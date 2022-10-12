@@ -1,0 +1,10 @@
+starting at Tue Oct 11 21:31:46 CDT 2022 on mhgcp-d00.grid.bcm.edu
+SLURM_JOBID=623525
+●  Matching reference with new dataset...
+	 ─ 2000 features present in reference loadings
+	 ─ 903 features shared between reference and new dataset
+	 ─ 45.15% of features in the reference are present in new dataset
+●  Aligning new data to reference...
+●  Classifying cells...
+DONE!
+ended at Tue Oct 11 21:55:03 CDT 2022 on mhgcp-d00.grid.bcm.edu. Time elapsed: 00:23:17

@@ -1,0 +1,54 @@
+args <- commandArgs(trailingOnly = TRUE)
+input_path = args[1]
+output_results_path <-args[2]
+#https://greenleaflab.github.io/ArchR_2020/Ex-Analyze-Multiome.html
+#https://www.archrproject.com/
+
+# import packages
+library(ArchR)
+library(parallel)
+library(stringi)
+set.seed(1)
+setwd(output_results_path)
+
+# prepare to import atac-seq data
+samples <- list.dirs(input_path, full.names = F, recursive = F)
+inputFiles <- paste(input_path,samples, '/outs/atac_fragments.tsv.gz', sep = "")
+names(inputFiles) <- samples
+inputFiles
+addArchRGenome("hg38")
+addArchRThreads(threads = 10)
+
+# remove all unwanted chr
+ArrowFiles <- createArrowFiles(
+  inputFiles = inputFiles,
+  sampleNames = names(inputFiles),
+  minTSS = 4, #Dont set this too high because you can always increase later
+  minFrags = 1000, 
+  addTileMat = TRUE,
+  addGeneScoreMat = TRUE,
+  excludeChr = c("chrM", "chrY","KI270728.1", "KI270727.1", "GL000009.2", "GL000194.1", 
+                 "GL000205.2", "GL000195.1", "GL000219.1", "KI270734.1", "GL000213.1", 
+                 "GL000218.1", "KI270731.1", "KI270721.1", "KI270726.1", "KI270711.1", 
+                 "KI270713.1"),subThreading = F, force = T
+)
+
+doubScores <- addDoubletScores(
+  input = ArrowFiles,
+  k = 10, #Refers to how many cells near a "pseudo-doublet" to count.
+  knnMethod = "UMAP", #Refers to the embedding to use for nearest neighbor search with doublet projection.
+  LSIMethod = 1
+)
+
+# create project
+projretina1 <- ArchRProject(
+  ArrowFiles = ArrowFiles, 
+  outputDirectory = "projretina1",
+  copyArrows = TRUE #This is recommened so that if you modify the Arrow files you have an original copy for later usage.
+)
+
+paste0("Memory Size = ", round(object.size(projretina1) / 10^6, 3), " MB")
+
+getAvailableMatrices(projretina1)
+
+saveArchRProject(ArchRProj = projretina1, outputDirectory = "Save-projretina1", load = FALSE)
