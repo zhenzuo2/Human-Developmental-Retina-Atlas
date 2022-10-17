@@ -25,6 +25,9 @@ Multiome_20w1d_FR
 Multiome_20w1d_NR
 Multiome_23w4d_FR
 Multiome_23w4d_NR
+17W1D_Fovea_retina
+17W1D_Nasal_retina
+17W1D_Temporal_retina
 )
 output_results_path="/storage/singlecell/zz4/fetal_bash/results/after_qc_seurat_object/"
 output_figuress_path="/storage/singlecell/zz4/fetal_bash/figures/after_qc_seurat_object/"

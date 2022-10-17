@@ -1,0 +1,4 @@
+[W::hts_idx_load3] The index file is older than the data file: /storage/singlecell/zz4/fetal_bash/data/Retina_fetal/17W1D_Temporal_retina/outs/possorted_genome_bam.bam.bai
+[W::hts_idx_load3] The index file is older than the data file: /storage/singlecell/zz4/fetal_bash/data/Retina_fetal/17W1D_Temporal_retina/outs/possorted_genome_bam.bam.bai
+[bam_sort_core] merging from 24 files and 12 in-memory blocks...
+[E::idx_find_and_load] Could not retrieve index file for '/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/17W1D_Temporal_retina/outs/cellsorted_possorted_genome_bam.bam'

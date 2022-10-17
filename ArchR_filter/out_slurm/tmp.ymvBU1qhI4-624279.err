@@ -1,0 +1,1004 @@
+Loading required package: ggplot2
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
+    colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
+    colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
+    colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
+    colWeightedMeans, colWeightedMedians, colWeightedSds,
+    colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
+    rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
+    rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
+    rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
+    rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
+    rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
+    rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
+    rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+Loading required package: data.table
+
+Attaching package: ‘data.table’
+
+The following object is masked from ‘package:SummarizedExperiment’:
+
+    shift
+
+The following object is masked from ‘package:GenomicRanges’:
+
+    shift
+
+The following object is masked from ‘package:IRanges’:
+
+    shift
+
+The following objects are masked from ‘package:S4Vectors’:
+
+    first, second
+
+Loading required package: Matrix
+
+Attaching package: ‘Matrix’
+
+The following object is masked from ‘package:S4Vectors’:
+
+    expand
+
+Loading required package: rhdf5
+Loading required package: magrittr
+Setting default genome to Hg38.
+Setting default number of Parallel threads to 20.
+Successfully loaded ArchRProject!
+
+                                                   / |
+                                                 /    \
+            .                                  /      |.
+            \\\                              /        |.
+              \\\                          /           `|.
+                \\\                      /              |.
+                  \                    /                |\
+                  \\#####\           /                  ||
+                ==###########>      /                   ||
+                 \\##==......\    /                     ||
+            ______ =       =|__ /__                     ||      \\\
+        ,--' ,----`-,__ ___/'  --,-`-===================##========>
+       \               '        ##_______ _____ ,--,__,=##,__   ///
+        ,    __==    ___,-,__,--'#'  ==='      `-'    | ##,-/
+        -,____,---'       \\####\\________________,--\\_##,/
+           ___      .______        ______  __    __  .______      
+          /   \     |   _  \      /      ||  |  |  | |   _  \     
+         /  ^  \    |  |_)  |    |  ,----'|  |__|  | |  |_)  |    
+        /  /_\  \   |      /     |  |     |   __   | |      /     
+       /  _____  \  |  |\  \\___ |  `----.|  |  |  | |  |\  \\___.
+      /__/     \__\ | _| `._____| \______||__|  |__| | _| `._____|
+    
+Filtering 29078 cells from ArchRProject!
+	Multi_Fetal_13W_NR : 2669 of 24574 (10.9%)
+	Multi_Fetal_20W2d_FR : 1920 of 13860 (13.9%)
+	Multi_Fetal_19W4d_FR : 2499 of 20310 (12.3%)
+	Multi_Fetal_14w5d_FR : 2508 of 19885 (12.6%)
+	Multi_Fetal_19W4d_NR : 2977 of 18534 (16.1%)
+	Multi_Fetal_11w2d_FR : 0 of 10907 (0%)
+	Multi_Fetal_13W_FR : 3064 of 17506 (17.5%)
+	Multi_Fetal_23w1d_FR : 2290 of 20330 (11.3%)
+	Multi_Fetal_11w2d_FR_2 : 0 of 13603 (0%)
+	Multi_Fetal_20W2d_NR : 2874 of 16955 (17%)
+	Multi_Fetal_23w1d_NR : 2243 of 14977 (15%)
+	Multi_Fetal_11w2d_NR : 1419 of 11914 (11.9%)
+	Multiome_10w_NR : 0 of 4261 (0%)
+	Multiome_12w3d_NR : 701 of 8376 (8.4%)
+	Multiome_10w_FR : 331 of 5757 (5.7%)
+	Multiome_12w3d_FR : 628 of 7927 (7.9%)
+	Multiome_14w2d_FR : 335 of 5791 (5.8%)
+	Multiome_23w4d_FR : 324 of 5694 (5.7%)
+	Multiome_16w4d_FR : 0 of 5216 (0%)
+	Multiome_23w4d_NR : 434 of 6594 (6.6%)
+	Multiome_20w1d_FR : 0 of 5875 (0%)
+	Multi_Fetal_14w5d_NR : 725 of 8518 (8.5%)
+	Multiome_14w2d_NR : 475 of 6893 (6.9%)
+	Multiome_20w1d_NR : 434 of 6593 (6.6%)
+	Multiome_16w4d_NR : 228 of 4777 (4.8%)
+Copying ArchRProject to new outputDirectory : /storage/singlecell/zz4/fetal_bash/results/ArchR/ArchRSubset
+Copying Arrow Files...
+Getting ImputeWeights
+No imputeWeights found, returning NULL
+Copying Other Files...
+Saving ArchRProject...
+Loading ArchRProject...
+Successfully loaded ArchRProject!
+
+                                                   / |
+                                                 /    \
+            .                                  /      |.
+            \\\                              /        |.
+              \\\                          /           `|.
+                \\\                      /              |.
+                  \                    /                |\
+                  \\#####\           /                  ||
+                ==###########>      /                   ||
+                 \\##==......\    /                     ||
+            ______ =       =|__ /__                     ||      \\\
+        ,--' ,----`-,__ ___/'  --,-`-===================##========>
+       \               '        ##_______ _____ ,--,__,=##,__   ///
+        ,    __==    ___,-,__,--'#'  ==='      `-'    | ##,-/
+        -,____,---'       \\####\\________________,--\\_##,/
+           ___      .______        ______  __    __  .______      
+          /   \     |   _  \      /      ||  |  |  | |   _  \     
+         /  ^  \    |  |_)  |    |  ,----'|  |__|  | |  |_)  |    
+        /  /_\  \   |      /     |  |     |   __   | |      /     
+       /  _____  \  |  |\  \\___ |  `----.|  |  |  | |  |\  \\___.
+      /__/     \__\ | _| `._____| \______||__|  |__| | _| `._____|
+    
+Checking Inputs...
+ArchR logging to : ArchRLogs/ArchR-addIterativeLSI-12854ec0d669-Date-2022-10-13_Time-00-50-21.log
+If there is an issue, please report to github with logFile!
+2022-10-13 00:50:29 : Computing Total Across All Features, 0.092 mins elapsed.
+2022-10-13 00:50:41 : Computing Top Features, 0.288 mins elapsed.
+###########
+2022-10-13 00:50:43 : Running LSI (1 of 2) on Top Features, 0.314 mins elapsed.
+###########
+2022-10-13 00:50:43 : Sampling Cells (N = 10014) for Estimated LSI, 0.317 mins elapsed.
+2022-10-13 00:50:43 : Creating Sampled Partial Matrix, 0.317 mins elapsed.
+2022-10-13 00:51:14 : Computing Estimated LSI (projectAll = FALSE), 0.835 mins elapsed.
+2022-10-13 00:51:49 : Identifying Clusters, 1.416 mins elapsed.
+2022-10-13 00:52:13 : Identified 5 Clusters, 1.818 mins elapsed.
+2022-10-13 00:52:13 : Saving LSI Iteration, 1.819 mins elapsed.
+Length of unique values greater than palette, interpolating..
+2022-10-13 00:52:34 : Creating Cluster Matrix on the total Group Features, 2.163 mins elapsed.
+2022-10-13 00:52:58 : Computing Variable Features, 2.564 mins elapsed.
+###########
+2022-10-13 00:52:58 : Running LSI (2 of 2) on Variable Features, 2.567 mins elapsed.
+###########
+2022-10-13 00:52:58 : Creating Partial Matrix, 2.569 mins elapsed.
+2022-10-13 00:57:12 : Computing LSI, 6.8 mins elapsed.
+2022-10-13 01:02:06 : Finished Running IterativeLSI, 11.697 mins elapsed.
+Harmony 1/10
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Harmony 2/10
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Harmony 3/10
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Harmony converged after 3 iterations
+Warning messages:
+1: did not converge in 25 iterations 
+2: Quick-TRANSfer stage steps exceeded maximum (= 8685650) 
+3: Quick-TRANSfer stage steps exceeded maximum (= 8685650) 
+4: Quick-TRANSfer stage steps exceeded maximum (= 8685650) 
+ArchR logging to : ArchRLogs/ArchR-addClusters-12851e5b0374-Date-2022-10-13_Time-01-09-49.log
+If there is an issue, please report to github with logFile!
+2022-10-13 01:09:50 : Running Seurats FindClusters (Stuart et al. Cell 2019), 0.013 mins elapsed.
+Computing nearest neighbor graph
+Computing SNN
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+44 singletons identified. 18 final clusters.
+2022-10-13 01:15:45 : Testing Outlier Clusters, 5.919 mins elapsed.
+2022-10-13 01:15:45 : Assigning Cluster Names to 18 Clusters, 5.919 mins elapsed.
+2022-10-13 01:15:45 : Finished addClusters, 5.925 mins elapsed.
+01:15:45 UMAP embedding parameters a = 0.583 b = 1.334
+01:15:45 Read 173713 rows and found 30 numeric columns
+01:15:45 Using Annoy for neighbor search, n_neighbors = 30
+01:15:45 Building Annoy index with metric = cosine, n_trees = 50
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+01:16:11 Writing NN index file to temp file /tmp/RtmpC08FbC/file12852b808269
+01:16:11 Searching Annoy index using 24 threads, search_k = 3000
+01:16:16 Annoy recall = 100%
+01:16:20 Commencing smooth kNN distance calibration using 24 threads with target n_neighbors = 30
+01:16:28 Initializing from normalized Laplacian + noise (using irlba)
+01:16:46 Commencing optimization for 200 epochs, with 8700284 positive edges
+Using method 'umap'
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+01:20:48 Optimization finished
+01:20:48 Creating temp model dir /tmp/RtmpC08FbC/dir128557caf6ce
+01:20:48 Creating dir /tmp/RtmpC08FbC/dir128557caf6ce
+01:21:02 Changing to /tmp/RtmpC08FbC/dir128557caf6ce
+01:21:02 Creating /storage/singlecell/zz4/fetal_bash/results/ArchR/ArchRSubset/Embeddings/Save-Uwot-UMAP-Params-IterativeLSI-1285372f25ae-Date-2022-10-13_Time-01-20-48.tar
+Warning messages:
+1: In sprintf(gettext(fmt, domain = domain), ...) :
+  one argument not used by format 'invalid uid value replaced by that for user 'nobody''
+2: invalid uid value replaced by that for user 'nobody' 
+3: In sprintf(gettext(fmt, domain = domain), ...) :
+  one argument not used by format 'invalid gid value replaced by that for user 'nobody''
+4: invalid gid value replaced by that for user 'nobody' 
+Setting default number of Parallel threads to 1.
+ArchR logging to : ArchRLogs/ArchR-addGroupCoverages-12856d37ced2-Date-2022-10-13_Time-01-21-08.log
+If there is an issue, please report to github with logFile!
+2022-10-13 01:21:15 : Creating Coverage Files!, 0.112 mins elapsed.
+2022-10-13 01:21:15 : Batch Execution w/ safelapply!, 0.112 mins elapsed.
+2022-10-13 01:21:15 : Group AC._.Multiome_10w_NR (1 of 35) : Creating Group Coverage File : AC._.Multiome_10w_NR.insertions.coverage.h5, 0.113 mins elapsed.
+2022-10-13 01:21:51 : Group AC._.Multiome_16w4d_FR (2 of 35) : Creating Group Coverage File : AC._.Multiome_16w4d_FR.insertions.coverage.h5, 0.721 mins elapsed.
+2022-10-13 01:22:26 : Group AC._.Multi_Fetal_20W2d_NR (3 of 35) : Creating Group Coverage File : AC._.Multi_Fetal_20W2d_NR.insertions.coverage.h5, 1.293 mins elapsed.
+2022-10-13 01:23:05 : Group AC._.Multi_Fetal_13W_NR (4 of 35) : Creating Group Coverage File : AC._.Multi_Fetal_13W_NR.insertions.coverage.h5, 1.947 mins elapsed.
+2022-10-13 01:23:50 : Group AC._.Multi_Fetal_19W4d_FR (5 of 35) : Creating Group Coverage File : AC._.Multi_Fetal_19W4d_FR.insertions.coverage.h5, 2.701 mins elapsed.
+2022-10-13 01:24:35 : Group BC._.Multi_Fetal_14w5d_FR (6 of 35) : Creating Group Coverage File : BC._.Multi_Fetal_14w5d_FR.insertions.coverage.h5, 3.439 mins elapsed.
+2022-10-13 01:25:12 : Group BC._.Multi_Fetal_20W2d_NR (7 of 35) : Creating Group Coverage File : BC._.Multi_Fetal_20W2d_NR.insertions.coverage.h5, 4.066 mins elapsed.
+2022-10-13 01:25:48 : Group BC._.Multiome_16w4d_FR (8 of 35) : Creating Group Coverage File : BC._.Multiome_16w4d_FR.insertions.coverage.h5, 4.668 mins elapsed.
+2022-10-13 01:26:21 : Group BC._.Multi_Fetal_19W4d_FR (9 of 35) : Creating Group Coverage File : BC._.Multi_Fetal_19W4d_FR.insertions.coverage.h5, 5.211 mins elapsed.
+2022-10-13 01:27:01 : Group BC._.Multi_Fetal_23w1d_NR (10 of 35) : Creating Group Coverage File : BC._.Multi_Fetal_23w1d_NR.insertions.coverage.h5, 5.873 mins elapsed.
+2022-10-13 01:27:35 : Group Cone._.Multi_Fetal_14w5d_FR (11 of 35) : Creating Group Coverage File : Cone._.Multi_Fetal_14w5d_FR.insertions.coverage.h5, 6.443 mins elapsed.
+2022-10-13 01:28:14 : Group Cone._.Multi_Fetal_23w1d_FR (12 of 35) : Creating Group Coverage File : Cone._.Multi_Fetal_23w1d_FR.insertions.coverage.h5, 7.102 mins elapsed.
+2022-10-13 01:28:57 : Group Cone._.Multi_Fetal_19W4d_NR (13 of 35) : Creating Group Coverage File : Cone._.Multi_Fetal_19W4d_NR.insertions.coverage.h5, 7.82 mins elapsed.
+2022-10-13 01:29:40 : Group Cone._.Multi_Fetal_20W2d_NR (14 of 35) : Creating Group Coverage File : Cone._.Multi_Fetal_20W2d_NR.insertions.coverage.h5, 8.537 mins elapsed.
+2022-10-13 01:30:17 : Group Cone._.Multi_Fetal_19W4d_FR (15 of 35) : Creating Group Coverage File : Cone._.Multi_Fetal_19W4d_FR.insertions.coverage.h5, 9.144 mins elapsed.
+2022-10-13 01:31:03 : Group HC._.Multi_Fetal_13W_FR (16 of 35) : Creating Group Coverage File : HC._.Multi_Fetal_13W_FR.insertions.coverage.h5, 9.921 mins elapsed.
+2022-10-13 01:31:41 : Group HC._.Multi_Fetal_13W_NR (17 of 35) : Creating Group Coverage File : HC._.Multi_Fetal_13W_NR.insertions.coverage.h5, 10.556 mins elapsed.
+2022-10-13 01:32:24 : Group HC._.Multi_Fetal_11w2d_FR_2 (18 of 35) : Creating Group Coverage File : HC._.Multi_Fetal_11w2d_FR_2.insertions.coverage.h5, 11.258 mins elapsed.
+2022-10-13 01:33:01 : Group HC._.Multi_Fetal_14w5d_FR (19 of 35) : Creating Group Coverage File : HC._.Multi_Fetal_14w5d_FR.insertions.coverage.h5, 11.878 mins elapsed.
+2022-10-13 01:33:39 : Group HC._.Multi_Fetal_23w1d_FR (20 of 35) : Creating Group Coverage File : HC._.Multi_Fetal_23w1d_FR.insertions.coverage.h5, 12.518 mins elapsed.
+2022-10-13 01:34:26 : Group MG._.Multiome_16w4d_NR (21 of 35) : Creating Group Coverage File : MG._.Multiome_16w4d_NR.insertions.coverage.h5, 13.302 mins elapsed.
+2022-10-13 01:34:58 : Group MG._.Multi_Fetal_14w5d_NR (22 of 35) : Creating Group Coverage File : MG._.Multi_Fetal_14w5d_NR.insertions.coverage.h5, 13.833 mins elapsed.
+2022-10-13 01:35:32 : Group MG._.Multiome_12w3d_FR (23 of 35) : Creating Group Coverage File : MG._.Multiome_12w3d_FR.insertions.coverage.h5, 14.396 mins elapsed.
+2022-10-13 01:36:05 : Group MG._.Multiome_20w1d_NR (24 of 35) : Creating Group Coverage File : MG._.Multiome_20w1d_NR.insertions.coverage.h5, 14.952 mins elapsed.
+2022-10-13 01:36:37 : Group MG._.Multiome_14w2d_FR (25 of 35) : Creating Group Coverage File : MG._.Multiome_14w2d_FR.insertions.coverage.h5, 15.485 mins elapsed.
+2022-10-13 01:37:12 : Group RGC._.Multiome_10w_NR (26 of 35) : Creating Group Coverage File : RGC._.Multiome_10w_NR.insertions.coverage.h5, 16.07 mins elapsed.
+2022-10-13 01:37:49 : Group RGC._.Multi_Fetal_19W4d_FR (27 of 35) : Creating Group Coverage File : RGC._.Multi_Fetal_19W4d_FR.insertions.coverage.h5, 16.676 mins elapsed.
+2022-10-13 01:38:42 : Group RGC._.Multi_Fetal_14w5d_NR (28 of 35) : Creating Group Coverage File : RGC._.Multi_Fetal_14w5d_NR.insertions.coverage.h5, 17.566 mins elapsed.
+2022-10-13 01:39:22 : Group RGC._.Multiome_12w3d_FR (29 of 35) : Creating Group Coverage File : RGC._.Multiome_12w3d_FR.insertions.coverage.h5, 18.225 mins elapsed.
+2022-10-13 01:39:56 : Group RGC._.Multi_Fetal_11w2d_NR (30 of 35) : Creating Group Coverage File : RGC._.Multi_Fetal_11w2d_NR.insertions.coverage.h5, 18.804 mins elapsed.
+2022-10-13 01:40:36 : Group Rod._.Multi_Fetal_20W2d_FR (31 of 35) : Creating Group Coverage File : Rod._.Multi_Fetal_20W2d_FR.insertions.coverage.h5, 19.471 mins elapsed.
+2022-10-13 01:41:16 : Group Rod._.Multi_Fetal_23w1d_FR (32 of 35) : Creating Group Coverage File : Rod._.Multi_Fetal_23w1d_FR.insertions.coverage.h5, 20.13 mins elapsed.
+2022-10-13 01:41:52 : Group Rod._.Multi_Fetal_19W4d_FR (33 of 35) : Creating Group Coverage File : Rod._.Multi_Fetal_19W4d_FR.insertions.coverage.h5, 20.738 mins elapsed.
+2022-10-13 01:42:33 : Group Rod._.Multi_Fetal_23w1d_NR (34 of 35) : Creating Group Coverage File : Rod._.Multi_Fetal_23w1d_NR.insertions.coverage.h5, 21.407 mins elapsed.
+2022-10-13 01:43:08 : Group Rod._.Multiome_23w4d_FR (35 of 35) : Creating Group Coverage File : Rod._.Multiome_23w4d_FR.insertions.coverage.h5, 22 mins elapsed.
+2022-10-13 01:43:42 : Adding Kmer Bias to Coverage Files!, 22.567 mins elapsed.
+chr1 chr10 chr11 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr2 chr20 chr21 chr22 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chrX chrY 2022-10-13 02:02:57 : Finished Creation of Coverage Files!, 41.819 mins elapsed.
+ArchR logging successful to : ArchRLogs/ArchR-addGroupCoverages-12856d37ced2-Date-2022-10-13_Time-01-21-08.log
+Setting default number of Parallel threads to 20.
+Searching For MACS2..
+Found with $path!
+ArchR logging to : ArchRLogs/ArchR-addReproduciblePeakSet-128553d54712-Date-2022-10-13_Time-02-03-00.log
+If there is an issue, please report to github with logFile!
+2022-10-13 02:03:07 : Peak Calling Parameters!, 0.112 mins elapsed.
+2022-10-13 02:03:07 : Batching Peak Calls!, 0.112 mins elapsed.
+2022-10-13 02:03:07 : Batch Execution w/ safelapply!, 0 mins elapsed.
+2022-10-13 02:03:07 : Group 1 of 35, Calling Peaks with MACS2!, 0.003 mins elapsed.
+2022-10-13 02:03:07 : Group 2 of 35, Calling Peaks with MACS2!, 0.005 mins elapsed.
+2022-10-13 02:03:07 : Group 3 of 35, Calling Peaks with MACS2!, 0.008 mins elapsed.
+2022-10-13 02:03:07 : Group 4 of 35, Calling Peaks with MACS2!, 0.01 mins elapsed.
+2022-10-13 02:03:07 : Group 5 of 35, Calling Peaks with MACS2!, 0.013 mins elapsed.
+2022-10-13 02:03:08 : Group 6 of 35, Calling Peaks with MACS2!, 0.015 mins elapsed.
+2022-10-13 02:03:08 : Group 7 of 35, Calling Peaks with MACS2!, 0.018 mins elapsed.
+2022-10-13 02:03:08 : Group 8 of 35, Calling Peaks with MACS2!, 0.021 mins elapsed.
+2022-10-13 02:03:08 : Group 9 of 35, Calling Peaks with MACS2!, 0.024 mins elapsed.
+2022-10-13 02:03:08 : Group 10 of 35, Calling Peaks with MACS2!, 0.026 mins elapsed.
+2022-10-13 02:03:08 : Group 11 of 35, Calling Peaks with MACS2!, 0.029 mins elapsed.
+2022-10-13 02:03:09 : Group 12 of 35, Calling Peaks with MACS2!, 0.032 mins elapsed.
+2022-10-13 02:03:09 : Group 13 of 35, Calling Peaks with MACS2!, 0.035 mins elapsed.
+2022-10-13 02:03:09 : Group 14 of 35, Calling Peaks with MACS2!, 0.037 mins elapsed.
+2022-10-13 02:03:09 : Group 15 of 35, Calling Peaks with MACS2!, 0.04 mins elapsed.
+2022-10-13 02:03:09 : Group 16 of 35, Calling Peaks with MACS2!, 0.043 mins elapsed.
+2022-10-13 02:03:09 : Group 17 of 35, Calling Peaks with MACS2!, 0.046 mins elapsed.
+2022-10-13 02:03:10 : Group 18 of 35, Calling Peaks with MACS2!, 0.049 mins elapsed.
+2022-10-13 02:03:10 : Group 19 of 35, Calling Peaks with MACS2!, 0.052 mins elapsed.
+2022-10-13 02:03:10 : Group 20 of 35, Calling Peaks with MACS2!, 0.056 mins elapsed.
+2022-10-13 02:05:02 : Group 21 of 35, Calling Peaks with MACS2!, 1.929 mins elapsed.
+2022-10-13 02:05:04 : Group 22 of 35, Calling Peaks with MACS2!, 1.954 mins elapsed.
+2022-10-13 02:05:05 : Group 23 of 35, Calling Peaks with MACS2!, 1.977 mins elapsed.
+2022-10-13 02:05:10 : Group 24 of 35, Calling Peaks with MACS2!, 2.049 mins elapsed.
+2022-10-13 02:05:10 : Group 25 of 35, Calling Peaks with MACS2!, 2.052 mins elapsed.
+2022-10-13 02:05:17 : Group 26 of 35, Calling Peaks with MACS2!, 2.181 mins elapsed.
+2022-10-13 02:05:26 : Group 27 of 35, Calling Peaks with MACS2!, 2.322 mins elapsed.
+2022-10-13 02:05:28 : Group 28 of 35, Calling Peaks with MACS2!, 2.36 mins elapsed.
+2022-10-13 02:05:42 : Group 29 of 35, Calling Peaks with MACS2!, 2.595 mins elapsed.
+2022-10-13 02:05:44 : Group 30 of 35, Calling Peaks with MACS2!, 2.622 mins elapsed.
+2022-10-13 02:06:09 : Group 31 of 35, Calling Peaks with MACS2!, 3.036 mins elapsed.
+2022-10-13 02:06:09 : Group 32 of 35, Calling Peaks with MACS2!, 3.039 mins elapsed.
+2022-10-13 02:06:11 : Group 33 of 35, Calling Peaks with MACS2!, 3.072 mins elapsed.
+2022-10-13 02:06:14 : Group 34 of 35, Calling Peaks with MACS2!, 3.118 mins elapsed.
+2022-10-13 02:06:33 : Group 35 of 35, Calling Peaks with MACS2!, 3.443 mins elapsed.
+2022-10-13 02:11:55 : Identifying Reproducible Peaks!, 8.927 mins elapsed.
+2022-10-13 02:12:21 : Creating Union Peak Set!, 9.344 mins elapsed.
+Converged after 10 iterations!
+Plotting Ggplot!
+2022-10-13 02:12:33 : Finished Creating Union Peak Set (366280)!, 9.548 mins elapsed.
+ArchR logging to : ArchRLogs/ArchR-addPeakMatrix-12857e8167f4-Date-2022-10-13_Time-02-12-33.log
+If there is an issue, please report to github with logFile!
+2022-10-13 02:12:33 : Batch Execution w/ safelapply!, 0 mins elapsed.
+2022-10-13 02:12:35 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (1 of 23)!, 0.028 mins elapsed.
+2022-10-13 02:12:35 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (1 of 23)!, 0.026 mins elapsed.
+2022-10-13 02:12:36 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (1 of 23)!, 0.026 mins elapsed.
+2022-10-13 02:12:36 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (1 of 23)!, 0.026 mins elapsed.
+2022-10-13 02:12:36 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (1 of 23)!, 0.026 mins elapsed.
+2022-10-13 02:12:36 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (1 of 23)!, 0.026 mins elapsed.
+2022-10-13 02:12:36 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (1 of 23)!, 0.032 mins elapsed.
+2022-10-13 02:12:36 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (1 of 23)!, 0.026 mins elapsed.
+2022-10-13 02:12:36 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (1 of 23)!, 0.026 mins elapsed.
+2022-10-13 02:12:37 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (1 of 23)!, 0.027 mins elapsed.
+2022-10-13 02:12:37 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (1 of 23)!, 0.026 mins elapsed.
+2022-10-13 02:12:37 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (1 of 23)!, 0.027 mins elapsed.
+2022-10-13 02:12:37 : Adding Multiome_10w_FR to PeakMatrix for Chr (1 of 23)!, 0.026 mins elapsed.
+2022-10-13 02:12:37 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (1 of 23)!, 0.027 mins elapsed.
+2022-10-13 02:12:37 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (1 of 23)!, 0.026 mins elapsed.
+2022-10-13 02:12:38 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (1 of 23)!, 0.029 mins elapsed.
+2022-10-13 02:12:38 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (1 of 23)!, 0.03 mins elapsed.
+2022-10-13 02:12:38 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (1 of 23)!, 0.03 mins elapsed.
+2022-10-13 02:12:38 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (1 of 23)!, 0.03 mins elapsed.
+2022-10-13 02:12:38 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (1 of 23)!, 0.029 mins elapsed.
+2022-10-13 02:12:48 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (2 of 23)!, 0.21 mins elapsed.
+2022-10-13 02:12:49 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (2 of 23)!, 0.224 mins elapsed.
+2022-10-13 02:12:50 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (2 of 23)!, 0.22 mins elapsed.
+2022-10-13 02:12:50 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (2 of 23)!, 0.226 mins elapsed.
+2022-10-13 02:12:52 : Adding Multiome_10w_FR to PeakMatrix for Chr (2 of 23)!, 0.278 mins elapsed.
+2022-10-13 02:12:52 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (2 of 23)!, 0.263 mins elapsed.
+2022-10-13 02:12:53 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (2 of 23)!, 0.279 mins elapsed.
+2022-10-13 02:12:54 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (2 of 23)!, 0.311 mins elapsed.
+2022-10-13 02:12:54 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (2 of 23)!, 0.307 mins elapsed.
+2022-10-13 02:12:56 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (2 of 23)!, 0.344 mins elapsed.
+2022-10-13 02:12:57 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (2 of 23)!, 0.36 mins elapsed.
+2022-10-13 02:12:57 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (3 of 23)!, 0.344 mins elapsed.
+2022-10-13 02:12:57 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (2 of 23)!, 0.369 mins elapsed.
+2022-10-13 02:12:57 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (3 of 23)!, 0.337 mins elapsed.
+2022-10-13 02:12:57 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (3 of 23)!, 0.357 mins elapsed.
+2022-10-13 02:12:57 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (3 of 23)!, 0.349 mins elapsed.
+2022-10-13 02:12:58 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (2 of 23)!, 0.384 mins elapsed.
+2022-10-13 02:13:00 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (2 of 23)!, 0.43 mins elapsed.
+2022-10-13 02:13:00 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (3 of 23)!, 0.4 mins elapsed.
+2022-10-13 02:13:01 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (2 of 23)!, 0.436 mins elapsed.
+2022-10-13 02:13:02 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (2 of 23)!, 0.461 mins elapsed.
+2022-10-13 02:13:02 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (3 of 23)!, 0.43 mins elapsed.
+2022-10-13 02:13:02 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (2 of 23)!, 0.468 mins elapsed.
+2022-10-13 02:13:02 : Adding Multiome_10w_FR to PeakMatrix for Chr (3 of 23)!, 0.444 mins elapsed.
+2022-10-13 02:13:03 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (4 of 23)!, 0.433 mins elapsed.
+2022-10-13 02:13:04 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (3 of 23)!, 0.464 mins elapsed.
+2022-10-13 02:13:04 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (4 of 23)!, 0.462 mins elapsed.
+2022-10-13 02:13:04 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (4 of 23)!, 0.451 mins elapsed.
+2022-10-13 02:13:04 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (4 of 23)!, 0.472 mins elapsed.
+2022-10-13 02:13:04 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (3 of 23)!, 0.485 mins elapsed.
+2022-10-13 02:13:05 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (2 of 23)!, 0.516 mins elapsed.
+2022-10-13 02:13:07 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (2 of 23)!, 0.543 mins elapsed.
+2022-10-13 02:13:07 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (4 of 23)!, 0.515 mins elapsed.
+2022-10-13 02:13:07 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (3 of 23)!, 0.539 mins elapsed.
+2022-10-13 02:13:08 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (5 of 23)!, 0.516 mins elapsed.
+2022-10-13 02:13:09 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (5 of 23)!, 0.549 mins elapsed.
+2022-10-13 02:13:09 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (5 of 23)!, 0.544 mins elapsed.
+2022-10-13 02:13:09 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (3 of 23)!, 0.578 mins elapsed.
+2022-10-13 02:13:10 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (5 of 23)!, 0.558 mins elapsed.
+2022-10-13 02:13:10 : Adding Multiome_10w_FR to PeakMatrix for Chr (4 of 23)!, 0.569 mins elapsed.
+2022-10-13 02:13:10 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (4 of 23)!, 0.562 mins elapsed.
+2022-10-13 02:13:10 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (3 of 23)!, 0.582 mins elapsed.
+2022-10-13 02:13:11 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (4 of 23)!, 0.581 mins elapsed.
+2022-10-13 02:13:12 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (3 of 23)!, 0.614 mins elapsed.
+2022-10-13 02:13:13 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (6 of 23)!, 0.598 mins elapsed.
+2022-10-13 02:13:13 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (5 of 23)!, 0.608 mins elapsed.
+2022-10-13 02:13:13 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (4 of 23)!, 0.628 mins elapsed.
+2022-10-13 02:13:14 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (3 of 23)!, 0.657 mins elapsed.
+2022-10-13 02:13:14 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (6 of 23)!, 0.63 mins elapsed.
+2022-10-13 02:13:15 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (6 of 23)!, 0.654 mins elapsed.
+2022-10-13 02:13:15 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (6 of 23)!, 0.653 mins elapsed.
+2022-10-13 02:13:16 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (5 of 23)!, 0.661 mins elapsed.
+2022-10-13 02:13:16 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (3 of 23)!, 0.699 mins elapsed.
+2022-10-13 02:13:16 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (2 of 23)!, 0.712 mins elapsed.
+2022-10-13 02:13:17 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (5 of 23)!, 0.685 mins elapsed.
+2022-10-13 02:13:17 : Adding Multiome_10w_FR to PeakMatrix for Chr (5 of 23)!, 0.689 mins elapsed.
+2022-10-13 02:13:17 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (3 of 23)!, 0.72 mins elapsed.
+2022-10-13 02:13:18 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (4 of 23)!, 0.708 mins elapsed.
+2022-10-13 02:13:18 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (7 of 23)!, 0.685 mins elapsed.
+2022-10-13 02:13:19 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (3 of 23)!, 0.743 mins elapsed.
+2022-10-13 02:13:19 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (6 of 23)!, 0.715 mins elapsed.
+2022-10-13 02:13:20 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (5 of 23)!, 0.736 mins elapsed.
+2022-10-13 02:13:20 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (4 of 23)!, 0.745 mins elapsed.
+2022-10-13 02:13:20 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (7 of 23)!, 0.73 mins elapsed.
+2022-10-13 02:13:20 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (4 of 23)!, 0.764 mins elapsed.
+2022-10-13 02:13:22 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (4 of 23)!, 0.777 mins elapsed.
+2022-10-13 02:13:22 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (7 of 23)!, 0.763 mins elapsed.
+2022-10-13 02:13:22 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (7 of 23)!, 0.772 mins elapsed.
+2022-10-13 02:13:23 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (6 of 23)!, 0.773 mins elapsed.
+2022-10-13 02:13:23 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (6 of 23)!, 0.788 mins elapsed.
+2022-10-13 02:13:23 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (8 of 23)!, 0.775 mins elapsed.
+2022-10-13 02:13:23 : Adding Multiome_10w_FR to PeakMatrix for Chr (6 of 23)!, 0.798 mins elapsed.
+2022-10-13 02:13:24 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (3 of 23)!, 0.832 mins elapsed.
+2022-10-13 02:13:25 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (5 of 23)!, 0.835 mins elapsed.
+2022-10-13 02:13:25 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (7 of 23)!, 0.813 mins elapsed.
+2022-10-13 02:13:25 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (4 of 23)!, 0.844 mins elapsed.
+2022-10-13 02:13:26 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (8 of 23)!, 0.816 mins elapsed.
+2022-10-13 02:13:26 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (6 of 23)!, 0.847 mins elapsed.
+2022-10-13 02:13:27 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (3 of 23)!, 0.88 mins elapsed.
+2022-10-13 02:13:27 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (5 of 23)!, 0.867 mins elapsed.
+2022-10-13 02:13:28 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (8 of 23)!, 0.864 mins elapsed.
+2022-10-13 02:13:28 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (9 of 23)!, 0.858 mins elapsed.
+2022-10-13 02:13:28 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (8 of 23)!, 0.872 mins elapsed.
+2022-10-13 02:13:29 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (7 of 23)!, 0.876 mins elapsed.
+2022-10-13 02:13:29 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (4 of 23)!, 0.911 mins elapsed.
+2022-10-13 02:13:29 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (7 of 23)!, 0.892 mins elapsed.
+2022-10-13 02:13:29 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (5 of 23)!, 0.914 mins elapsed.
+2022-10-13 02:13:30 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (5 of 23)!, 0.91 mins elapsed.
+2022-10-13 02:13:30 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (4 of 23)!, 0.922 mins elapsed.
+2022-10-13 02:13:30 : Adding Multiome_10w_FR to PeakMatrix for Chr (7 of 23)!, 0.91 mins elapsed.
+2022-10-13 02:13:31 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (4 of 23)!, 0.948 mins elapsed.
+2022-10-13 02:13:31 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (9 of 23)!, 0.906 mins elapsed.
+2022-10-13 02:13:31 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (8 of 23)!, 0.915 mins elapsed.
+2022-10-13 02:13:33 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (9 of 23)!, 0.95 mins elapsed.
+2022-10-13 02:13:33 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (7 of 23)!, 0.962 mins elapsed.
+2022-10-13 02:13:33 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (5 of 23)!, 0.979 mins elapsed.
+2022-10-13 02:13:33 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (6 of 23)!, 0.974 mins elapsed.
+2022-10-13 02:13:34 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (10 of 23)!, 0.953 mins elapsed.
+2022-10-13 02:13:34 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (9 of 23)!, 0.969 mins elapsed.
+2022-10-13 02:13:35 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (8 of 23)!, 0.984 mins elapsed.
+2022-10-13 02:13:36 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (8 of 23)!, 0.999 mins elapsed.
+2022-10-13 02:13:36 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (6 of 23)!, 1.009 mins elapsed.
+2022-10-13 02:13:36 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (10 of 23)!, 0.996 mins elapsed.
+2022-10-13 02:13:37 : Adding Multiome_10w_FR to PeakMatrix for Chr (8 of 23)!, 1.019 mins elapsed.
+2022-10-13 02:13:37 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (4 of 23)!, 1.062 mins elapsed.
+2022-10-13 02:13:38 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (9 of 23)!, 1.022 mins elapsed.
+2022-10-13 02:13:38 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (6 of 23)!, 1.054 mins elapsed.
+2022-10-13 02:13:38 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (6 of 23)!, 1.06 mins elapsed.
+2022-10-13 02:13:38 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (10 of 23)!, 1.043 mins elapsed.
+2022-10-13 02:13:39 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (11 of 23)!, 1.037 mins elapsed.
+2022-10-13 02:13:39 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (5 of 23)!, 1.079 mins elapsed.
+2022-10-13 02:13:39 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (5 of 23)!, 1.077 mins elapsed.
+2022-10-13 02:13:40 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (10 of 23)!, 1.061 mins elapsed.
+2022-10-13 02:13:40 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (3 of 23)!, 1.109 mins elapsed.
+2022-10-13 02:13:40 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (8 of 23)!, 1.083 mins elapsed.
+2022-10-13 02:13:41 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (4 of 23)!, 1.107 mins elapsed.
+2022-10-13 02:13:41 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (9 of 23)!, 1.078 mins elapsed.
+2022-10-13 02:13:41 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (5 of 23)!, 1.121 mins elapsed.
+2022-10-13 02:13:41 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (9 of 23)!, 1.093 mins elapsed.
+2022-10-13 02:13:42 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (7 of 23)!, 1.113 mins elapsed.
+2022-10-13 02:13:42 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (11 of 23)!, 1.096 mins elapsed.
+2022-10-13 02:13:43 : Adding Multiome_10w_FR to PeakMatrix for Chr (9 of 23)!, 1.119 mins elapsed.
+2022-10-13 02:13:43 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (6 of 23)!, 1.135 mins elapsed.
+2022-10-13 02:13:43 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (10 of 23)!, 1.116 mins elapsed.
+2022-10-13 02:13:44 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (11 of 23)!, 1.134 mins elapsed.
+2022-10-13 02:13:44 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (7 of 23)!, 1.154 mins elapsed.
+2022-10-13 02:13:45 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (12 of 23)!, 1.134 mins elapsed.
+2022-10-13 02:13:45 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (11 of 23)!, 1.153 mins elapsed.
+2022-10-13 02:13:46 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (10 of 23)!, 1.17 mins elapsed.
+2022-10-13 02:13:47 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (9 of 23)!, 1.186 mins elapsed.
+2022-10-13 02:13:47 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (10 of 23)!, 1.182 mins elapsed.
+2022-10-13 02:13:47 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (7 of 23)!, 1.197 mins elapsed.
+2022-10-13 02:13:47 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (7 of 23)!, 1.21 mins elapsed.
+2022-10-13 02:13:48 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (12 of 23)!, 1.189 mins elapsed.
+2022-10-13 02:13:48 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (5 of 23)!, 1.242 mins elapsed.
+2022-10-13 02:13:49 : Adding Multiome_10w_FR to PeakMatrix for Chr (10 of 23)!, 1.222 mins elapsed.
+2022-10-13 02:13:49 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (11 of 23)!, 1.208 mins elapsed.
+2022-10-13 02:13:50 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (6 of 23)!, 1.258 mins elapsed.
+2022-10-13 02:13:50 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (13 of 23)!, 1.218 mins elapsed.
+2022-10-13 02:13:50 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (12 of 23)!, 1.239 mins elapsed.
+2022-10-13 02:13:50 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (6 of 23)!, 1.267 mins elapsed.
+2022-10-13 02:13:50 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (5 of 23)!, 1.273 mins elapsed.
+2022-10-13 02:13:51 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (8 of 23)!, 1.261 mins elapsed.
+2022-10-13 02:13:51 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (12 of 23)!, 1.256 mins elapsed.
+2022-10-13 02:13:53 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (11 of 23)!, 1.287 mins elapsed.
+2022-10-13 02:13:53 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (7 of 23)!, 1.304 mins elapsed.
+2022-10-13 02:13:53 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (10 of 23)!, 1.294 mins elapsed.
+2022-10-13 02:13:53 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (13 of 23)!, 1.276 mins elapsed.
+2022-10-13 02:13:54 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (6 of 23)!, 1.327 mins elapsed.
+2022-10-13 02:13:54 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (14 of 23)!, 1.287 mins elapsed.
+2022-10-13 02:13:54 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (8 of 23)!, 1.313 mins elapsed.
+2022-10-13 02:13:54 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (11 of 23)!, 1.298 mins elapsed.
+2022-10-13 02:13:55 : Adding Multiome_10w_FR to PeakMatrix for Chr (11 of 23)!, 1.327 mins elapsed.
+2022-10-13 02:13:55 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (12 of 23)!, 1.315 mins elapsed.
+2022-10-13 02:13:55 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (8 of 23)!, 1.34 mins elapsed.
+2022-10-13 02:13:56 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (13 of 23)!, 1.33 mins elapsed.
+2022-10-13 02:13:56 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (8 of 23)!, 1.361 mins elapsed.
+2022-10-13 02:13:57 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (13 of 23)!, 1.345 mins elapsed.
+2022-10-13 02:13:57 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (14 of 23)!, 1.343 mins elapsed.
+2022-10-13 02:13:58 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (4 of 23)!, 1.404 mins elapsed.
+2022-10-13 02:13:58 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (15 of 23)!, 1.358 mins elapsed.
+2022-10-13 02:13:59 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (9 of 23)!, 1.405 mins elapsed.
+2022-10-13 02:14:00 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (11 of 23)!, 1.404 mins elapsed.
+2022-10-13 02:14:00 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (12 of 23)!, 1.402 mins elapsed.
+2022-10-13 02:14:00 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (14 of 23)!, 1.401 mins elapsed.
+2022-10-13 02:14:00 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (7 of 23)!, 1.429 mins elapsed.
+2022-10-13 02:14:01 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (6 of 23)!, 1.446 mins elapsed.
+2022-10-13 02:14:01 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (12 of 23)!, 1.413 mins elapsed.
+2022-10-13 02:14:01 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (14 of 23)!, 1.416 mins elapsed.
+2022-10-13 02:14:01 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (13 of 23)!, 1.41 mins elapsed.
+2022-10-13 02:14:01 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (7 of 23)!, 1.448 mins elapsed.
+2022-10-13 02:14:02 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (9 of 23)!, 1.44 mins elapsed.
+2022-10-13 02:14:02 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (6 of 23)!, 1.459 mins elapsed.
+2022-10-13 02:14:02 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (15 of 23)!, 1.422 mins elapsed.
+2022-10-13 02:14:02 : Adding Multiome_10w_FR to PeakMatrix for Chr (12 of 23)!, 1.444 mins elapsed.
+2022-10-13 02:14:02 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (8 of 23)!, 1.46 mins elapsed.
+2022-10-13 02:14:03 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (16 of 23)!, 1.432 mins elapsed.
+2022-10-13 02:14:03 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (9 of 23)!, 1.473 mins elapsed.
+2022-10-13 02:14:04 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (9 of 23)!, 1.492 mins elapsed.
+2022-10-13 02:14:04 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (7 of 23)!, 1.506 mins elapsed.
+2022-10-13 02:14:05 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (15 of 23)!, 1.489 mins elapsed.
+2022-10-13 02:14:05 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (14 of 23)!, 1.483 mins elapsed.
+2022-10-13 02:14:06 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (15 of 23)!, 1.494 mins elapsed.
+2022-10-13 02:14:06 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (16 of 23)!, 1.493 mins elapsed.
+2022-10-13 02:14:07 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (13 of 23)!, 1.515 mins elapsed.
+2022-10-13 02:14:07 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (10 of 23)!, 1.527 mins elapsed.
+2022-10-13 02:14:07 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (13 of 23)!, 1.514 mins elapsed.
+2022-10-13 02:14:07 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (12 of 23)!, 1.529 mins elapsed.
+2022-10-13 02:14:07 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (17 of 23)!, 1.511 mins elapsed.
+2022-10-13 02:14:08 : Adding Multiome_10w_FR to PeakMatrix for Chr (13 of 23)!, 1.547 mins elapsed.
+2022-10-13 02:14:10 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (10 of 23)!, 1.572 mins elapsed.
+2022-10-13 02:14:10 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (16 of 23)!, 1.565 mins elapsed.
+2022-10-13 02:14:10 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (15 of 23)!, 1.565 mins elapsed.
+2022-10-13 02:14:10 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (16 of 23)!, 1.574 mins elapsed.
+2022-10-13 02:14:11 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (9 of 23)!, 1.597 mins elapsed.
+2022-10-13 02:14:11 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (8 of 23)!, 1.606 mins elapsed.
+2022-10-13 02:14:11 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (17 of 23)!, 1.575 mins elapsed.
+2022-10-13 02:14:11 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (10 of 23)!, 1.607 mins elapsed.
+2022-10-13 02:14:11 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (14 of 23)!, 1.594 mins elapsed.
+2022-10-13 02:14:12 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (14 of 23)!, 1.592 mins elapsed.
+2022-10-13 02:14:13 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (8 of 23)!, 1.636 mins elapsed.
+2022-10-13 02:14:13 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (10 of 23)!, 1.633 mins elapsed.
+2022-10-13 02:14:13 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (18 of 23)!, 1.601 mins elapsed.
+2022-10-13 02:14:13 : Adding Multiome_10w_FR to PeakMatrix for Chr (14 of 23)!, 1.627 mins elapsed.
+2022-10-13 02:14:14 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (7 of 23)!, 1.657 mins elapsed.
+2022-10-13 02:14:14 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (13 of 23)!, 1.644 mins elapsed.
+2022-10-13 02:14:14 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (5 of 23)!, 1.675 mins elapsed.
+2022-10-13 02:14:14 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (11 of 23)!, 1.656 mins elapsed.
+2022-10-13 02:14:15 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (7 of 23)!, 1.679 mins elapsed.
+2022-10-13 02:14:15 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (17 of 23)!, 1.651 mins elapsed.
+2022-10-13 02:14:15 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (16 of 23)!, 1.644 mins elapsed.
+2022-10-13 02:14:16 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (8 of 23)!, 1.694 mins elapsed.
+2022-10-13 02:14:16 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (17 of 23)!, 1.666 mins elapsed.
+2022-10-13 02:14:17 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (15 of 23)!, 1.681 mins elapsed.
+2022-10-13 02:14:17 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (19 of 23)!, 1.667 mins elapsed.
+2022-10-13 02:14:17 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (18 of 23)!, 1.671 mins elapsed.
+2022-10-13 02:14:17 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (15 of 23)!, 1.678 mins elapsed.
+2022-10-13 02:14:18 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (11 of 23)!, 1.709 mins elapsed.
+2022-10-13 02:14:18 : Adding Multiome_10w_FR to PeakMatrix for Chr (15 of 23)!, 1.712 mins elapsed.
+2022-10-13 02:14:19 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (14 of 23)!, 1.72 mins elapsed.
+2022-10-13 02:14:20 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (10 of 23)!, 1.753 mins elapsed.
+2022-10-13 02:14:20 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (9 of 23)!, 1.762 mins elapsed.
+2022-10-13 02:14:20 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (17 of 23)!, 1.726 mins elapsed.
+2022-10-13 02:14:20 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (11 of 23)!, 1.752 mins elapsed.
+2022-10-13 02:14:21 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (18 of 23)!, 1.75 mins elapsed.
+2022-10-13 02:14:21 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (19 of 23)!, 1.741 mins elapsed.
+2022-10-13 02:14:22 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (11 of 23)!, 1.782 mins elapsed.
+2022-10-13 02:14:22 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (16 of 23)!, 1.767 mins elapsed.
+2022-10-13 02:14:22 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (16 of 23)!, 1.761 mins elapsed.
+2022-10-13 02:14:22 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (9 of 23)!, 1.792 mins elapsed.
+2022-10-13 02:14:22 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (20 of 23)!, 1.754 mins elapsed.
+2022-10-13 02:14:22 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (18 of 23)!, 1.77 mins elapsed.
+2022-10-13 02:14:23 : Adding Multiome_10w_FR to PeakMatrix for Chr (16 of 23)!, 1.798 mins elapsed.
+2022-10-13 02:14:24 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (12 of 23)!, 1.807 mins elapsed.
+2022-10-13 02:14:24 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (15 of 23)!, 1.809 mins elapsed.
+2022-10-13 02:14:25 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (8 of 23)!, 1.847 mins elapsed.
+2022-10-13 02:14:25 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (19 of 23)!, 1.82 mins elapsed.
+2022-10-13 02:14:25 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (9 of 23)!, 1.853 mins elapsed.
+2022-10-13 02:14:26 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (18 of 23)!, 1.819 mins elapsed.
+2022-10-13 02:14:26 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (19 of 23)!, 1.839 mins elapsed.
+2022-10-13 02:14:26 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (8 of 23)!, 1.877 mins elapsed.
+2022-10-13 02:14:27 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (21 of 23)!, 1.83 mins elapsed.
+2022-10-13 02:14:27 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (20 of 23)!, 1.834 mins elapsed.
+2022-10-13 02:14:27 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (17 of 23)!, 1.859 mins elapsed.
+2022-10-13 02:14:27 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (12 of 23)!, 1.868 mins elapsed.
+2022-10-13 02:14:27 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (17 of 23)!, 1.852 mins elapsed.
+2022-10-13 02:14:29 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (11 of 23)!, 1.899 mins elapsed.
+2022-10-13 02:14:29 : Adding Multiome_10w_FR to PeakMatrix for Chr (17 of 23)!, 1.89 mins elapsed.
+2022-10-13 02:14:29 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (16 of 23)!, 1.897 mins elapsed.
+2022-10-13 02:14:30 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (19 of 23)!, 1.886 mins elapsed.
+2022-10-13 02:14:30 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (10 of 23)!, 1.928 mins elapsed.
+2022-10-13 02:14:30 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (22 of 23)!, 1.889 mins elapsed.
+2022-10-13 02:14:31 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (6 of 23)!, 1.951 mins elapsed.
+2022-10-13 02:14:31 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (12 of 23)!, 1.93 mins elapsed.
+2022-10-13 02:14:31 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (21 of 23)!, 1.908 mins elapsed.
+2022-10-13 02:14:31 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (20 of 23)!, 1.92 mins elapsed.
+2022-10-13 02:14:31 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (13 of 23)!, 1.937 mins elapsed.
+2022-10-13 02:14:32 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (10 of 23)!, 1.952 mins elapsed.
+2022-10-13 02:14:32 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (12 of 23)!, 1.952 mins elapsed.
+2022-10-13 02:14:32 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (20 of 23)!, 1.939 mins elapsed.
+2022-10-13 02:14:34 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (18 of 23)!, 1.961 mins elapsed.
+2022-10-13 02:14:34 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (18 of 23)!, 1.97 mins elapsed.
+2022-10-13 02:14:34 : Adding Multiome_12w3d_FR to PeakMatrix for Chr (23 of 23)!, 1.954 mins elapsed.
+2022-10-13 02:14:35 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (9 of 23)!, 2.008 mins elapsed.
+2022-10-13 02:14:35 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (22 of 23)!, 1.969 mins elapsed.
+2022-10-13 02:14:35 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (10 of 23)!, 2.021 mins elapsed.
+2022-10-13 02:14:35 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (20 of 23)!, 1.984 mins elapsed.
+2022-10-13 02:14:35 : Adding Multiome_10w_FR to PeakMatrix for Chr (18 of 23)!, 1.999 mins elapsed.
+2022-10-13 02:14:35 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (17 of 23)!, 2.001 mins elapsed.
+2022-10-13 02:14:36 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (13 of 23)!, 2.007 mins elapsed.
+2022-10-13 02:14:36 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (21 of 23)!, 1.997 mins elapsed.
+2022-10-13 02:14:36 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (9 of 23)!, 2.045 mins elapsed.
+2022-10-13 02:14:37 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (21 of 23)!, 2.015 mins elapsed.
+2022-10-13 02:14:37 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (14 of 23)!, 2.033 mins elapsed.
+2022-10-13 02:14:38 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (19 of 23)!, 2.032 mins elapsed.
+2022-10-13 02:14:38 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (19 of 23)!, 2.042 mins elapsed.
+2022-10-13 02:14:39 : Adding Multiome_23w4d_FR to PeakMatrix for Chr (23 of 23)!, 2.039 mins elapsed.
+2022-10-13 02:14:39 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (22 of 23)!, 2.057 mins elapsed.
+2022-10-13 02:14:40 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (12 of 23)!, 2.08 mins elapsed.
+2022-10-13 02:14:40 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (13 of 23)!, 2.081 mins elapsed.
+2022-10-13 02:14:40 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (1 of 23)!, 0.026 mins elapsed.
+2022-10-13 02:14:40 : Adding Multiome_10w_FR to PeakMatrix for Chr (19 of 23)!, 2.072 mins elapsed.
+2022-10-13 02:14:40 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (11 of 23)!, 2.095 mins elapsed.
+2022-10-13 02:14:40 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (21 of 23)!, 2.062 mins elapsed.
+2022-10-13 02:14:40 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (22 of 23)!, 2.073 mins elapsed.
+2022-10-13 02:14:41 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (13 of 23)!, 2.101 mins elapsed.
+2022-10-13 02:14:41 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (14 of 23)!, 2.097 mins elapsed.
+2022-10-13 02:14:41 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (11 of 23)!, 2.116 mins elapsed.
+2022-10-13 02:14:43 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (18 of 23)!, 2.12 mins elapsed.
+2022-10-13 02:14:43 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (15 of 23)!, 2.135 mins elapsed.
+2022-10-13 02:14:44 : Adding Multiome_20w1d_FR to PeakMatrix for Chr (23 of 23)!, 2.129 mins elapsed.
+2022-10-13 02:14:44 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (22 of 23)!, 2.123 mins elapsed.
+2022-10-13 02:14:44 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (20 of 23)!, 2.136 mins elapsed.
+2022-10-13 02:14:45 : Adding Multiome_14w2d_FR to PeakMatrix for Chr (23 of 23)!, 2.142 mins elapsed.
+2022-10-13 02:14:45 : Adding Multiome_10w_NR to PeakMatrix for Chr (1 of 23)!, 0.026 mins elapsed.
+2022-10-13 02:14:45 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (20 of 23)!, 2.155 mins elapsed.
+2022-10-13 02:14:45 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (10 of 23)!, 2.185 mins elapsed.
+2022-10-13 02:14:45 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (14 of 23)!, 2.176 mins elapsed.
+2022-10-13 02:14:46 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (11 of 23)!, 2.194 mins elapsed.
+2022-10-13 02:14:46 : Adding Multiome_10w_FR to PeakMatrix for Chr (20 of 23)!, 2.177 mins elapsed.
+2022-10-13 02:14:46 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (14 of 23)!, 2.193 mins elapsed.
+2022-10-13 02:14:46 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (7 of 23)!, 2.211 mins elapsed.
+2022-10-13 02:14:47 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (19 of 23)!, 2.194 mins elapsed.
+2022-10-13 02:14:48 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (10 of 23)!, 2.231 mins elapsed.
+2022-10-13 02:14:48 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (15 of 23)!, 2.212 mins elapsed.
+2022-10-13 02:14:48 : Adding Multi_Fetal_14w5d_NR to PeakMatrix for Chr (23 of 23)!, 2.193 mins elapsed.
+2022-10-13 02:14:49 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (13 of 23)!, 2.232 mins elapsed.
+2022-10-13 02:14:49 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (16 of 23)!, 2.237 mins elapsed.
+2022-10-13 02:14:49 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (21 of 23)!, 2.219 mins elapsed.
+2022-10-13 02:14:50 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (1 of 23)!, 0.027 mins elapsed.
+2022-10-13 02:14:50 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (21 of 23)!, 2.235 mins elapsed.
+2022-10-13 02:14:50 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (2 of 23)!, 0.2 mins elapsed.
+2022-10-13 02:14:51 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (1 of 23)!, 0.026 mins elapsed.
+2022-10-13 02:14:51 : Adding Multiome_10w_FR to PeakMatrix for Chr (21 of 23)!, 2.254 mins elapsed.
+2022-10-13 02:14:52 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (12 of 23)!, 2.293 mins elapsed.
+2022-10-13 02:14:53 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (15 of 23)!, 2.3 mins elapsed.
+2022-10-13 02:14:53 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (15 of 23)!, 2.305 mins elapsed.
+2022-10-13 02:14:53 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (22 of 23)!, 2.292 mins elapsed.
+2022-10-13 02:14:53 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (22 of 23)!, 2.285 mins elapsed.
+2022-10-13 02:14:54 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (12 of 23)!, 2.32 mins elapsed.
+2022-10-13 02:14:54 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (1 of 23)!, 0.028 mins elapsed.
+2022-10-13 02:14:54 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (14 of 23)!, 2.324 mins elapsed.
+2022-10-13 02:14:54 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (16 of 23)!, 2.319 mins elapsed.
+2022-10-13 02:14:54 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (20 of 23)!, 2.316 mins elapsed.
+2022-10-13 02:14:54 : Adding Multiome_10w_FR to PeakMatrix for Chr (22 of 23)!, 2.315 mins elapsed.
+2022-10-13 02:14:56 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (11 of 23)!, 2.359 mins elapsed.
+2022-10-13 02:14:56 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (17 of 23)!, 2.353 mins elapsed.
+2022-10-13 02:14:56 : Adding Multiome_10w_NR to PeakMatrix for Chr (2 of 23)!, 0.219 mins elapsed.
+2022-10-13 02:14:57 : Adding Multiome_12w3d_NR to PeakMatrix for Chr (23 of 23)!, 2.362 mins elapsed.
+2022-10-13 02:14:58 : Adding Multiome_14w2d_NR to PeakMatrix for Chr (23 of 23)!, 2.357 mins elapsed.
+2022-10-13 02:14:58 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (2 of 23)!, 0.169 mins elapsed.
+2022-10-13 02:14:58 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (2 of 23)!, 0.15 mins elapsed.
+2022-10-13 02:14:58 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (12 of 23)!, 2.406 mins elapsed.
+2022-10-13 02:14:59 : Adding Multiome_10w_FR to PeakMatrix for Chr (23 of 23)!, 2.392 mins elapsed.
+2022-10-13 02:14:59 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (16 of 23)!, 2.409 mins elapsed.
+2022-10-13 02:15:00 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (21 of 23)!, 2.402 mins elapsed.
+2022-10-13 02:15:00 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (16 of 23)!, 2.418 mins elapsed.
+2022-10-13 02:15:00 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (3 of 23)!, 0.36 mins elapsed.
+2022-10-13 02:15:00 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (11 of 23)!, 2.441 mins elapsed.
+2022-10-13 02:15:01 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (2 of 23)!, 0.152 mins elapsed.
+2022-10-13 02:15:02 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (15 of 23)!, 2.448 mins elapsed.
+2022-10-13 02:15:02 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (17 of 23)!, 2.446 mins elapsed.
+2022-10-13 02:15:02 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (13 of 23)!, 2.464 mins elapsed.
+2022-10-13 02:15:02 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (8 of 23)!, 2.475 mins elapsed.
+2022-10-13 02:15:03 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (3 of 23)!, 0.236 mins elapsed.
+2022-10-13 02:15:03 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (22 of 23)!, 2.466 mins elapsed.
+2022-10-13 02:15:04 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (3 of 23)!, 0.264 mins elapsed.
+2022-10-13 02:15:04 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (18 of 23)!, 2.489 mins elapsed.
+2022-10-13 02:15:05 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (13 of 23)!, 2.507 mins elapsed.
+2022-10-13 02:15:05 : Adding Multiome_10w_NR to PeakMatrix for Chr (3 of 23)!, 0.362 mins elapsed.
+2022-10-13 02:15:06 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (4 of 23)!, 0.465 mins elapsed.
+2022-10-13 02:15:07 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (17 of 23)!, 2.536 mins elapsed.
+2022-10-13 02:15:07 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (3 of 23)!, 0.248 mins elapsed.
+2022-10-13 02:15:08 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (17 of 23)!, 2.552 mins elapsed.
+2022-10-13 02:15:08 : Adding Multi_Fetal_23w1d_NR to PeakMatrix for Chr (23 of 23)!, 2.543 mins elapsed.
+2022-10-13 02:15:08 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (4 of 23)!, 0.335 mins elapsed.
+2022-10-13 02:15:08 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (12 of 23)!, 2.571 mins elapsed.
+2022-10-13 02:15:08 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (14 of 23)!, 2.57 mins elapsed.
+2022-10-13 02:15:09 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (4 of 23)!, 0.323 mins elapsed.
+2022-10-13 02:15:09 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (16 of 23)!, 2.564 mins elapsed.
+2022-10-13 02:15:09 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (19 of 23)!, 2.569 mins elapsed.
+2022-10-13 02:15:10 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (13 of 23)!, 2.606 mins elapsed.
+2022-10-13 02:15:11 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (5 of 23)!, 0.55 mins elapsed.
+2022-10-13 02:15:11 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (18 of 23)!, 2.601 mins elapsed.
+2022-10-13 02:15:12 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (4 of 23)!, 0.321 mins elapsed.
+2022-10-13 02:15:12 : Adding Multiome_10w_NR to PeakMatrix for Chr (4 of 23)!, 0.482 mins elapsed.
+2022-10-13 02:15:12 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (5 of 23)!, 0.387 mins elapsed.
+2022-10-13 02:15:13 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (14 of 23)!, 2.641 mins elapsed.
+2022-10-13 02:15:13 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (5 of 23)!, 0.419 mins elapsed.
+2022-10-13 02:15:14 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (12 of 23)!, 2.664 mins elapsed.
+2022-10-13 02:15:15 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (5 of 23)!, 0.378 mins elapsed.
+2022-10-13 02:15:16 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (9 of 23)!, 2.698 mins elapsed.
+2022-10-13 02:15:16 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (18 of 23)!, 2.683 mins elapsed.
+2022-10-13 02:15:16 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (15 of 23)!, 2.699 mins elapsed.
+2022-10-13 02:15:16 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (6 of 23)!, 0.635 mins elapsed.
+2022-10-13 02:15:16 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (19 of 23)!, 2.685 mins elapsed.
+2022-10-13 02:15:16 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (6 of 23)!, 0.454 mins elapsed.
+2022-10-13 02:15:17 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (14 of 23)!, 2.711 mins elapsed.
+2022-10-13 02:15:17 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (17 of 23)!, 2.707 mins elapsed.
+2022-10-13 02:15:17 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (6 of 23)!, 0.488 mins elapsed.
+2022-10-13 02:15:17 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (18 of 23)!, 2.714 mins elapsed.
+2022-10-13 02:15:18 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (20 of 23)!, 2.71 mins elapsed.
+2022-10-13 02:15:18 : Adding Multiome_10w_NR to PeakMatrix for Chr (5 of 23)!, 0.58 mins elapsed.
+2022-10-13 02:15:19 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (13 of 23)!, 2.75 mins elapsed.
+2022-10-13 02:15:19 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (6 of 23)!, 0.446 mins elapsed.
+2022-10-13 02:15:20 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (7 of 23)!, 0.522 mins elapsed.
+2022-10-13 02:15:21 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (15 of 23)!, 2.775 mins elapsed.
+2022-10-13 02:15:21 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (7 of 23)!, 0.72 mins elapsed.
+2022-10-13 02:15:22 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (19 of 23)!, 2.778 mins elapsed.
+2022-10-13 02:15:22 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (7 of 23)!, 0.563 mins elapsed.
+2022-10-13 02:15:23 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (7 of 23)!, 0.506 mins elapsed.
+2022-10-13 02:15:23 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (19 of 23)!, 2.803 mins elapsed.
+2022-10-13 02:15:23 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (21 of 23)!, 2.805 mins elapsed.
+2022-10-13 02:15:23 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (16 of 23)!, 2.819 mins elapsed.
+2022-10-13 02:15:24 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (15 of 23)!, 2.834 mins elapsed.
+2022-10-13 02:15:24 : Adding Multiome_10w_NR to PeakMatrix for Chr (6 of 23)!, 0.683 mins elapsed.
+2022-10-13 02:15:24 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (8 of 23)!, 0.585 mins elapsed.
+2022-10-13 02:15:25 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (13 of 23)!, 2.856 mins elapsed.
+2022-10-13 02:15:25 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (14 of 23)!, 2.856 mins elapsed.
+2022-10-13 02:15:26 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (20 of 23)!, 2.84 mins elapsed.
+2022-10-13 02:15:26 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (8 of 23)!, 0.633 mins elapsed.
+2022-10-13 02:15:26 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (8 of 23)!, 0.567 mins elapsed.
+2022-10-13 02:15:26 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (8 of 23)!, 0.803 mins elapsed.
+2022-10-13 02:15:27 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (22 of 23)!, 2.871 mins elapsed.
+2022-10-13 02:15:28 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (9 of 23)!, 0.644 mins elapsed.
+2022-10-13 02:15:28 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (18 of 23)!, 2.885 mins elapsed.
+2022-10-13 02:15:28 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (16 of 23)!, 2.892 mins elapsed.
+2022-10-13 02:15:29 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (10 of 23)!, 2.914 mins elapsed.
+2022-10-13 02:15:30 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (9 of 23)!, 0.696 mins elapsed.
+2022-10-13 02:15:30 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (9 of 23)!, 0.635 mins elapsed.
+2022-10-13 02:15:31 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (20 of 23)!, 2.929 mins elapsed.
+2022-10-13 02:15:31 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (9 of 23)!, 0.88 mins elapsed.
+2022-10-13 02:15:31 : Adding Multiome_10w_NR to PeakMatrix for Chr (7 of 23)!, 0.798 mins elapsed.
+2022-10-13 02:15:31 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (16 of 23)!, 2.955 mins elapsed.
+2022-10-13 02:15:32 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (14 of 23)!, 2.965 mins elapsed.
+2022-10-13 02:15:32 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (10 of 23)!, 0.71 mins elapsed.
+2022-10-13 02:15:32 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (20 of 23)!, 2.954 mins elapsed.
+2022-10-13 02:15:32 : Adding Multi_Fetal_11w2d_NR to PeakMatrix for Chr (23 of 23)!, 2.955 mins elapsed.
+2022-10-13 02:15:32 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (21 of 23)!, 2.953 mins elapsed.
+2022-10-13 02:15:33 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (17 of 23)!, 2.974 mins elapsed.
+2022-10-13 02:15:33 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (19 of 23)!, 2.969 mins elapsed.
+2022-10-13 02:15:34 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (10 of 23)!, 0.759 mins elapsed.
+2022-10-13 02:15:34 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (15 of 23)!, 2.994 mins elapsed.
+2022-10-13 02:15:34 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (10 of 23)!, 0.698 mins elapsed.
+2022-10-13 02:15:36 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (11 of 23)!, 0.774 mins elapsed.
+2022-10-13 02:15:36 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (10 of 23)!, 0.957 mins elapsed.
+2022-10-13 02:15:37 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (22 of 23)!, 3.025 mins elapsed.
+2022-10-13 02:15:37 : Adding Multiome_10w_NR to PeakMatrix for Chr (8 of 23)!, 0.898 mins elapsed.
+2022-10-13 02:15:37 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (21 of 23)!, 3.037 mins elapsed.
+2022-10-13 02:15:37 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (17 of 23)!, 3.047 mins elapsed.
+2022-10-13 02:15:38 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (11 of 23)!, 0.826 mins elapsed.
+2022-10-13 02:15:38 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (11 of 23)!, 0.758 mins elapsed.
+2022-10-13 02:15:38 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (21 of 23)!, 3.058 mins elapsed.
+2022-10-13 02:15:40 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (12 of 23)!, 0.84 mins elapsed.
+2022-10-13 02:15:40 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (17 of 23)!, 3.1 mins elapsed.
+2022-10-13 02:15:40 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (15 of 23)!, 3.107 mins elapsed.
+2022-10-13 02:15:41 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (11 of 23)!, 1.037 mins elapsed.
+2022-10-13 02:15:41 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (16 of 23)!, 3.119 mins elapsed.
+2022-10-13 02:15:41 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (22 of 23)!, 3.107 mins elapsed.
+2022-10-13 02:15:42 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (12 of 23)!, 0.823 mins elapsed.
+2022-10-13 02:15:42 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (22 of 23)!, 3.127 mins elapsed.
+2022-10-13 02:15:42 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (12 of 23)!, 0.905 mins elapsed.
+2022-10-13 02:15:42 : Adding Multi_Fetal_20W2d_NR to PeakMatrix for Chr (23 of 23)!, 3.119 mins elapsed.
+2022-10-13 02:15:43 : Adding Multiome_10w_NR to PeakMatrix for Chr (9 of 23)!, 0.988 mins elapsed.
+2022-10-13 02:15:43 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (13 of 23)!, 0.902 mins elapsed.
+2022-10-13 02:15:44 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (11 of 23)!, 3.168 mins elapsed.
+2022-10-13 02:15:44 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (18 of 23)!, 3.159 mins elapsed.
+2022-10-13 02:15:45 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (20 of 23)!, 3.168 mins elapsed.
+2022-10-13 02:15:45 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (13 of 23)!, 0.884 mins elapsed.
+2022-10-13 02:15:46 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (12 of 23)!, 1.124 mins elapsed.
+2022-10-13 02:15:46 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (13 of 23)!, 0.972 mins elapsed.
+2022-10-13 02:15:47 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (14 of 23)!, 0.956 mins elapsed.
+2022-10-13 02:15:47 : Adding Multiome_10w_NR to PeakMatrix for Chr (10 of 23)!, 1.065 mins elapsed.
+2022-10-13 02:15:47 : Adding Multi_Fetal_11w2d_FR to PeakMatrix for Chr (23 of 23)!, 3.206 mins elapsed.
+2022-10-13 02:15:48 : Adding Multi_Fetal_11w2d_FR_2 to PeakMatrix for Chr (23 of 23)!, 3.223 mins elapsed.
+2022-10-13 02:15:48 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (18 of 23)!, 3.232 mins elapsed.
+2022-10-13 02:15:48 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (16 of 23)!, 3.244 mins elapsed.
+2022-10-13 02:15:49 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (14 of 23)!, 0.937 mins elapsed.
+2022-10-13 02:15:50 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (19 of 23)!, 3.255 mins elapsed.
+2022-10-13 02:15:50 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (14 of 23)!, 1.029 mins elapsed.
+2022-10-13 02:15:50 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (15 of 23)!, 1.013 mins elapsed.
+2022-10-13 02:15:50 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (13 of 23)!, 1.202 mins elapsed.
+2022-10-13 02:15:50 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (17 of 23)!, 3.273 mins elapsed.
+2022-10-13 02:15:51 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (18 of 23)!, 3.286 mins elapsed.
+2022-10-13 02:15:52 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (21 of 23)!, 3.284 mins elapsed.
+2022-10-13 02:15:52 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (15 of 23)!, 0.997 mins elapsed.
+2022-10-13 02:15:53 : Adding Multiome_10w_NR to PeakMatrix for Chr (11 of 23)!, 1.159 mins elapsed.
+2022-10-13 02:15:53 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (15 of 23)!, 1.085 mins elapsed.
+2022-10-13 02:15:54 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (16 of 23)!, 1.073 mins elapsed.
+2022-10-13 02:15:54 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (14 of 23)!, 1.263 mins elapsed.
+2022-10-13 02:15:54 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (19 of 23)!, 3.333 mins elapsed.
+2022-10-13 02:15:55 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (16 of 23)!, 1.052 mins elapsed.
+2022-10-13 02:15:56 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (22 of 23)!, 3.351 mins elapsed.
+2022-10-13 02:15:56 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (16 of 23)!, 1.139 mins elapsed.
+2022-10-13 02:15:57 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (19 of 23)!, 3.383 mins elapsed.
+2022-10-13 02:15:57 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (17 of 23)!, 1.133 mins elapsed.
+2022-10-13 02:15:58 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (15 of 23)!, 1.33 mins elapsed.
+2022-10-13 02:15:58 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (17 of 23)!, 3.407 mins elapsed.
+2022-10-13 02:15:59 : Adding Multiome_10w_NR to PeakMatrix for Chr (12 of 23)!, 1.262 mins elapsed.
+2022-10-13 02:15:59 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (17 of 23)!, 1.118 mins elapsed.
+2022-10-13 02:16:00 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (17 of 23)!, 1.2 mins elapsed.
+2022-10-13 02:16:01 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (12 of 23)!, 3.451 mins elapsed.
+2022-10-13 02:16:01 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (20 of 23)!, 3.444 mins elapsed.
+2022-10-13 02:16:01 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (18 of 23)!, 1.199 mins elapsed.
+2022-10-13 02:16:02 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (16 of 23)!, 1.396 mins elapsed.
+2022-10-13 02:16:02 : Adding Multi_Fetal_20W2d_FR to PeakMatrix for Chr (23 of 23)!, 3.455 mins elapsed.
+2022-10-13 02:16:02 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (18 of 23)!, 3.467 mins elapsed.
+2022-10-13 02:16:03 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (18 of 23)!, 1.183 mins elapsed.
+2022-10-13 02:16:04 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (18 of 23)!, 1.267 mins elapsed.
+2022-10-13 02:16:05 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (19 of 23)!, 1.256 mins elapsed.
+2022-10-13 02:16:05 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (20 of 23)!, 3.508 mins elapsed.
+2022-10-13 02:16:05 : Adding Multiome_10w_NR to PeakMatrix for Chr (13 of 23)!, 1.365 mins elapsed.
+2022-10-13 02:16:06 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (17 of 23)!, 1.468 mins elapsed.
+2022-10-13 02:16:07 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (19 of 23)!, 1.239 mins elapsed.
+2022-10-13 02:16:07 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (19 of 23)!, 1.32 mins elapsed.
+2022-10-13 02:16:08 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (21 of 23)!, 3.557 mins elapsed.
+2022-10-13 02:16:08 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (20 of 23)!, 3.566 mins elapsed.
+2022-10-13 02:16:08 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (19 of 23)!, 3.567 mins elapsed.
+2022-10-13 02:16:09 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (20 of 23)!, 1.335 mins elapsed.
+2022-10-13 02:16:10 : Adding Multiome_10w_NR to PeakMatrix for Chr (14 of 23)!, 1.447 mins elapsed.
+2022-10-13 02:16:10 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (18 of 23)!, 3.61 mins elapsed.
+2022-10-13 02:16:11 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (20 of 23)!, 1.304 mins elapsed.
+2022-10-13 02:16:11 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (20 of 23)!, 1.384 mins elapsed.
+2022-10-13 02:16:11 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (18 of 23)!, 1.551 mins elapsed.
+2022-10-13 02:16:11 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (21 of 23)!, 3.618 mins elapsed.
+2022-10-13 02:16:12 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (22 of 23)!, 3.629 mins elapsed.
+2022-10-13 02:16:13 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (21 of 23)!, 1.398 mins elapsed.
+2022-10-13 02:16:14 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (21 of 23)!, 1.361 mins elapsed.
+2022-10-13 02:16:14 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (13 of 23)!, 3.674 mins elapsed.
+2022-10-13 02:16:14 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (21 of 23)!, 1.438 mins elapsed.
+2022-10-13 02:16:15 : Adding Multiome_10w_NR to PeakMatrix for Chr (15 of 23)!, 1.523 mins elapsed.
+2022-10-13 02:16:15 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (21 of 23)!, 3.679 mins elapsed.
+2022-10-13 02:16:15 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (19 of 23)!, 1.614 mins elapsed.
+2022-10-13 02:16:16 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (22 of 23)!, 3.69 mins elapsed.
+2022-10-13 02:16:16 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (22 of 23)!, 1.45 mins elapsed.
+2022-10-13 02:16:17 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (19 of 23)!, 3.713 mins elapsed.
+2022-10-13 02:16:17 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (22 of 23)!, 1.485 mins elapsed.
+2022-10-13 02:16:17 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (22 of 23)!, 1.414 mins elapsed.
+2022-10-13 02:16:18 : Adding Multi_Fetal_23w1d_FR to PeakMatrix for Chr (23 of 23)!, 3.729 mins elapsed.
+2022-10-13 02:16:19 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (22 of 23)!, 3.753 mins elapsed.
+2022-10-13 02:16:19 : Adding Multiome_10w_NR to PeakMatrix for Chr (16 of 23)!, 1.599 mins elapsed.
+2022-10-13 02:16:20 : Adding Multiome_16w4d_NR to PeakMatrix for Chr (23 of 23)!, 1.507 mins elapsed.
+2022-10-13 02:16:20 : Adding Multiome_20w1d_NR to PeakMatrix for Chr (23 of 23)!, 1.535 mins elapsed.
+2022-10-13 02:16:20 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (20 of 23)!, 3.768 mins elapsed.
+2022-10-13 02:16:20 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (20 of 23)!, 1.702 mins elapsed.
+2022-10-13 02:16:21 : Adding Multiome_23w4d_NR to PeakMatrix for Chr (23 of 23)!, 1.472 mins elapsed.
+2022-10-13 02:16:22 : Adding Multi_Fetal_14w5d_FR to PeakMatrix for Chr (23 of 23)!, 3.787 mins elapsed.
+2022-10-13 02:16:22 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (14 of 23)!, 3.805 mins elapsed.
+2022-10-13 02:16:24 : Adding Multiome_10w_NR to PeakMatrix for Chr (17 of 23)!, 1.677 mins elapsed.
+2022-10-13 02:16:25 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (21 of 23)!, 1.774 mins elapsed.
+2022-10-13 02:16:25 : Adding Multi_Fetal_13W_FR to PeakMatrix for Chr (23 of 23)!, 3.858 mins elapsed.
+2022-10-13 02:16:28 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (22 of 23)!, 1.824 mins elapsed.
+2022-10-13 02:16:28 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (21 of 23)!, 3.898 mins elapsed.
+2022-10-13 02:16:30 : Adding Multiome_10w_NR to PeakMatrix for Chr (18 of 23)!, 1.773 mins elapsed.
+2022-10-13 02:16:30 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (20 of 23)!, 3.936 mins elapsed.
+2022-10-13 02:16:31 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (15 of 23)!, 3.959 mins elapsed.
+2022-10-13 02:16:31 : Adding Multiome_16w4d_FR to PeakMatrix for Chr (23 of 23)!, 1.887 mins elapsed.
+2022-10-13 02:16:32 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (22 of 23)!, 3.973 mins elapsed.
+2022-10-13 02:16:33 : Adding Multiome_10w_NR to PeakMatrix for Chr (19 of 23)!, 1.838 mins elapsed.
+2022-10-13 02:16:37 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (21 of 23)!, 4.057 mins elapsed.
+2022-10-13 02:16:38 : Adding Multiome_10w_NR to PeakMatrix for Chr (20 of 23)!, 1.915 mins elapsed.
+2022-10-13 02:16:39 : Adding Multi_Fetal_19W4d_NR to PeakMatrix for Chr (23 of 23)!, 4.075 mins elapsed.
+2022-10-13 02:16:39 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (16 of 23)!, 4.095 mins elapsed.
+2022-10-13 02:16:41 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (22 of 23)!, 4.123 mins elapsed.
+2022-10-13 02:16:41 : Adding Multiome_10w_NR to PeakMatrix for Chr (21 of 23)!, 1.97 mins elapsed.
+2022-10-13 02:16:44 : Adding Multiome_10w_NR to PeakMatrix for Chr (22 of 23)!, 2.015 mins elapsed.
+2022-10-13 02:16:47 : Adding Multiome_10w_NR to PeakMatrix for Chr (23 of 23)!, 2.065 mins elapsed.
+2022-10-13 02:16:47 : Adding Multi_Fetal_19W4d_FR to PeakMatrix for Chr (23 of 23)!, 4.225 mins elapsed.
+2022-10-13 02:16:49 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (17 of 23)!, 4.252 mins elapsed.
+2022-10-13 02:17:01 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (18 of 23)!, 4.454 mins elapsed.
+2022-10-13 02:17:07 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (19 of 23)!, 4.555 mins elapsed.
+2022-10-13 02:17:18 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (20 of 23)!, 4.747 mins elapsed.
+2022-10-13 02:17:26 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (21 of 23)!, 4.874 mins elapsed.
+2022-10-13 02:17:30 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (22 of 23)!, 4.943 mins elapsed.
+2022-10-13 02:17:36 : Adding Multi_Fetal_13W_NR to PeakMatrix for Chr (23 of 23)!, 5.047 mins elapsed.
+ArchR logging successful to : ArchRLogs/ArchR-addPeakMatrix-12857e8167f4-Date-2022-10-13_Time-02-12-33.log
+Copying ArchRProject to new outputDirectory : /storage/singlecell/zz4/fetal_bash/results/ArchR/Save-projretina2
+Copying Arrow Files...
+Copying Arrow Files (1 of 25)
+Copying Arrow Files (2 of 25)
+Copying Arrow Files (3 of 25)
+Copying Arrow Files (4 of 25)
+Copying Arrow Files (5 of 25)
+Copying Arrow Files (6 of 25)
+Copying Arrow Files (7 of 25)
+Copying Arrow Files (8 of 25)
+Copying Arrow Files (9 of 25)
+Copying Arrow Files (10 of 25)
+Copying Arrow Files (11 of 25)
+Copying Arrow Files (12 of 25)
+Copying Arrow Files (13 of 25)
+Copying Arrow Files (14 of 25)
+Copying Arrow Files (15 of 25)
+Copying Arrow Files (16 of 25)
+Copying Arrow Files (17 of 25)
+Copying Arrow Files (18 of 25)
+Copying Arrow Files (19 of 25)
+Copying Arrow Files (20 of 25)
+Copying Arrow Files (21 of 25)
+Copying Arrow Files (22 of 25)
+Copying Arrow Files (23 of 25)
+Copying Arrow Files (24 of 25)
+Copying Arrow Files (25 of 25)
+Getting ImputeWeights
+No imputeWeights found, returning NULL
+Copying Other Files...
+Saving ArchRProject...
+Copying ArchRProject to new outputDirectory : /storage/singlecell/zz4/fetal_bash/results/ArchR/Save-projretina3
+Copying Arrow Files...
+Copying Arrow Files (1 of 25)
+Copying Arrow Files (2 of 25)
+Copying Arrow Files (3 of 25)
+Copying Arrow Files (4 of 25)
+Copying Arrow Files (5 of 25)
+Copying Arrow Files (6 of 25)
+Copying Arrow Files (7 of 25)
+Copying Arrow Files (8 of 25)
+Copying Arrow Files (9 of 25)
+Copying Arrow Files (10 of 25)
+Copying Arrow Files (11 of 25)
+Copying Arrow Files (12 of 25)
+Copying Arrow Files (13 of 25)
+Copying Arrow Files (14 of 25)
+Copying Arrow Files (15 of 25)
+Copying Arrow Files (16 of 25)
+Copying Arrow Files (17 of 25)
+Copying Arrow Files (18 of 25)
+Copying Arrow Files (19 of 25)
+Copying Arrow Files (20 of 25)
+Copying Arrow Files (21 of 25)
+Copying Arrow Files (22 of 25)
+Copying Arrow Files (23 of 25)
+Copying Arrow Files (24 of 25)
+Copying Arrow Files (25 of 25)
+Getting ImputeWeights
+No imputeWeights found, returning NULL
+Copying Other Files...
+Copying Other Files (1 of 5): Embeddings
+Copying Other Files (2 of 5): GroupCoverages
+Copying Other Files (3 of 5): IterativeLSI
+Copying Other Files (4 of 5): PeakCalls
+Copying Other Files (5 of 5): Plots
+Saving ArchRProject...

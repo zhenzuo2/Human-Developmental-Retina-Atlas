@@ -1,0 +1,22 @@
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Attaching SeuratObject
+Attaching sp
+Error in asMethod(object) : 
+  Cholmod error 'out of memory' at file ../Core/cholmod_memory.c, line 146
+Calls: Read10X_h5 -> as -> asMethod
+In addition: Warning message:
+In sparseMatrix(i = indices[] + 1, p = indptr[], x = as.numeric(x = counts[]),  :
+  'giveCsparse' has been deprecated; setting 'repr = "T"' for you
+Execution halted
+Warning message:
+system call failed: Cannot allocate memory 

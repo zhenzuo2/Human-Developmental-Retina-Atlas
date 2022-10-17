@@ -17,8 +17,14 @@ counts <- Read10X_h5(paste0(input_path, sample_id, "/outs/filtered_feature_bc_ma
     sep = ""))
 
 # Create a Seurat object containing the RNA data
-seurat_object <- CreateSeuratObject(counts = counts$`Gene Expression`,
+if (class(counts)=="list") {
+    seurat_object <- CreateSeuratObject(counts = counts$`Gene Expression`,
     assay = "RNA", min.cells = min_cells, min.features = min_features)
+}
+if (class(counts)=="dgCMatrix") {
+    seurat_object <- CreateSeuratObject(counts = counts,
+    assay = "RNA", min.cells = min_cells, min.features = min_features)
+}
 DefaultAssay(seurat_object) <- "RNA"
 
 # Rename cells with sample ID

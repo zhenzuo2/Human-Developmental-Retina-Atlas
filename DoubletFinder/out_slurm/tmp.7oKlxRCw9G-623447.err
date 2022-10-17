@@ -1,198 +1,0 @@
-Attaching SeuratObject
-Attaching sp
-Performing log-normalization
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating gene variances
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating feature variances of standardized and clipped values
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Centering and scaling data matrix
-  |                                                                              |                                                                      |   0%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================================================| 100%
-PC_ 1 
-Positive:  SHROOM3, SPON1, CDK6, ILDR2, MYB, ARHGEF26, TCF7L2, GLI3, YAP1, NFIA 
-	   LINC01508, GULP1, FOXO1, AC099792.1, RARB, DOCK1, TJP2, TCF7L1, MOB3B, FAM184B 
-	   STK3, SEMA5A, SIPA1L1, LINC01515, AC092422.1, HMGA2, PDZRN3, SLC1A3, GLI2, FAM160A1 
-Negative:  SEZ6L, TMEM163, SLC17A6, PTPRE, NTRK3, FAR2, AL445623.2, ALCAM, SCN7A, LINC02223 
-	   ANK1, PPP2R2B, NEFM, CLSTN2, PPP1R1C, HS3ST5, GPR149, SNTG1, CHRNB3, KCNMA1 
-	   DCC, LIN7A, FSTL4, SEMA3E, MGAT4C, RAB3C, LUZP2, CPNE4, GPR156, GRM3 
-PC_ 2 
-Positive:  PRKG1, SEMA3D, LINC00511, CHL1, MIR99AHG, DDAH1, FAR2, CDH23, GLI3, ZBTB7C 
-	   MOB3B, PPP1R1C, PIEZO2, TMEM163, MIR924HG, PREX2, YAP1, MIR4500HG, DIAPH2, PLXDC2 
-	   DOCK1, NTRK3, LINC02223, LINC01515, COL4A1, ADAMTS6, SCN7A, SPON1, UNC5D, NEFM 
-Negative:  FSTL5, FMN1, PDE1C, AC084880.2, THRB, PCAT4, LINC00599, TMEM108, RD3, NEUROD1 
-	   RPGRIP1, AIPL1, CCDC141, MCC, MMD2, AMER2, GRM6, SLC35F3, TMEM244, LINC00934 
-	   NPTX1, AC116903.2, CACNA2D4, LRFN2, PPP4R4, EML5, ONECUT3, MAOA, WWC1, ITGA8 
-PC_ 3 
-Positive:  THRB, CNTNAP5, MCC, ADGRV1, IQCJ-SCHIP1, PCAT4, KANK1, AC084880.2, RD3, AIPL1 
-	   DMD, RPGRIP1, SV2B, RXRG, FAM161A, MMD2, FMN1, CCDC141, ZNF83, PRICKLE2 
-	   GRM6, TMEM244, EPHA7, CHRNB4, TRIM9, PPP4R4, AC092675.1, HS3ST5, NPTX1, LINC00934 
-Negative:  PLXNA2, NWD2, NDST3, CSMD1, NSG2, PROX1, ONECUT2, ZFPM2, ADARB2, RYR3 
-	   PCSK6, ARHGEF4, MEGF10, NTRK2, EFNA5, SNTG2, CNTN3, SLC4A5, TANC1, SLCO5A1 
-	   SULF2, TPM3, SYN3, FGD6, ONECUT3, LINC00298, KCNJ3, FAM107B, CNTNAP4, KCNQ3 
-PC_ 4 
-Positive:  SLC18A2, TFAP2D, MEIS2, POU4F1, PIEZO2, CRIM1, CNTN2, CHRNA3, CNTN6, STARD13 
-	   CSGALNACT1, HS3ST2, LINC00535, SOX6, PRPH, ANO3, GALNT14, NR3C2, SLC17A6, AL445623.2 
-	   CHST8, GPR156, TUBA1C, BCL11B, SATB2, AL133346.1, AC099520.1, ZBTB16, ALCAM, FSTL4 
-Negative:  CDH18, LAMA4, ZNF804B, LUZP2, OPCML, BTBD11, ZBTB7C, TRHDE, SUSD4, NKAIN2 
-	   SHISA6, GRID1, ARHGAP29, CACNA2D3, SERPINE2, KCND3, CHL1, GRIK1, DOCK10, RYR2 
-	   AC060809.1, YPEL2, CDH10, CLSTN2, MAST4, GRIK3, KIRREL3, BRINP1, XYLT1, SNTG2 
-PC_ 5 
-Positive:  SAT1, ADAMTS6, MIR99AHG, CGNL1, MIR4500HG, LINC01748, ARHGEF26-AS1, KDR, CUBN, ADAMTSL1 
-	   CLRN1, TLL1, COL11A1, FAM184B, MAMDC2, GATB, FAT4, PRR16, COL5A2, F11-AS1 
-	   ARID5B, FOXO1, AC079298.3, FSIP2-AS1, COL4A5, LINC01508, PLAG1, SPON1, SOX9, PDZRN3 
-Negative:  CIT, DLGAP5, NCAPG, MYBL1, APOLD1, SMC4, CEP55, CDCA8, MIS18BP1, BRIP1 
-	   CENPK, DEPDC1, AURKB, HJURP, ATAD2, ESPL1, KIF2C, CKAP2, SHCBP1, LINC01572 
-	   CCDC18, CENPI, NCAPG2, CENPP, DNA2, HMMR, CDKN3, FAM83D, GEN1, KIF20B 
-Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
-To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to 'correlation'
-This message will be shown once per session
-20:58:10 UMAP embedding parameters a = 0.9922 b = 1.112
-20:58:10 Read 11696 rows and found 10 numeric columns
-20:58:10 Using Annoy for neighbor search, n_neighbors = 30
-20:58:10 Building Annoy index with metric = cosine, n_trees = 50
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-20:58:15 Writing NN index file to temp file /tmp/RtmpZlRnWT/fileae7e195d0243
-20:58:15 Searching Annoy index using 1 thread, search_k = 3000
-20:58:32 Annoy recall = 100%
-20:58:33 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-20:58:35 Initializing from normalized Laplacian + noise (using irlba)
-20:58:43 Commencing optimization for 200 epochs, with 467778 positive edges
-Using method 'umap'
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-20:59:24 Optimization finished
-Computing nearest neighbor graph
-Computing SNN
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Loading required package: fields
-Loading required package: spam
-Spam version 2.9-1 (2022-08-07) is loaded.
-Type 'help( Spam)' or 'demo( spam)' for a short introduction 
-and overview of this package.
-Help for individual functions is also obtained by adding the
-suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
-
-Attaching package: ‘spam’
-
-The following objects are masked from ‘package:base’:
-
-    backsolve, forwardsolve
-
-Loading required package: viridis
-Loading required package: viridisLite
-
-Try help(fields) to get started.
-Error in (function (x)  : attempt to apply non-function
-Performing log-normalization
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating gene variances
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating feature variances of standardized and clipped values
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Centering and scaling data matrix
-  |                                                                              |                                                                      |   0%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================================================| 100%
-Performing log-normalization
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating gene variances
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating feature variances of standardized and clipped values
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Centering and scaling data matrix
-  |                                                                              |                                                                      |   0%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================================================| 100%
-Performing log-normalization
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating gene variances
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating feature variances of standardized and clipped values
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Centering and scaling data matrix
-  |                                                                              |                                                                      |   0%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================================================| 100%
-Performing log-normalization
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating gene variances
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating feature variances of standardized and clipped values
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Centering and scaling data matrix
-  |                                                                              |                                                                      |   0%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================================================| 100%
-Performing log-normalization
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating gene variances
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating feature variances of standardized and clipped values
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Centering and scaling data matrix
-  |                                                                              |                                                                      |   0%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================================================| 100%
-Performing log-normalization
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating gene variances
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating feature variances of standardized and clipped values
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Centering and scaling data matrix
-  |                                                                              |                                                                      |   0%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================================================| 100%
-Loading required package: KernSmooth
-KernSmooth 2.23 loaded
-Copyright M. P. Wand 1997-2009
-Loading required package: ROCR
-Performing log-normalization
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating gene variances
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Calculating feature variances of standardized and clipped values
-0%   10   20   30   40   50   60   70   80   90   100%
-[----|----|----|----|----|----|----|----|----|----|
-**************************************************|
-Centering and scaling data matrix
-  |                                                                              |                                                                      |   0%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================================================| 100%

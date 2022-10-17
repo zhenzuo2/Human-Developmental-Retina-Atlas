@@ -1,0 +1,27 @@
+starting at Thu Oct 13 00:30:01 CDT 2022 on mhgcp-d01.grid.bcm.edu
+SLURM_JOBID=624279
+Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+
+Number of nodes: 173713
+Number of edges: 4964049
+
+Running Louvain algorithm...
+Maximum modularity in 10 random starts: 0.9035
+Number of communities: 62
+Elapsed time: 77 seconds
+     Group nCells nCellsUsed nReplicates nMin nMax maxPeaks
+AC      AC  39210       2500           5  500  500   150000
+BC      BC  22556       2500           5  500  500   150000
+Cone  Cone   6070       2463           5  472  500   150000
+HC      HC   5369       2234           5  376  500   150000
+MG      MG  55069       2500           5  500  500   150000
+RGC    RGC  33309       2500           5  500  500   150000
+Rod    Rod  12130       2500           5  500  500   150000
+[1] "/storage/singlecell/zz4/fetal_bash/results/ArchR/ArchRSubset/PeakCalls/BC-reproduciblePeaks.gr.rds"
+[1] "/storage/singlecell/zz4/fetal_bash/results/ArchR/ArchRSubset/PeakCalls/Rod-reproduciblePeaks.gr.rds"
+[1] "/storage/singlecell/zz4/fetal_bash/results/ArchR/ArchRSubset/PeakCalls/Cone-reproduciblePeaks.gr.rds"
+[1] "/storage/singlecell/zz4/fetal_bash/results/ArchR/ArchRSubset/PeakCalls/MG-reproduciblePeaks.gr.rds"
+[1] "/storage/singlecell/zz4/fetal_bash/results/ArchR/ArchRSubset/PeakCalls/HC-reproduciblePeaks.gr.rds"
+[1] "/storage/singlecell/zz4/fetal_bash/results/ArchR/ArchRSubset/PeakCalls/AC-reproduciblePeaks.gr.rds"
+[1] "/storage/singlecell/zz4/fetal_bash/results/ArchR/ArchRSubset/PeakCalls/RGC-reproduciblePeaks.gr.rds"
+ended at Thu Oct 13 02:25:01 CDT 2022 on mhgcp-d01.grid.bcm.edu. Time elapsed: 01:55:00

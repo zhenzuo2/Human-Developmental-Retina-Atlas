@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/storage/chen/home/zz4/anaconda3/envs/python/bin/velocyto", line 8, in <module>
+    sys.exit(cli())
+  File "/storage/chen/home/zz4/anaconda3/envs/python/lib/python3.9/site-packages/click/core.py", line 1128, in __call__
+    return self.main(*args, **kwargs)
+  File "/storage/chen/home/zz4/anaconda3/envs/python/lib/python3.9/site-packages/click/core.py", line 1053, in main
+    rv = self.invoke(ctx)
+  File "/storage/chen/home/zz4/anaconda3/envs/python/lib/python3.9/site-packages/click/core.py", line 1659, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+  File "/storage/chen/home/zz4/anaconda3/envs/python/lib/python3.9/site-packages/click/core.py", line 1395, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/storage/chen/home/zz4/anaconda3/envs/python/lib/python3.9/site-packages/click/core.py", line 754, in invoke
+    return __callback(*args, **kwargs)
+  File "/storage/chen/home/zz4/anaconda3/envs/python/lib/python3.9/site-packages/velocyto/commands/run.py", line 113, in run
+    return _run(bamfile=bamfile, gtffile=gtffile, bcfile=bcfile, outputfolder=outputfolder,
+  File "/storage/chen/home/zz4/anaconda3/envs/python/lib/python3.9/site-packages/velocyto/commands/_run.py", line 98, in _run
+    valid_bcs_list = (gzip.open(bcfile).read().decode() if bcfile.endswith(".gz") else open(bcfile).read()).rstrip().split()
+  File "/storage/chen/home/zz4/anaconda3/envs/python/lib/python3.9/gzip.py", line 58, in open
+    binary_file = GzipFile(filename, gz_mode, compresslevel)
+  File "/storage/chen/home/zz4/anaconda3/envs/python/lib/python3.9/gzip.py", line 173, in __init__
+    fileobj = self.myfileobj = builtins.open(filename, mode or 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: '/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/17W1D_Fovea_retina/outs/filtered_feature_bc_matrix/barcodes.tsv.gz'

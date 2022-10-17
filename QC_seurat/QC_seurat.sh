@@ -25,6 +25,9 @@ Multiome_20w1d_FR
 Multiome_20w1d_NR
 Multiome_23w4d_FR
 Multiome_23w4d_NR
+17W1D_Fovea_retina
+17W1D_Nasal_retina
+17W1D_Temporal_retina
 )
 min_cells=3
 min_features=200
@@ -34,5 +37,5 @@ output_results_path="/storage/singlecell/zz4/fetal_bash/results/qc_seurat_object
 
 for f in ${sample_id[@]}
 do
-    slurmtaco.sh --g00 -m 10G -t 1 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript QC_seurat.R "$input_path" "$f" "$min_cells" "$min_features" "$output_figures_path" "$output_results_path";
+    slurmtaco.sh -p short -m 10G -t 1 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript QC_seurat.R "$input_path" "$f" "$min_cells" "$min_features" "$output_figures_path" "$output_results_path";
 done

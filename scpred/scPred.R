@@ -1,9 +1,10 @@
 args <- commandArgs(trailingOnly = TRUE)
 input_file <- args[1]
 output_results_path <- args[2]
-sample_id <- args[3]
-reference_file <- args[4]
-meta_file <- args[5]
+output_figures_path <- args[3]
+sample_id <- args[4]
+reference_file <- args[5]
+meta_file <- args[6]
 
 suppressMessages(library(Seurat))
 suppressMessages(library(scPred))
@@ -20,7 +21,12 @@ meta <- read.csv(meta_file)
 rownames(meta) <- meta$Samples
 
 seurat_object@meta.data$Time <- meta[sample_id, "Time"]
-seurat_object@meta.data$Reion <- meta[sample_id, "Reion"]
+seurat_object@meta.data$Region <- meta[sample_id, "Region"]
 seurat_object@meta.data$Days <- meta[sample_id, "Days"]
 
-saveRDS(seurat_object, paste(output_results_path, sample_id, "_scPred.rds", sep = ""))
+svg(paste(output_figures_path, sample_id, "_scpred_prediction.svg", sep = ""))
+DimPlot(object = seurat_object, group.by = "scpred_prediction", label = TRUE)
+dev.off()
+
+saveRDS(seurat_object, paste(output_results_path, sample_id, "_scPred.rds",
+    sep = ""))
