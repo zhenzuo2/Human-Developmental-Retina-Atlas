@@ -1,0 +1,13 @@
+Global seed set to 0
+Global seed set to 0
+GPU available: True, used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
+Set SLURM handle signals.
+Global seed set to 0
+GPU available: True, used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
+Set SLURM handle signals.
