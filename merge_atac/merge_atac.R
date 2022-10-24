@@ -46,7 +46,8 @@ quantify_peaks <- function(meta_list, fragment_list, combined.peaks, sams) {
         frags <- CreateFragmentObject(path = fragment_list[i], cells = rownames(md))
         counts <- FeatureMatrix(fragments = frags, features = combined.peaks,
             cells = rownames(md))
-        assay <- CreateChromatinAssay(counts, fragments = frags, annotation = annotation)
+        assay <- CreateChromatinAssay(counts, fragments = frags, annotation = annotation,
+            min.cells = 10, min.features = 200)
         seurat_object <- CreateSeuratObject(assay, assay = "peaks")
         # compute LSI seurat_object <- FindTopFeatures(seurat_object)
         # seurat_object <- RunTFIDF(seurat_object) seurat_object <-

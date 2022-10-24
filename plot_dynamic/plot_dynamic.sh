@@ -9,14 +9,14 @@ input_path=(
 /storage/singlecell/zz4/fetal_bash/results/MG_annotation_adult_umap/annotated_umap_ldata_dynamic.h5ad
 )
 output_path=(
-/storage/singlecell/zz4/fetal_bash/figures/merged_h5ad_adult_annotated/merged_h5ad_adult_annotated_umap_ldata_dynamic.svg
-/storage/singlecell/zz4/fetal_bash/figures/AC_annotation_adult_umap/annotated_umap_ldata_dynamic.svg
-/storage/singlecell/zz4/fetal_bash/figures/BC_annotation_adult_umap/annotated_umap_ldata_dynamic.svg
-/storage/singlecell/zz4/fetal_bash/figures/Cone_annotation_adult_umap/annotated_umap_ldata_dynamic.svg
-/storage/singlecell/zz4/fetal_bash/figures/Rod_annotation_adult_umap/annotated_umap_ldata_dynamic.svg
-/storage/singlecell/zz4/fetal_bash/figures/HC_annotation_adult_umap/annotated_umap_ldata_dynamic.svg
-/storage/singlecell/zz4/fetal_bash/figures/RGC_annotation_adult_umap/annotated_umap_ldata_dynamic.svg
-/storage/singlecell/zz4/fetal_bash/figures/MG_annotation_adult_umap/annotated_umap_ldata_dynamic.svg
+/storage/singlecell/zz4/fetal_bash/figures/merged_h5ad_adult_annotated/merged_h5ad_adult_annotated_umap_ldata_dynamic
+/storage/singlecell/zz4/fetal_bash/figures/AC_annotation_adult_umap/annotated_umap_ldata_dynamic
+/storage/singlecell/zz4/fetal_bash/figures/BC_annotation_adult_umap/annotated_umap_ldata_dynamic
+/storage/singlecell/zz4/fetal_bash/figures/Cone_annotation_adult_umap/annotated_umap_ldata_dynamic
+/storage/singlecell/zz4/fetal_bash/figures/Rod_annotation_adult_umap/annotated_umap_ldata_dynamic
+/storage/singlecell/zz4/fetal_bash/figures/HC_annotation_adult_umap/annotated_umap_ldata_dynamic
+/storage/singlecell/zz4/fetal_bash/figures/RGC_annotation_adult_umap/annotated_umap_ldata_dynamic
+/storage/singlecell/zz4/fetal_bash/figures/MG_annotation_adult_umap/annotated_umap_ldata_dynamic
 )
 
 for i in ${!input_path[@]}

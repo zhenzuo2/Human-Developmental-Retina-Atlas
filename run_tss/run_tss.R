@@ -8,6 +8,7 @@ input_atac_file = args[1]
 output_file = args[2]
 
 seurat_object <- readRDS(input_atac_file)
+seurat_object <- NucleosomeSignal(object = seurat_object)
 seurat_object <- TSSEnrichment(seurat_object, fast = FALSE)
 
 saveRDS(seurat_object, output_file)
