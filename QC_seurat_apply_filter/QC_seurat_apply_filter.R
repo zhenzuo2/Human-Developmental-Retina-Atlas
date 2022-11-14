@@ -1,8 +1,8 @@
 args <- commandArgs(trailingOnly = TRUE)
-input_file <- args[1]
-output_results_path <- args[2]
-output_figures_path <- args[3]
-sample_id <- args[4]
+sample_id <- args[1]
+input_file <- args[2]
+output_results_path <- args[3]
+output_figures_path <- args[4]
 
 library(Seurat)
 seurat_object <- readRDS(input_file)
