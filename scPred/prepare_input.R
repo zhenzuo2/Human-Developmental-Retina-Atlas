@@ -1,0 +1,22 @@
+input_path = "/storage/singlecell/zz4/fetal_bash/results/DoubletFinder_seurat_object/"
+df <- data.frame("Samples_ID" = substr(list.files(input_path),1,nchar(list.files(input_path))-4),
+                 "Samples" = list.files(input_path,full.names = T))
+df
+
+write.csv(df, "/storage/singlecell/zz4/fetal_bash/scripts/scpred/meta.csv",
+          row.names = F)
+
+sink("/storage/singlecell/zz4/fetal_bash/scripts/scpred/scpred.sh")
+cat("meta=/storage/singlecell/zz4/fetal_bash/data/Retina_fetal_sample_meta.csv\n")
+cat("reference=/storage/chen/data_share_folder/jinli/scpred/scPred_trainmodel_RNA_svmRadialWeights_scpred.rds\n")
+cat("output_results_path=/storage/singlecell/zz4/fetal_bash/results/scPred/\n")
+cat("output_figures_path=/storage/singlecell/zz4/fetal_bash/figures/scPred/\n")
+
+for (i in 1:nrow(df)) {
+  cat(paste("slurmtaco.sh -p short -m 10G -t 1 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript scPred.R",
+            " ", df$Samples_ID[i], " ", df$Samples[i]," $reference", " $meta",
+            " $output_results_path", " $output_figures_path", sep = ""))
+  cat("\n")
+}
+sink()
+

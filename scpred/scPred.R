@@ -1,10 +1,10 @@
 args <- commandArgs(trailingOnly = TRUE)
-input_file <- args[1]
-output_results_path <- args[2]
-output_figures_path <- args[3]
-sample_id <- args[4]
-reference_file <- args[5]
-meta_file <- args[6]
+sample_id <- args[1]
+input_file <- args[2]
+reference_file <- args[3]
+meta_file <- args[4]
+output_results_path <- args[5]
+output_figures_path <- args[6]
 
 suppressMessages(library(Seurat))
 suppressMessages(library(scPred))
