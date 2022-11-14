@@ -1,1 +1,3 @@
+https://www.archrproject.com/bookdown/creating-an-archrproject.html
+
 An ArchRProject allows us to group multiple Arrow files together into a single project. This ArchRProject is small and is stored in memory. By interacting with the ArchRProject we can rapidly push and pull data from the Arrow files. As such, it forms the basis of nearly all ArchR functions and analytical workflows. Moreover, ArchRProject objects can be saved and re-loaded at a later date, providing continuity of analyses and facilitating sharing of analytical projects across collaborators. This chapter describes how to create and interact with an ArchRProject object.
