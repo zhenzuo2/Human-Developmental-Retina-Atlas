@@ -21,5 +21,5 @@ output_path=(
 
 for i in ${!input_path[@]}
 do
-    slurmtaco.sh -p gpu -m 20G -t 1 -- python3 plot_dynamic.py "${input_path[i]}" "${output_path[i]}";
+    slurmtaco.sh -p short -m 20G -t 1 -- python3 plot_dynamic.py "${input_path[i]}" "${output_path[i]}";
 done;

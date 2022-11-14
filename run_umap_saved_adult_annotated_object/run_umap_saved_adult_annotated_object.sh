@@ -19,16 +19,16 @@ output_file_path=(
 )
 CUDA_VISIBLE_DEVICES=(
 0
-1
-2
-3
 0
-1
-2
+0
+0
+0
+0
+0
 )
 
 for i in ${!input_file_path[@]}
 do
     CUDA_VISIBLE_DEVICES="$CUDA_VISIBLE_DEVICES[i]"
-    slurmtaco.sh --g01 -m 20G -t 1 -- python3 run_umap_saved_adult_annotated_object.py "${input_file_path[i]}" "${output_file_path[i]}";
+    slurmtaco.sh --g00 -m 20G -t 1 -- python3 run_umap_saved_adult_annotated_object.py "${input_file_path[i]}" "${output_file_path[i]}";
 done

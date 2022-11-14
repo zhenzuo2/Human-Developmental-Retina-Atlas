@@ -1,5 +1,5 @@
 args <- commandArgs(trailingOnly = TRUE)
-input_path = args[1]
+input_meta_file = args[1]
 output_results_path <-args[2]
 #https://greenleaflab.github.io/ArchR_2020/Ex-Analyze-Multiome.html
 #https://www.archrproject.com/
@@ -9,20 +9,20 @@ library(ArchR)
 library(parallel)
 library(stringi)
 set.seed(1)
+dir.create(output_results_path, showWarnings = FALSE)
 setwd(output_results_path)
 
 # prepare to import atac-seq data
-samples <- list.dirs(input_path, full.names = F, recursive = F)
-inputFiles <- paste(input_path,samples, '/outs/atac_fragments.tsv.gz', sep = "")
-names(inputFiles) <- samples
-inputFiles
+df <- read.csv(input_meta_file)
+inputFiles <- df$inputFiles
+Samples <- df$Samples
 addArchRGenome("hg38")
 addArchRThreads(threads = 10)
 
 # remove all unwanted chr
 ArrowFiles <- createArrowFiles(
   inputFiles = inputFiles,
-  sampleNames = names(inputFiles),
+  sampleNames = Samples,
   minTSS = 4, #Dont set this too high because you can always increase later
   minFrags = 1000, 
   addTileMat = TRUE,

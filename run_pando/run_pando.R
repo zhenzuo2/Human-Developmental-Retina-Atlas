@@ -6,6 +6,7 @@ library(BSgenome.Hsapiens.UCSC.hg38)
 library(foreach)
 library(doParallel)
 registerDoParallel(4)
+set.seed(0)
 
 input_rna_file = args[1]
 input_atac_file = args[2]
@@ -13,10 +14,17 @@ meta_file = args[3]
 cell_type = args[4]
 n_features = as.numeric(args[5])
 output_dir = args[6]
+mode = args[7]
 
 
 rna <- readRDS(input_rna_file)
 meta <- read.csv(meta_file)
+if (mode == "Macula"){
+    meta<- meta[meta$Region == "Macula",]
+}
+if (mode == "Peripheral"){
+    meta<- meta[meta$Region == "Peripheral",]
+}
 cells <- meta$X
 rna <- subset(rna, cells = cells)
 DefaultAssay(rna)<- "RNA"
@@ -32,13 +40,18 @@ rna <- subset(rna, cells = common_cells)
 seurat_object[["RNA"]] <- rna@assays$RNA
 seurat_object@meta.data<-cbind(seurat_object@meta.data, rna@meta.data[colnames(seurat_object),])
 
+if (length(colnames(seurat_object))>10000){
+    cells = sample(colnames(seurat_object), 10000)
+    seurat_object <- subset(seurat_object, cells = cells)
+}
+
 seurat_object <- initiate_grn(seurat_object)
 data(motifs)
 seurat_object <- find_motifs(seurat_object, pfm = motifs, genome = BSgenome.Hsapiens.UCSC.hg38)
 
 seurat_object <- infer_grn(seurat_object, peak_to_gene_method = "Signac",
     method = "glm", parallel = T)
-saveRDS(seurat_object, paste(output_dir, cell_type, "_seurat_object.rds", sep = ""))
+saveRDS(seurat_object, paste(output_dir, cell_type, "_seurat_object_", mode, ".rds", sep = ""))
 seurat_object <- find_modules(seurat_object)
 modules <- NetworkModules(seurat_object)
-write.csv(modules@meta, paste(output_dir, cell_type, "_modules_meta.csv", sep = ""))
+write.csv(modules@meta, paste(output_dir, cell_type, "_modules_meta_", mode, ".csv", sep = ""))

@@ -48,6 +48,13 @@ adata.obs["majorclass"] = (
     .fillna(cell_type + " Precursor")
 )
 
+adata.obs["scpred_prediction_mode"] = adata.obs["scpred_prediction_mode"].astype(str)
+if adata.obs.majorclass.str.contains("MG").any():
+    adata.obs.loc[adata.obs.majorclass == "MG", "scpred_prediction_mode"] = "MG"
+adata.obs["scpred_prediction_mode"] = adata.obs["scpred_prediction_mode"].astype(
+    "category"
+)
+
 adata.write(output_file_path + cell_type + "_major_sub_class.h5ad")
 adata.obs.to_csv(output_file_path + cell_type + "_major_sub_class_obs.csv")
 

@@ -1,7 +1,13 @@
 # fetal_project_bash
 
+## ArchR_create_object
+Create ArchR object for all data with ATAC-seq.
+
+## ArchR_filter
+Filter Doublets.
+
 ## QC_seurat
-Read10X_h5() and saveRDS(). Generate QC figures.
+First-round of QC. Read10X_h5() and saveRDS(). Generate QC figures to find optimal QC parameters for each sample.
 
 ## QC_seurat_apply_filter
 Apply filters based on QC results from QC_seurat.
@@ -17,12 +23,6 @@ Merge all meta data.
 
 ## run_umap
 Run umap on all merged/filtered cells.
-
-## ArchR_create_object
-Create ArchR object
-
-## ArchR_filter
-Filter Doublets.
 
 ## velocyto
 Run velocyto

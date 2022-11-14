@@ -1,0 +1,1 @@
+slurmtaco.sh -p mhgcp -m 1G -t 1 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript plot_Region_DE_heatmap.R;
