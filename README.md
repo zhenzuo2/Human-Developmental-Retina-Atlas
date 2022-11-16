@@ -16,12 +16,12 @@ Apply filters based on QC results from QC_seurat.
 Find Doublets.
 
 ## scpred
-Run scPredict().
+Run scPredict() on filtered cells to infer cell type.
 
 ## merge_scpred_meta
 Merge all meta data.
 
-## run_umap
+## run_umap_all_samples
 Run umap on all merged/filtered cells.
 
 ## velocyto
@@ -33,8 +33,8 @@ Merge all looms from velocyto results.
 ## annotate_with_adult
 Assign subclass labels with adult data
 
-## save_adult_annotated_object
-Save objects with annotations from adults
+## add_adult_annotated_reference_to_object
+add_adult_annotated_reference_to_object
 
 ## run_umap_adult_annotated_object
 Run umap on objects with annotations from adults

@@ -3,10 +3,10 @@ df <- data.frame("Samples_ID" = substr(list.files(input_path),1,nchar(list.files
                  "Samples" = list.files(input_path,full.names = T))
 df
 
-write.csv(df, "/storage/singlecell/zz4/fetal_bash/scripts/scpred/meta.csv",
+write.csv(df, "/storage/singlecell/zz4/fetal_bash/scripts/scPred/meta.csv",
           row.names = F)
 
-sink("/storage/singlecell/zz4/fetal_bash/scripts/scpred/scpred.sh")
+sink("/storage/singlecell/zz4/fetal_bash/scripts/scPred/scPred.sh")
 cat("meta=/storage/singlecell/zz4/fetal_bash/data/Retina_fetal_sample_meta.csv\n")
 cat("reference=/storage/chen/data_share_folder/jinli/scpred/scPred_trainmodel_RNA_svmRadialWeights_scpred.rds\n")
 cat("output_results_path=/storage/singlecell/zz4/fetal_bash/results/scPred/\n")

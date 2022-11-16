@@ -41,8 +41,11 @@ adata.var_names_make_unique()
 adata.obs_names_make_unique()
 adata.write(os.path.join(output_path, "merged_raw_filtered.h5ad"))
 
-meta = pd.read_csv(meta_file, sep=" ")
-adata = adata[meta.index.values]
+meta = pd.read_csv(meta_file, sep=",")
+meta.index = list(meta['Unnamed: 0'].values)
+
+adata = adata[list(meta['Unnamed: 0'].values),:]
+
 adata.obs["scpred_prediction"] = meta.loc[adata.obs.index.to_list()].scpred_prediction
 adata.obs["Time"] = meta.loc[adata.obs.index.to_list()].Time
 adata.obs["Region"] = meta.loc[adata.obs.index.to_list()].Region
@@ -87,7 +90,7 @@ temp.obs["leiden"] = adata.obs.leiden
 temp.obsm["X_scVI"] = adata.obsm["X_scVI"]
 temp.obsm["X_umap"] = adata.obsm["X_umap"]
 temp.obsm["X_scANVI"] = adata.obsm["X_scANVI"]
-temp.obsm["scpred_prediction_mode"] = adata.obsm["scpred_prediction_mode"]
+temp.obs["scpred_prediction_mode"] = adata.obs["scpred_prediction_mode"]
 
 temp.obs.to_csv(os.path.join(output_path, "merged_raw_filtered_annotated_umap_obs.csv"))
 temp.write(os.path.join(output_path, "merged_raw_filtered_annotated_umap.h5ad"))

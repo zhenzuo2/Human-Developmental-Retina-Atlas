@@ -17,18 +17,6 @@ adata = adata[
     adata.obs.scpred_prediction_mode == cell_type,
 ]
 
-# Remove this unwanted cluster of cells
-if cell_type == "AC":
-    adata = adata[adata.obs.leiden != "16"]
-
-if cell_type == "BC":
-    adata = adata[adata.obs.leiden != "28"]
-    adata = adata[adata.obs.leiden != "41"]
-
-if cell_type == "RGC":
-    adata = adata[adata.obs.leiden != "8"]
-    adata = adata[adata.obs.leiden != "29"]
-
 # Read meta_cluster file with cluster information
 meta_cluster = scv.read(meta_cluster_adata_file).obs.loc[adata.obs.index, :]
 meta_cluster["author_cell_type"] = meta_cluster.author_cell_type.astype(str).astype(int)
