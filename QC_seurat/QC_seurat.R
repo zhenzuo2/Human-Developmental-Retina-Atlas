@@ -11,6 +11,10 @@ output_results_path <- args[6]
 library(dplyr)
 library(Seurat)
 library(patchwork)
+set.seed(0)
+
+dir.create(output_figures_path, showWarnings = F)
+dir.create(output_results_path, showWarnings = F)
 
 # Read h5 files
 counts <- Read10X_h5(input_file)

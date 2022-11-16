@@ -8,6 +8,12 @@ output_figures_path <- args[4]
 # load libraries
 library(DoubletFinder)
 library(Seurat)
+
+dir.create(output_figures_path, showWarnings = F)
+dir.create(output_results_path, showWarnings = F)
+
+set.seed(0)
+
 seurat_object <- readRDS(input_file)
 # https://rpubs.com/kenneditodd/doublet_finder_example
 

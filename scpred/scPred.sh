@@ -2,9 +2,6 @@ meta=/storage/singlecell/zz4/fetal_bash/data/Retina_fetal_sample_meta.csv
 reference=/storage/chen/data_share_folder/jinli/scpred/scPred_trainmodel_RNA_svmRadialWeights_scpred.rds
 output_results_path=/storage/singlecell/zz4/fetal_bash/results/scPred/
 output_figures_path=/storage/singlecell/zz4/fetal_bash/figures/scPred/
-slurmtaco.sh -p short -m 10G -t 1 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript scPred.R 17W1D_Fovea_retina /storage/singlecell/zz4/fetal_bash/results/DoubletFinder_seurat_object//17W1D_Fovea_retina.rds $reference $meta $output_results_path $output_figures_path
-slurmtaco.sh -p short -m 10G -t 1 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript scPred.R 17W1D_Nasal_retina /storage/singlecell/zz4/fetal_bash/results/DoubletFinder_seurat_object//17W1D_Nasal_retina.rds $reference $meta $output_results_path $output_figures_path
-slurmtaco.sh -p short -m 10G -t 1 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript scPred.R 17W1D_Temporal_retina /storage/singlecell/zz4/fetal_bash/results/DoubletFinder_seurat_object//17W1D_Temporal_retina.rds $reference $meta $output_results_path $output_figures_path
 slurmtaco.sh -p short -m 10G -t 1 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript scPred.R Multi_Fetal_11w2d_FR_2 /storage/singlecell/zz4/fetal_bash/results/DoubletFinder_seurat_object//Multi_Fetal_11w2d_FR_2.rds $reference $meta $output_results_path $output_figures_path
 slurmtaco.sh -p short -m 10G -t 1 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript scPred.R Multi_Fetal_11w2d_FR /storage/singlecell/zz4/fetal_bash/results/DoubletFinder_seurat_object//Multi_Fetal_11w2d_FR.rds $reference $meta $output_results_path $output_figures_path
 slurmtaco.sh -p short -m 10G -t 1 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript scPred.R Multi_Fetal_11w2d_NR /storage/singlecell/zz4/fetal_bash/results/DoubletFinder_seurat_object//Multi_Fetal_11w2d_NR.rds $reference $meta $output_results_path $output_figures_path

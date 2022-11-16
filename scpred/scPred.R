@@ -9,6 +9,10 @@ output_figures_path <- args[6]
 suppressMessages(library(Seurat))
 suppressMessages(library(scPred))
 
+dir.create(output_figures_path, showWarnings = F)
+dir.create(output_results_path, showWarnings = F)
+set.seed(0)
+
 seurat_object <- readRDS(input_file)
 reference <- readRDS(reference_file)
 

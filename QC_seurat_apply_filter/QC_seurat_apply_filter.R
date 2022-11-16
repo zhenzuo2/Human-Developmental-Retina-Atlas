@@ -5,6 +5,10 @@ output_results_path <- args[3]
 output_figures_path <- args[4]
 
 library(Seurat)
+set.seed(0)
+dir.create(output_figures_path, showWarnings = F)
+dir.create(output_results_path, showWarnings = F)
+
 seurat_object <- readRDS(input_file)
 
 seurat_object <- subset(seurat_object, subset = nFeature_RNA > 500 & nFeature_RNA < 5000 & percent.mt < 5)

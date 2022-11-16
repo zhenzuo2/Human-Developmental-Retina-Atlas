@@ -1,0 +1,1 @@
+Merge all metafiles.
