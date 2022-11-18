@@ -14,5 +14,7 @@ for (file in input_file) {
 }
 
 meta = meta[, colSums(is.na(meta)) == 0]
+meta <- meta[meta$scpred_prediction %in% c("AC", "RGC", "MG", "Cone", "BC", "HC","Rod"),]
+meta <- meta[meta$scpred_max>0.99,]
 
 write.csv(meta, paste(output_results_path, "meta.csv", sep = ""))

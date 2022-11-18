@@ -2,7 +2,9 @@ import sys
 import scvelo as scv
 import pandas as pd
 import plotly.express as px
+import os
 
+   
 adata_file = sys.argv[1]
 cell_type = sys.argv[2]
 meta_cluster_adata_file = sys.argv[3]
@@ -10,6 +12,12 @@ subclass_reference_file = sys.argv[4]
 majorclass_reference_file = sys.argv[5]
 output_file_path = sys.argv[6]
 output_fig_path = sys.argv[7]
+
+if not os.path.exists(output_file_path):
+   os.makedirs(output_file_path)
+
+if not os.path.exists(output_fig_path):
+   os.makedirs(output_fig_path)
 
 adata = scv.read(adata_file)
 
@@ -27,6 +35,12 @@ subclass_reference = pd.read_csv(subclass_reference_file)
 adata.obs["subclass"] = meta_cluster.author_cell_type.map(
     dict(zip(subclass_reference.leiden, subclass_reference.subclass))
 ).fillna(cell_type + " Precursor")
+
+adata.obs["meta_cluster_author_cell_type"] = meta_cluster.author_cell_type.astype(
+    "category"
+)
+
+adata = adata[adata.obs["subclass"] != "Mislabel"]
 
 # Read reference file
 majorclass_reference = pd.read_csv(majorclass_reference_file)
@@ -46,7 +60,7 @@ adata.obs["scpred_prediction_mode"] = adata.obs["scpred_prediction_mode"].astype
 adata.write(output_file_path + cell_type + "_major_sub_class.h5ad")
 adata.obs.to_csv(output_file_path + cell_type + "_major_sub_class_obs.csv")
 
-for attribute in ["Days", "Region", "subclass", "majorclass"]:
+for attribute in ["Days", "Region", "subclass", "majorclass","meta_cluster_author_cell_type"]:
     df = adata.obs.copy()
     df["x"] = adata.obsm["X_umap"][:, 0]
     df["y"] = adata.obsm["X_umap"][:, 1]
@@ -72,4 +86,5 @@ for attribute in ["Days", "Region", "subclass", "majorclass"]:
     fig.update_layout(legend={"title_text": ""})
     fig.update_layout(legend={"itemsizing": "constant"})
     fig.update_layout(legend=dict(font=dict(size=5)))
-    fig.write_image(output_fig_path + cell_type + attribute + ".svg")
+    fig.write_image(output_fig_path +cell_type + "_" + attribute + ".svg")
+    fig.write_html(output_fig_path + cell_type + "_" + attribute + ".html")

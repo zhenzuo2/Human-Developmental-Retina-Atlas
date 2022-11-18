@@ -4,7 +4,7 @@ import scanpy as sc
 import scvi
 import anndata
 import pandas as pd
-from os.path import exists
+import os
 import plotly.express as px
 
 # Read both query adata and ref adata
@@ -15,6 +15,19 @@ adata_ref_file = sys.argv[3]
 output_file_path = sys.argv[4]
 output_fig_path = sys.argv[5]
 resolution = int(sys.argv[6])
+
+
+try:
+   os.makedirs(output_file_path)
+except FileExistsError:
+   # directory already exists
+   pass
+
+try:
+   os.makedirs(output_fig_path)
+except FileExistsError:
+   # directory already exists
+   pass
 
 # Read data needed to be annotated
 adata_query = scv.read(
@@ -122,7 +135,7 @@ sc.tl.leiden(adata)
 sc.tl.umap(adata)
 
 adata.write(
-    output_file_path + "merged_object.h5ad"
+    output_file_path + cell_type + "_merged_object.h5ad"
 )
 
 # Plots
@@ -155,10 +168,10 @@ fig.update_layout(legend={"title_text": ""})
 fig.update_layout(legend={"itemsizing": "constant"})
 fig.update_layout(legend=dict(font=dict(size=10)))
 fig.write_html(
-    output_fig_path + "subtype_umap_adult_fetal_sample_source.html"
+    output_fig_path + cell_type + "_subtype_umap_adult_fetal_sample_source.html"
 )
 fig.write_image(
-    output_fig_path + "subtype_umap_adult_fetal_sample_source.svg"
+    output_fig_path + cell_type + "_subtype_umap_adult_fetal_sample_source.svg"
 )
 
 
@@ -190,8 +203,8 @@ fig.update_layout(legend={"title_text": ""})
 fig.update_layout(legend={"itemsizing": "constant"})
 fig.update_layout(legend=dict(font=dict(size=10)))
 fig.write_html(
-    output_fig_path + "subtype_umap_adult_fetal_author_cell_type.html"
+    output_fig_path + cell_type + "_subtype_umap_adult_fetal_author_cell_type.html"
 )
 fig.write_image(
-    output_fig_path + "subtype_umap_adult_fetal_author_cell_type.svg"
+    output_fig_path + cell_type + "_subtype_umap_adult_fetal_author_cell_type.svg"
 )
