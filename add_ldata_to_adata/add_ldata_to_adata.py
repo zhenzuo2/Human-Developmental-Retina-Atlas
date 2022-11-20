@@ -1,10 +1,17 @@
 import sys
 import scvelo as scv
 import anndata
+import os
 
 adata_file = sys.argv[1]
 ldata_file = sys.argv[2]
 output_file = sys.argv[3]
+
+try:
+   os.makedirs(os.path.dirname(output_file))
+except FileExistsError:
+   # directory already exists
+   pass
 
 adata = scv.read(adata_file)
 ldata = anndata.read_loom(ldata_file)

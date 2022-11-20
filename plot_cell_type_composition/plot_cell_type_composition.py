@@ -49,8 +49,8 @@ counts.columns = [
 ]
 counts.index = ["FW10", "FW13", "FW16", "FW20", "FW23"]
 for i in range(df.shape[0]):
-    counts.at[df.Weeks[i], df.scpred_prediction_mode[i]] = (
-        counts.at[df.Weeks[i], df.scpred_prediction_mode[i]] + 1
+    counts.at[df.Weeks[i], df.scpred_prediction[i]] = (
+        counts.at[df.Weeks[i], df.scpred_prediction[i]] + 1
     )
 counts = counts.div(counts.sum(axis=1), axis=0) * 100
 counts["Weeks"] = counts.index.values

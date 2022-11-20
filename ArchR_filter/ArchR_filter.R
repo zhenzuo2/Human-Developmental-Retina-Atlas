@@ -17,8 +17,9 @@ projretina1 <- loadArchRProject("Save-projretina1")
 
 projretina2 <- filterDoublets(projretina1)
 
-cells = getCellNames(projretina2)
-meta.data <- read.table(input_meta)
+cells <- getCellNames(projretina2)
+meta.data <- read.csv(input_meta)
+rownames(meta.data) <- meta.data$X
 meta.data$X2 <- stri_replace_last(rownames(meta.data), fixed = "_", "#")
 
 common_cells <- intersect(cells, meta.data$X2)
@@ -37,10 +38,6 @@ projretina3 <- addIterativeLSI(ArchRProj = projretina3, useMatrix = "TileMatrix"
     name = "IterativeLSI", iterations = 2, clusterParams = list(resolution = c(0.2),
         sampleCells = 10000, n.start = 10), varFeatures = 25000, dimsToUse = 1:30,
     force = T)
-
-# add Harmony Batch Corrected Reduced Dims to an ArchRProject
-projretina3 <- addHarmony(ArchRProj = projretina3, reducedDims = "IterativeLSI",
-    name = "Harmony", groupBy = "Sample", force = T)
 
 # add cluster information to an ArchRProject
 projretina3 <- addClusters(input = projretina3, reducedDims = "IterativeLSI",
