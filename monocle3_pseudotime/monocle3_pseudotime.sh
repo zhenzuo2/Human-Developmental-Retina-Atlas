@@ -1,0 +1,1 @@
+slurmtaco.sh --g01 -m 20G -t 1 --30day -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript monocle3_de_analysis.R  $input_file ${meta_file[i]} ${output_dir[i]} Early;

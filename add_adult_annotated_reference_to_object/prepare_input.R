@@ -2,13 +2,13 @@ adata_file = "/storage/singlecell/zz4/fetal_bash/results/merged_h5ad/merged_raw_
 
 cell_type = c("AC", "BC", "RGC", "HC", "Cone", "Rod","RPC")
 
-meta_cluster_adata_file = c("/storage/singlecell/zz4/fetal_bash/results/AC_annotation_adult/merged_object.h5ad",
-                            "/storage/singlecell/zz4/fetal_bash/results/BC_annotation_adult/merged_object.h5ad",
-                            "/storage/singlecell/zz4/fetal_bash/results/RGC_annotation_adult/merged_object.h5ad",
-                            "/storage/singlecell/zz4/fetal_bash/results/HC_annotation_adult/merged_object.h5ad",
-                            "/storage/singlecell/zz4/fetal_bash/results/Photoreceptor_annotation_adult/merged_object.h5ad",
-                            "/storage/singlecell/zz4/fetal_bash/results/Photoreceptor_annotation_adult/merged_object.h5ad",
-                            "/storage/singlecell/zz4/fetal_bash/results/MG_annotation_adult/merged_object.h5ad")
+meta_cluster_adata_file = c("/storage/singlecell/zz4/fetal_bash/results/AC_annotation_adult/AC_merged_object.h5ad",
+                            "/storage/singlecell/zz4/fetal_bash/results/BC_annotation_adult/BC_merged_object.h5ad",
+                            "/storage/singlecell/zz4/fetal_bash/results/RGC_annotation_adult/RGC_merged_object.h5ad",
+                            "/storage/singlecell/zz4/fetal_bash/results/HC_annotation_adult/HC_merged_object.h5ad",
+                            "/storage/singlecell/zz4/fetal_bash/results/Photoreceptor_annotation_adult/Cone_merged_object.h5ad",
+                            "/storage/singlecell/zz4/fetal_bash/results/Photoreceptor_annotation_adult/Rod_merged_object.h5ad",
+                            "/storage/singlecell/zz4/fetal_bash/results/MG_annotation_adult/RPC_merged_object.h5ad")
 
 subclass_reference_file = c("/storage/singlecell/zz4/fetal_bash/data/manual_reference/AC_subclass_annotation.csv",
                             "/storage/singlecell/zz4/fetal_bash/data/manual_reference/BC_subclass_annotation.csv",
@@ -18,21 +18,21 @@ subclass_reference_file = c("/storage/singlecell/zz4/fetal_bash/data/manual_refe
                             "/storage/singlecell/zz4/fetal_bash/data/manual_reference/Rod_subclass_annotation.csv",
                             "/storage/singlecell/zz4/fetal_bash/data/manual_reference/MG_subclass_annotation.csv")
 majorclass_reference_file = "/storage/singlecell/zz4/fetal_bash/data/cell_subclass_majorclass_mapping.csv"
-output_file_path = c("/storage/singlecell/zz4/fetal_bash/results/AC_annotation_adult_with_lable/",
-                     "/storage/singlecell/zz4/fetal_bash/results/BC_annotation_adult_with_lable/",
-                     "/storage/singlecell/zz4/fetal_bash/results/RGC_annotation_adult_with_lable/",
-                     "/storage/singlecell/zz4/fetal_bash/results/HC_annotation_adult_with_lable/",
-                     "/storage/singlecell/zz4/fetal_bash/results/Photoreceptor_annotation_adult_with_lable/",
-                     "/storage/singlecell/zz4/fetal_bash/results/Photoreceptor_annotation_adult_with_lable/",
-                     "/storage/singlecell/zz4/fetal_bash/results/MG_annotation_adult_with_lable/")
+output_file_path = c("/storage/singlecell/zz4/fetal_bash/results/AC_annotation_adult_with_label/",
+                     "/storage/singlecell/zz4/fetal_bash/results/BC_annotation_adult_with_label/",
+                     "/storage/singlecell/zz4/fetal_bash/results/RGC_annotation_adult_with_label/",
+                     "/storage/singlecell/zz4/fetal_bash/results/HC_annotation_adult_with_label/",
+                     "/storage/singlecell/zz4/fetal_bash/results/Photoreceptor_annotation_adult_with_label/",
+                     "/storage/singlecell/zz4/fetal_bash/results/Photoreceptor_annotation_adult_with_label/",
+                     "/storage/singlecell/zz4/fetal_bash/results/MG_annotation_adult_with_label/")
 
-output_fig_path = c("/storage/singlecell/zz4/fetal_bash/figures/AC_annotation_adult_with_lable/",
-                    "/storage/singlecell/zz4/fetal_bash/figures/BC_annotation_adult_with_lable/",
-                    "/storage/singlecell/zz4/fetal_bash/figures/RGC_annotation_adult_with_lable/",
-                    "/storage/singlecell/zz4/fetal_bash/figures/HC_annotation_adult_with_lable/",
-                    "/storage/singlecell/zz4/fetal_bash/figures/Photoreceptor_annotation_adult_with_lable/",
-                    "/storage/singlecell/zz4/fetal_bash/figures/Photoreceptor_annotation_adult_with_lable/",
-                    "/storage/singlecell/zz4/fetal_bash/figures/MG_annotation_adult_with_lable/")
+output_fig_path = c("/storage/singlecell/zz4/fetal_bash/figures/AC_annotation_adult_with_label/",
+                    "/storage/singlecell/zz4/fetal_bash/figures/BC_annotation_adult_with_label/",
+                    "/storage/singlecell/zz4/fetal_bash/figures/RGC_annotation_adult_with_label/",
+                    "/storage/singlecell/zz4/fetal_bash/figures/HC_annotation_adult_with_label/",
+                    "/storage/singlecell/zz4/fetal_bash/figures/Photoreceptor_annotation_adult_with_label/",
+                    "/storage/singlecell/zz4/fetal_bash/figures/Photoreceptor_annotation_adult_with_label/",
+                    "/storage/singlecell/zz4/fetal_bash/figures/MG_annotation_adult_with_label/")
 
 n = length(cell_type)
 sink("/storage/singlecell/zz4/fetal_bash/scripts/add_adult_annotated_reference_to_object/add_adult_annotated_reference_to_object.sh")

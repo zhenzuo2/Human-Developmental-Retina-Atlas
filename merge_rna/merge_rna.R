@@ -41,7 +41,6 @@ seurat_object <- merge(Multi_Fetal_11w2d_FR, y = c(Multi_Fetal_11w2d_FR_2,
     Multi_Fetal_20W2d_NR, Multi_Fetal_23w1d_FR, Multi_Fetal_23w1d_NR, Multiome_10w_FR,
     Multiome_10w_NR, Multiome_12w3d_FR, Multiome_12w3d_NR, Multiome_14w2d_FR,
     Multiome_14w2d_NR, Multiome_16w4d_FR, Multiome_16w4d_NR, Multiome_20w1d_FR,
-    Multiome_20w1d_NR, Multiome_23w4d_FR, Multiome_23w4d_NR, get("17W1D_Fovea_retina"),
-    get("17W1D_Nasal_retina"), get("17W1D_Temporal_retina")))
+    Multiome_20w1d_NR, Multiome_23w4d_FR, Multiome_23w4d_NR))
 
 saveRDS(seurat_object, output_file)

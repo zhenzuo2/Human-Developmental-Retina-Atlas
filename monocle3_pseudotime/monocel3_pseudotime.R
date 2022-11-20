@@ -6,12 +6,10 @@ library(dplyr)
 input_file = args[1]
 meta_file = args[2]
 output_dir = args[3]
-mode = args[4]
 
 set.seed(0)
 seurat_object <- readRDS(input_file)
 meta <- read.csv(meta_file)
-meta <- meta[meta$Region %in% c("Macula", "Peripheral"), ]
 rownames(meta) <- meta$X
 cells <- meta$X
 common_cells <- intersect(cells, colnames(seurat_object))
@@ -52,10 +50,7 @@ cds <- new_cell_data_set(expression_matrix, cell_metadata = cell_metadata,
 cds <- preprocess_cds(cds, num_dim = 100)
 
 ## Step 2: Remove batch effects with cell alignment
-if ((meta_file != "/storage/singlecell/zz4/fetal_bash/results/merged_h5ad_adult_annotated/merged_h5ad_adult_annotated_obs.csv") &
-    (meta_file != "/storage/singlecell/zz4/fetal_bash/results/Rod_annotation_adult_umap/annotated_umap_obs.csv")) {
-    cds <- align_cds(cds, alignment_group = "batch")
-}
+cds <- align_cds(cds, alignment_group = "batch")
 
 ## Step 3: Reduce the dimensions using UMAP
 cds <- reduce_dimension(cds)
@@ -69,14 +64,9 @@ cds <- learn_graph(cds, use_partition = FALSE)
 ## Step 6: Order cells
 root_cells <- colnames(cds)[cds$batch == "Multiome_10w_NR"]
 if (length(root_cells) == 0) {
-    root_cells <- colnames(cds)[cds$Days == 70]
+    root_cells <- colnames(cds)[cds$Days == min(unique(cds$Days))]
 }
 
-if (meta_file == "/storage/singlecell/zz4/fetal_bash/results/Rod_annotation_adult_umap/annotated_umap_obs.csv") {
-    root_cells <- colnames(cds)[cds$Days == 62]
-}
-print("Root_cells")
-print(root_cells)
 cds <- order_cells(cds, root_cells = root_cells)
 
 saveRDS(cds, paste(output_dir, "monocle3.rds", sep = ""))

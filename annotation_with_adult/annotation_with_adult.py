@@ -16,7 +16,6 @@ output_file_path = sys.argv[4]
 output_fig_path = sys.argv[5]
 resolution = int(sys.argv[6])
 
-
 try:
    os.makedirs(output_file_path)
 except FileExistsError:
@@ -35,7 +34,7 @@ adata_query = scv.read(
     cache=False,
 )
 adata_query = adata_query[
-    adata_query.obs.scpred_prediction_mode == cell_type,
+    adata_query.obs.scpred_prediction == cell_type,
 ]
 adata_query.obs.Days = adata_query.obs.Days.astype(float)
 

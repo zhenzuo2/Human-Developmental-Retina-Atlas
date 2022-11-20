@@ -13,16 +13,22 @@ majorclass_reference_file = sys.argv[5]
 output_file_path = sys.argv[6]
 output_fig_path = sys.argv[7]
 
-if not os.path.exists(output_file_path):
+try:
    os.makedirs(output_file_path)
+except FileExistsError:
+   # directory already exists
+   pass
 
-if not os.path.exists(output_fig_path):
+try:
    os.makedirs(output_fig_path)
+except FileExistsError:
+   # directory already exists
+   pass
 
 adata = scv.read(adata_file)
 
 adata = adata[
-    adata.obs.scpred_prediction_mode == cell_type,
+    adata.obs.scpred_prediction == cell_type,
 ]
 
 # Read meta_cluster file with cluster information
@@ -50,10 +56,10 @@ adata.obs["majorclass"] = (
     .fillna(cell_type + " Precursor")
 )
 
-adata.obs["scpred_prediction_mode"] = adata.obs["scpred_prediction_mode"].astype(str)
+adata.obs["scpred_prediction"] = adata.obs["scpred_prediction"].astype(str)
 if adata.obs.majorclass.str.contains("MG").any():
-    adata.obs.loc[adata.obs.majorclass == "MG", "scpred_prediction_mode"] = "MG"
-adata.obs["scpred_prediction_mode"] = adata.obs["scpred_prediction_mode"].astype(
+    adata.obs.loc[adata.obs.majorclass == "MG", "scpred_prediction"] = "MG"
+adata.obs["scpred_prediction"] = adata.obs["scpred_prediction"].astype(
     "category"
 )
 

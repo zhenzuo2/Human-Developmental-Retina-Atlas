@@ -8,6 +8,12 @@ import pandas as pd
 input_file_path = sys.argv[1]
 output_file_path = sys.argv[2]
 
+try:
+   os.makedirs(output_file_path)
+except FileExistsError:
+   # directory already exists
+   pass
+
 adata = scv.read(input_file_path)
 
 sc.pp.highly_variable_genes(adata, flavor="seurat_v3", n_top_genes=2000, subset=True)
@@ -27,10 +33,6 @@ temp.obs["leiden"] = adata.obs.leiden
 temp.obsm["X_scVI"] = adata.obsm["X_scVI"]
 temp.obsm["X_umap"] = adata.obsm["X_umap"]
 temp.obsm["X_scANVI"] = adata.obsm["X_scANVI"]
-
-isExist = os.path.exists(output_file_path)
-if not isExist:
-    os.makedirs(output_file_path)
 
 temp.obs.to_csv(os.path.join(output_file_path, "annotated_umap_obs.csv"))
 temp.write(os.path.join(output_file_path, "annotated_umap.h5ad"))

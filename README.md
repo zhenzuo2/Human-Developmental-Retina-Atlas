@@ -24,17 +24,14 @@ Merge all meta data.
 ## run_umap_all_samples
 Run umap on all merged/filtered cells.
 
-## velocyto
-Run velocyto
-
-## merge_looms
-Merge all looms from velocyto results.
-
 ## annotate_with_adult
 Assign subclass labels with adult data
 
 ## add_adult_annotated_reference_to_object
 add_adult_annotated_reference_to_object
+
+## merge_annotated_h5ad
+Merge annotated object to one anndata object
 
 ## run_umap_adult_annotated_object
 Run umap on objects with annotations from adults
@@ -47,3 +44,10 @@ Merge atac and save as rds
 
 ## merge_rna
 Merge RNA and save as rds
+
+
+## velocyto
+Run velocyto
+
+## merge_looms
+Merge all looms from velocyto results.

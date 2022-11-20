@@ -78,19 +78,12 @@ sc.pp.neighbors(adata, use_rep="X_scANVI")
 sc.tl.leiden(adata)
 sc.tl.umap(adata)
 
-adata.obs["scpred_prediction_mode"] = adata.obs.scpred_prediction
-for cluster in set(adata.obs.leiden):
-    adata.obs.loc[adata.obs.leiden == cluster, "scpred_prediction_mode"] = mode(
-        adata.obs.loc[adata.obs.leiden == cluster, "scpred_prediction"]
-    )
-
 temp = scv.read(os.path.join(output_path, "merged_raw_filtered_annotated.h5ad"))
 
 temp.obs["leiden"] = adata.obs.leiden
 temp.obsm["X_scVI"] = adata.obsm["X_scVI"]
 temp.obsm["X_umap"] = adata.obsm["X_umap"]
 temp.obsm["X_scANVI"] = adata.obsm["X_scANVI"]
-temp.obs["scpred_prediction_mode"] = adata.obs["scpred_prediction_mode"]
 
 temp.obs.to_csv(os.path.join(output_path, "merged_raw_filtered_annotated_umap_obs.csv"))
 temp.write(os.path.join(output_path, "merged_raw_filtered_annotated_umap.h5ad"))
