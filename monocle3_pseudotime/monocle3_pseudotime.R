@@ -6,7 +6,7 @@ library(dplyr)
 input_file = args[1]
 meta_file = args[2]
 output_dir = args[3]
-
+dir.create(output_dir, showWarnings = FALSE)
 set.seed(0)
 seurat_object <- readRDS(input_file)
 meta <- read.csv(meta_file)
@@ -27,8 +27,6 @@ seurat_object@meta.data$Days <- meta[rownames(seurat_object@meta.data),
     "Days"]
 seurat_object@meta.data$leiden <- meta[rownames(seurat_object@meta.data),
     "leiden"]
-seurat_object@meta.data$scpred_prediction_mode <- meta[rownames(seurat_object@meta.data),
-    "scpred_prediction_mode"]
 seurat_object@meta.data$subclass <- meta[rownames(seurat_object@meta.data),
     "subclass"]
 seurat_object@meta.data$majorclass <- meta[rownames(seurat_object@meta.data),

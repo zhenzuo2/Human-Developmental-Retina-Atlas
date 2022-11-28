@@ -1,9 +1,16 @@
 import scvelo as scv
 import scanpy as sc
 import sys
+import os
 
 input_path = sys.argv[1]
 output_path = sys.argv[2]
+
+try:
+   os.makedirs(os.path.dirname(output_path))
+except FileExistsError:
+   # directory already exists
+   pass
 
 def velocity_graph_stochastic(input_path):
     print("Runing stochastic for " + input_path)

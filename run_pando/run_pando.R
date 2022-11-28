@@ -16,6 +16,7 @@ n_features = as.numeric(args[5])
 output_dir = args[6]
 mode = args[7]
 
+dir.create(output_dir, showWarnings = FALSE)
 
 rna <- readRDS(input_rna_file)
 meta <- read.csv(meta_file)
@@ -40,8 +41,8 @@ rna <- subset(rna, cells = common_cells)
 seurat_object[["RNA"]] <- rna@assays$RNA
 seurat_object@meta.data<-cbind(seurat_object@meta.data, rna@meta.data[colnames(seurat_object),])
 
-if (length(colnames(seurat_object))>10000){
-    cells = sample(colnames(seurat_object), 10000)
+if (length(colnames(seurat_object))>20000){
+    cells = sample(colnames(seurat_object), 20000)
     seurat_object <- subset(seurat_object, cells = cells)
 }
 
