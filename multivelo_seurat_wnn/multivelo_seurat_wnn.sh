@@ -6,7 +6,7 @@ meta_file=(
 /storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_HC.csv
 /storage/singlecell/zz4/fetal_bash/results/MultiVelo_filtered_cells/filtered_cells_MG.csv
 /storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_RGC.csv
-/storage/singlecell/zz4/fetal_bash/results/MultiVelo_filtered_cells/filtered_cells_Rod.csv
+/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_Rod.csv
 /storage/singlecell/zz4/fetal_bash/results/MultiVelo_filtered_cells/filtered_cells_RPC.csv
 /storage/singlecell/zz4/fetal_bash/results/MultiVelo_filtered_cells/filtered_cells.csv
 )

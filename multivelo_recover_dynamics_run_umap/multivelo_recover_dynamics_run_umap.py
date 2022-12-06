@@ -6,17 +6,17 @@ import scvelo as scv
 import multivelo as mv
 import sys
 import scvi
-import tempfile
 
 input_rna_file = sys.argv[1]
 input_atac_file = sys.argv[2]
 output_file_path = sys.argv[3]
 
 try:
-   os.makedirs(os.path.dirname(output_file_path))
+    os.makedirs(os.path.dirname(output_file_path))
 except FileExistsError:
-   # directory already exists
-   pass
+    # directory already exists
+    pass
+
 
 def run_umap_scvi(adata):
     f = tempfile.mkstemp(suffix=".h5ad")[1]
@@ -72,20 +72,4 @@ scv.pp.normalize_per_cell(adata_rna)
 scv.pp.log1p(adata_rna)
 scv.pp.moments(adata_rna, n_pcs=30, n_neighbors=50)
 
-scv.pl.umap(adata_rna, color="majorclass")
-# This will take a while. Parallelization is high recommended.
-adata_result = mv.recover_dynamics_chrom(
-    adata_rna,
-    adata_atac,
-    max_iter=5,
-    init_mode="invert",
-    verbose=False,
-    parallel=True,
-    save_plot=False,
-    rna_only=False,
-    fit=True,
-    n_anchors=500,
-    extra_color_key="majorclass",
-    n_jobs=8,
-)
-adata_result.write(output_file_path)
+adata_rna.write(output_file_path)
