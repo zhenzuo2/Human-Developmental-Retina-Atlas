@@ -4,7 +4,7 @@ meta_file <- args[2]
 sample_name <- args[3]
 output_path <- args[4]
 
-dir.create(output_dir, showWarnings = FALSE)
+dir.create(output_path, showWarnings = FALSE)
 
 
 # MultiVelo Seurat WNN Demo

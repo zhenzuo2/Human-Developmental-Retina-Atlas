@@ -32,7 +32,7 @@ temp = scv.read(input_file_path)
 temp.obs["leiden"] = adata.obs.leiden
 temp.obsm["X_scVI"] = adata.obsm["X_scVI"]
 temp.obsm["X_umap"] = adata.obsm["X_umap"]
-temp.obsm["X_scANVI"] = adata.obsm["X_scANVI"]
+
 
 temp.obs.to_csv(os.path.join(output_file_path, "annotated_umap_obs.csv"))
 temp.write(os.path.join(output_file_path, "annotated_umap.h5ad"))

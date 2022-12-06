@@ -6,6 +6,12 @@ import pandas as pd
 import numpy as np
 import os
 
+try:
+    os.makedirs("/storage/singlecell/zz4/fetal_bash/results/MultiVelo_filtered_cells/")
+except FileExistsError:
+    # directory already exists
+    pass
+
 meta = pd.read_csv(
     "/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/merged_h5ad_adult_annotated_obs.csv"
 )
@@ -65,16 +71,7 @@ adata_rna.obs["Region"] = meta.loc[adata_rna.obs_names, "Region"]
 adata_rna.obs["Days"] = meta.loc[adata_rna.obs_names, "Days"]
 adata_rna.obs["subclass"] = meta.loc[adata_rna.obs_names, "subclass"]
 adata_rna.obs["majorclass"] = meta.loc[adata_rna.obs_names, "majorclass"]
-
-scv.pp.normalize_per_cell(adata_rna)
-scv.pp.log1p(adata_rna)
-scv.pp.moments(adata_rna, n_pcs=30, n_neighbors=50)
-
-try:
-    os.makedirs("/storage/singlecell/zz4/fetal_bash/results/MultiVelo_filtered_cells/")
-except FileExistsError:
-    # directory already exists
-    pass
+adata_rna.obs["batch"] = meta.loc[adata_rna.obs_names, "batch"]
 
 # Write out filtered cells and prepare to run Seurat WNN --> R script can be found on Github.
 adata_rna.obs.to_csv(
