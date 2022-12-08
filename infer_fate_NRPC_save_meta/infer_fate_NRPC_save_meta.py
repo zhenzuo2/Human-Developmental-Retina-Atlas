@@ -7,7 +7,7 @@ adata = scv.read(
 )
 sc.pl.umap(adata, color="scpred_prediction")
 
-NRPC = scv.read("/storage/singlecell/zz4/fetal_bash/results/NRPC_fate.h5ad")
+NRPC = scv.read("/storage/singlecell/zz4/fetal_bash/results/NRPC_fate/NRPC_fate.h5ad")
 sc.pl.umap(NRPC, color="leiden", legend_loc="on data")
 
 
@@ -82,3 +82,27 @@ pd.concat(
         adata[adata.obs.scpred_prediction == "HC"].obs,
     ]
 ).to_csv("/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_HC.csv")
+
+pd.concat(
+    [
+        adata[adata.obs.majorclass == "MG"].obs,
+    ]
+).to_csv("/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/MG.csv")
+
+pd.concat(
+    [
+        adata[adata.obs.majorclass == "NRPC"].obs,
+    ]
+).to_csv("/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC.csv")
+
+pd.concat(
+    [
+        adata[adata.obs.majorclass == "PRPC"].obs,
+    ]
+).to_csv("/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/PRPC.csv")
+
+pd.concat(
+    [
+        adata[adata.obs.scpred_prediction == "RPC"].obs,
+    ]
+).to_csv("/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/RPC.csv")

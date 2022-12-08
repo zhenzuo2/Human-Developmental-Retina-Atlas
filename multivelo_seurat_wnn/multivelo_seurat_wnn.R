@@ -20,7 +20,8 @@ seurat_object <- readRDS(input_file)
 # subset for the same cells in the jointly filtered anndata object
 barcodes <- read.csv(meta_file)
 
-seurat_object <- subset(seurat_object, cells = barcodes$X)
+filtered_cells <- read.csv("/storage/singlecell/zz4/fetal_bash/results/MultiVelo_filtered_cells/filtered_cells.csv")
+seurat_object <- subset(seurat_object, cells = intersect(barcodes$X,filtered_cells$X))
 seurat_object
 
 # preprocess RNA
