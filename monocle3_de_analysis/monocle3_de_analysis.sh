@@ -1,27 +1,37 @@
 input_file="/storage/singlecell/zz4/fetal_bash/results/merged_rna/merged_rna.rds"
 
+mkdir /storage/singlecell/zz4/fetal_bash/results/AC_monocle3_DE_analysis/
+mkdir /storage/singlecell/zz4/fetal_bash/results/BC_monocle3_DE_analysis/
+mkdir /storage/singlecell/zz4/fetal_bash/results/Cone_monocle3_DE_analysis/
+mkdir /storage/singlecell/zz4/fetal_bash/results/Rod_monocle3_DE_analysis/
+mkdir /storage/singlecell/zz4/fetal_bash/results/HC_monocle3_DE_analysis/
+mkdir /storage/singlecell/zz4/fetal_bash/results/RGC_monocle3_DE_analysis/
+mkdir /storage/singlecell/zz4/fetal_bash/results/MG_monocle3_DE_analysis/
+
 meta_file=(
-/storage/singlecell/zz4/fetal_bash/results/MG_annotation_adult_umap/PRPC_annotated_umap_obs.csv
-/storage/singlecell/zz4/fetal_bash/results/MG_annotation_adult_umap/NRPC_annotated_umap_obs.csv
-/storage/singlecell/zz4/fetal_bash/results/AC_annotation_adult_umap/annotated_umap_obs.csv
-/storage/singlecell/zz4/fetal_bash/results/BC_annotation_adult_umap/annotated_umap_obs.csv
-/storage/singlecell/zz4/fetal_bash/results/Cone_annotation_adult_umap/annotated_umap_obs.csv
-/storage/singlecell/zz4/fetal_bash/results/Rod_annotation_adult_umap/annotated_umap_obs.csv
-/storage/singlecell/zz4/fetal_bash/results/HC_annotation_adult_umap/annotated_umap_obs.csv
-/storage/singlecell/zz4/fetal_bash/results/RGC_annotation_adult_umap/annotated_umap_obs.csv
-/storage/singlecell/zz4/fetal_bash/results/MG_annotation_adult_umap/annotated_umap_obs.csv
+/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_AC.csv
+/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_BC.csv
+/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_Cone.csv
+/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_Rod.csv
+/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_HC.csv
+/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_RGC.csv
+/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/RPC.csv
+/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/PRPC.csv
+/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC.csv
+/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/MG.csv
 )
 
 output_dir=(
-/storage/singlecell/zz4/fetal_bash/results/MG_monocle3_DE_analysis/PRPC_
-/storage/singlecell/zz4/fetal_bash/results/MG_monocle3_DE_analysis/NRPC_
 /storage/singlecell/zz4/fetal_bash/results/AC_monocle3_DE_analysis/
 /storage/singlecell/zz4/fetal_bash/results/BC_monocle3_DE_analysis/
 /storage/singlecell/zz4/fetal_bash/results/Cone_monocle3_DE_analysis/
 /storage/singlecell/zz4/fetal_bash/results/Rod_monocle3_DE_analysis/
 /storage/singlecell/zz4/fetal_bash/results/HC_monocle3_DE_analysis/
 /storage/singlecell/zz4/fetal_bash/results/RGC_monocle3_DE_analysis/
-/storage/singlecell/zz4/fetal_bash/results/MG_monocle3_DE_analysis/
+/storage/singlecell/zz4/fetal_bash/results/MG_monocle3_DE_analysis/RPC_
+/storage/singlecell/zz4/fetal_bash/results/MG_monocle3_DE_analysis/PPC_
+/storage/singlecell/zz4/fetal_bash/results/MG_monocle3_DE_analysis/NRPC_
+/storage/singlecell/zz4/fetal_bash/results/MG_monocle3_DE_analysis/MG_
 )
 
 for i in "${!meta_file[@]}"

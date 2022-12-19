@@ -1,0 +1,1 @@
+slurmtaco.sh -p short -m 100G -t 1 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript cell_cycle_infer.R;

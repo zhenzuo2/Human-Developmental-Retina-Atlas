@@ -27,10 +27,6 @@ seurat_object@meta.data$Region <- meta[rownames(seurat_object@meta.data),
     "Region"]
 seurat_object@meta.data$Days <- meta[rownames(seurat_object@meta.data),
     "Days"]
-seurat_object@meta.data$leiden <- meta[rownames(seurat_object@meta.data),
-    "leiden"]
-seurat_object@meta.data$scpred_prediction_mode <- meta[rownames(seurat_object@meta.data),
-    "scpred_prediction_mode"]
 seurat_object@meta.data$subclass <- meta[rownames(seurat_object@meta.data),
     "subclass"]
 seurat_object@meta.data$majorclass <- meta[rownames(seurat_object@meta.data),
@@ -53,7 +49,6 @@ cds <- preprocess_cds(cds, num_dim = 100)
 
 ## Step 2: Remove batch effects with cell alignment
 cds <- align_cds(cds, alignment_group = "batch")
-
 
 ## Step 3: Reduce the dimensions using UMAP
 cds <- reduce_dimension(cds)

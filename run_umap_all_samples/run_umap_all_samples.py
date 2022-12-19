@@ -7,7 +7,6 @@ import scvelo as scv
 import anndata
 import sys
 import pandas as pd
-from statistics import mode
 
 input_path = sys.argv[1]
 output_path = sys.argv[2]

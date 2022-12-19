@@ -5,7 +5,7 @@ library(Pando)
 library(BSgenome.Hsapiens.UCSC.hg38)
 library(foreach)
 library(doParallel)
-registerDoParallel(4)
+registerDoParallel(8)
 set.seed(0)
 
 input_rna_file = args[1]
@@ -15,6 +15,27 @@ cell_type = args[4]
 n_features = as.numeric(args[5])
 output_dir = args[6]
 mode = args[7]
+
+print("input_rna_file")
+print(input_rna_file)
+
+print("input_atac_file")
+print(input_atac_file)
+
+print("meta_file")
+print(meta_file)
+
+print("cell_type")
+print(cell_type)
+
+print("n_features")
+print(n_features)
+
+print("output_dir")
+print(output_dir)
+
+print("mode")
+print(mode)
 
 dir.create(output_dir, showWarnings = FALSE)
 
