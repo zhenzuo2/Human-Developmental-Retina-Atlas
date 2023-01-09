@@ -54,7 +54,7 @@ for i in range(df.shape[0]):
     )
 counts = counts.div(counts.sum(axis=1), axis=0) * 100
 counts["Weeks"] = counts.index.values
-ax = counts.plot(x="Weeks", kind="bar", stacked=True, title=region)
+ax = counts.plot(x="Weeks", kind="barh", stacked=True, title=region)
 ax.yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(
     bbox_to_anchor=(1.02, 1),
@@ -62,4 +62,4 @@ plt.legend(
     borderaxespad=0,
 )
 plt.xlabel("")
-plt.savefig(output_file_path + region + ".svg", bbox_inches='tight')
+plt.savefig(output_file_path + region + ".svg", bbox_inches="tight")

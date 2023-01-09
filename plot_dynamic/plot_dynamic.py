@@ -1,70 +1,55 @@
 import scvelo as scv
-import scanpy as sc
-import sys
 import os
 
-input_path = sys.argv[1]
-output_path = sys.argv[2]
-
 try:
-   os.makedirs(output_path)
+    os.makedirs(
+        os.path.dirname(
+            "/storage/singlecell/zz4/fetal_bash/figures/scv.pl.velocity_embedding_stream/"
+        )
+    )
 except FileExistsError:
-   # directory already exists
-   pass
+    # directory already exists
+    pass
 
-scv.settings.plot_prefix = ""
+cell_types = [
+    "AC",
+    "all",
+    "BC",
+    "Cone",
+    "HC",
+    "MG",
+    "NRPC",
+    "PRPC",
+    "RGC",
+    "Rod",
+    "RPC",
+]
+color_list = ["scpred_prediction", "Time", "Region", "Days", "subclass", "majorclass"]
+for cell_type in cell_types:
+    adata = scv.read(
+        "/storage/singlecell/zz4/fetal_bash/results/annotation_adult_with_label_NRPC_umap_ldata_dynamic/"
+        + cell_type
+        + ".h5ad"
+    )
+    adata.obs['Days'] = adata.obs['Days'].astype(float)
+    for color in color_list:
+        scv.pl.velocity_embedding_stream(
+            adata,
+            basis="umap",
+            legend_fontsize=20,
+            title="",
+            color=color,
+            size=20,
+            colorbar=True,
+            dpi=600,
+            figsize=(10, 10),
+            linewidth=2,
+            alpha=1,
+            legend_loc="on data",
+            save="/storage/singlecell/zz4/fetal_bash/figures/scv.pl.velocity_embedding_stream/"
+            + cell_type
+            + "_"
+            + color
+            + "_scv.pl.velocity_embedding_stream.png",
+        )
 
-adata = scv.read(input_path)
-adata.obs["scpred_prediction"] = adata.obs["scpred_prediction"].astype(str)
-if adata.obs.majorclass.str.contains("MG").any():
-    adata.obs.loc[adata.obs.majorclass == "MG", "scpred_prediction"] = "MG"
-adata.obs["scpred_prediction"] = adata.obs["scpred_prediction"].astype(
-    "category"
-)
-
-scv.pl.velocity_embedding_stream(
-    adata,
-    basis="umap",
-    color="scpred_prediction",
-    title="",
-    save=output_path + "scpred_prediction" + ".svg",
-)
-
-scv.pl.velocity_embedding_stream(
-    adata[adata.obs.Region == "Macula"],
-    basis="umap",
-    color="scpred_prediction",
-    title="",
-    save=output_path + "Macula_scpred_prediction" + ".svg",
-)
-
-scv.pl.velocity_embedding_stream(
-    adata[adata.obs.Region == "Peripheral"],
-    basis="umap",
-    color="scpred_prediction",
-    title="",
-    save=output_path + "Peripheral_scpred_prediction" + ".svg",
-)
-
-scv.pl.velocity_embedding_stream(
-    adata,
-    basis="umap",
-    color="majorclass",
-    title="",
-    save=output_path + "majorclass" + ".svg",
-)
-
-scv.pl.velocity_embedding_stream(
-    adata,
-    basis="umap",
-    color="subclass",
-    title="",
-    save=output_path + "subclass" + ".svg",
-)
-
-scv.pl.velocity_embedding_stream(
-    adata, basis="umap", title="", color="Days", save=output_path + "Days" + ".svg"
-)
-scv.pl.velocity_embedding_stream(
-    adata, basis="umap", title="", color="Region", save=output_path + "Region" + ".svg"
-)

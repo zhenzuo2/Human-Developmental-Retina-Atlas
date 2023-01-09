@@ -33,11 +33,9 @@ seurat_object@meta.data$majorclass <- meta[rownames(seurat_object@meta.data),
     "majorclass"]
 
 seurat_object <- NormalizeData(seurat_object)
-seurat_object <- FindVariableFeatures(seurat_object, selection.method = "vst",
-    nfeatures = 10000)
 
-expression_matrix <- seurat_object@assays$RNA@counts[VariableFeatures(seurat_object),
-    ]
+expression_matrix <- seurat_object@assays$RNA@counts
+
 cell_metadata <- seurat_object@meta.data
 gene_annotation <- data.frame(row.names = rownames(expression_matrix))
 gene_annotation$gene_short_name <- rownames(expression_matrix)
@@ -67,18 +65,26 @@ if (length(root_cells) == 0) {
 
 cds <- order_cells(cds, root_cells = root_cells)
 
+cds
+
 saveRDS(cds, paste(output_dir, "monocle3.rds", sep = ""))
 write.table(pseudotime(cds, reduction_method = "UMAP"), paste(output_dir,
     "monocle3_pseudotime.csv", sep = ""))
 
 time <- pseudotime(cds, reduction_method = "UMAP")
 time_cutoff <- quantile(time, 0.5)
+
 if (mode == "Early") {
     cds <- cds[, pseudotime(cds, reduction_method = "UMAP") < time_cutoff]
 }
 
 if (mode == "Late") {
     cds <- cds[, pseudotime(cds, reduction_method = "UMAP") >= time_cutoff]
+}
+
+if (length(colnames(cds))>10000) {
+    cells <- sample(colnames(cds), 10000, replace = FALSE)
+    cds <- cds[,cells]
 }
 
 region_days_models <- fit_models(cds, model_formula_str = "~ Region + Days",

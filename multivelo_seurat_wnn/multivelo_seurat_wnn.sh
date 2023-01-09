@@ -29,5 +29,5 @@ All
 output_file_path=/storage/singlecell/zz4/fetal_bash/results/multivelo_seurat_wnn/
 
 for i in "${!meta_file[@]}"; do
-    slurmtaco.sh -p gpu -m 200G -t 1 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript multivelo_seurat_wnn.R ${input_file} ${meta_file[i]} ${samples[i]} ${output_file_path};
+    slurmtaco.sh -p gpu -m 200G -t 1 -- Rscript multivelo_seurat_wnn.R ${input_file} ${meta_file[i]} ${samples[i]} ${output_file_path};
 done

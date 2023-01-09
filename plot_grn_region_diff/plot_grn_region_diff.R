@@ -2,7 +2,9 @@ args <- commandArgs(trailingOnly = TRUE)
 seurat_pando_object <- args[1]
 time_cds <- args[2]
 label <- args[3]
-output_dir <- args[4]
+meta1 <- args[4]
+meta2 <- args[5]
+output_dir <- args[6]
 dir.create(output_dir,showWarnings = FALSE)
 library(Pando)
 library(tidyr)
@@ -25,17 +27,12 @@ seurat_object <- find_modules(seurat_object, p_thresh = 0.1, nvar_thresh = 2,
     min_genes_per_module = 1, rsq_thresh = 0.05)
 modules <- NetworkModules(seurat_object)
 modules
-# plot quality control figures
-gof <- plot_gof(seurat_object, point_size = 3)
-ggsave(filename = paste(output_dir, label, "_gof.svg", sep = ""), plot = gof, scale = 1,
-    width = 10, height = 10)
 
-module_metrics <- plot_module_metrics(seurat_object)
-ggsave(filename = paste(output_dir, label, "_module_metrics.svg", sep = ""), plot = module_metrics,
-    scale = 1, width = 10, height = 10)
-
+df1 <- read.csv(meta1)
+df2 <- read.csv(meta2)
+features <- unique(c(setdiff(unique(df1$tf), unique(df2$tf)),setdiff(unique(df1$target), unique(df2$target))))
 # Get network graph
-seurat_object <- get_network_graph(seurat_object, graph_name = "umap_graph",
+seurat_object <- get_network_graph(seurat_object, graph_name = "umap_graph",features = features,
     umap_method = "weighted")
 # Save the initial plot
 grn_plot <- plot_network_graph(seurat_object, graph = "umap_graph", label_nodes = FALSE)
@@ -68,5 +65,5 @@ grn_plot <- grn_plot + geom_point(aes(x = UMAP_1, y = UMAP_2, size = SUM,
 grn_plot <- grn_plot + ggrepel::geom_label_repel(data = dat, aes(UMAP_1,
     UMAP_2, label = labels, color = TIME), box.padding = 1, point.padding = 0,
     max.overlaps = Inf, segment.color = "grey50", min.segment.length = 0)
-ggsave(filename = paste(output_dir, label, "_grn_plot.svg", sep = ""), plot = grn_plot,
+ggsave(filename = paste(output_dir, label, "_grn_plot_diff.svg", sep = ""), plot = grn_plot,
     scale = 1, width = 10, height = 10)

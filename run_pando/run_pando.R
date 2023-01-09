@@ -14,7 +14,8 @@ meta_file = args[3]
 cell_type = args[4]
 n_features = as.numeric(args[5])
 output_dir = args[6]
-mode = args[7]
+parallel = args[7]
+mode = args[8]
 
 print("input_rna_file")
 print(input_rna_file)
@@ -62,6 +63,8 @@ rna <- subset(rna, cells = common_cells)
 seurat_object[["RNA"]] <- rna@assays$RNA
 seurat_object@meta.data<-cbind(seurat_object@meta.data, rna@meta.data[colnames(seurat_object),])
 
+print(seurat_object)
+
 if (length(colnames(seurat_object))>20000){
     cells = sample(colnames(seurat_object), 20000)
     seurat_object <- subset(seurat_object, cells = cells)
@@ -72,7 +75,7 @@ data(motifs)
 seurat_object <- find_motifs(seurat_object, pfm = motifs, genome = BSgenome.Hsapiens.UCSC.hg38)
 
 seurat_object <- infer_grn(seurat_object, peak_to_gene_method = "Signac",
-    method = "glm", parallel = T)
+    method = "glm", parallel = as.logical(parallel))
 saveRDS(seurat_object, paste(output_dir, cell_type, "_seurat_object_", mode, ".rds", sep = ""))
 seurat_object <- find_modules(seurat_object)
 modules <- NetworkModules(seurat_object)

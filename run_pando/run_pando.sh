@@ -40,13 +40,11 @@ output_dir=(
 
 for i in "${!meta_file[@]}"
 do
-	slurmtaco.sh -p gpu -m 50G --30day -t 4 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} ${n_features} ${output_dir[i]} "All";
-	slurmtaco.sh -p gpu -m 50G --30day -t 4 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} ${n_features} ${output_dir[i]} "Macula";
-	slurmtaco.sh -p gpu -m 50G --30day -t 4 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} ${n_features} ${output_dir[i]} "Peripheral";
+	slurmtaco.sh -p gpu -m 50G --30day -t 4 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} ${n_features} ${output_dir[i]} "TRUE" "All";
+	slurmtaco.sh -p gpu -m 50G --30day -t 4 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} ${n_features} ${output_dir[i]} "TRUE" "Macula";
+	slurmtaco.sh -p gpu -m 50G --30day -t 4 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} ${n_features} ${output_dir[i]} "TRUE" "Peripheral";
 done
 
-i=1
-slurmtaco.sh -p short -m 100G -t 8 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} ${n_features} ${output_dir[i]} "All";
-slurmtaco.sh -p short -m 100G -t 8 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} ${n_features} ${output_dir[i]} "Macula";
-slurmtaco.sh -p short -m 100G -t 8 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} ${n_features} ${output_dir[i]} "Peripheral";
+i=0
+slurmtaco.sh --g01 -m 100G -t 1 -- Rscript run_pando.R ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} ${n_features} ${output_dir[i]} "FALSE" "Macula";
 

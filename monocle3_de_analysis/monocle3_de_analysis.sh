@@ -29,14 +29,14 @@ output_dir=(
 /storage/singlecell/zz4/fetal_bash/results/HC_monocle3_DE_analysis/
 /storage/singlecell/zz4/fetal_bash/results/RGC_monocle3_DE_analysis/
 /storage/singlecell/zz4/fetal_bash/results/MG_monocle3_DE_analysis/RPC_
-/storage/singlecell/zz4/fetal_bash/results/MG_monocle3_DE_analysis/PPC_
+/storage/singlecell/zz4/fetal_bash/results/MG_monocle3_DE_analysis/PRPC_
 /storage/singlecell/zz4/fetal_bash/results/MG_monocle3_DE_analysis/NRPC_
 /storage/singlecell/zz4/fetal_bash/results/MG_monocle3_DE_analysis/MG_
 )
 
 for i in "${!meta_file[@]}"
 do
-	slurmtaco.sh --g01 -m 20G -t 1 --30day -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript monocle3_de_analysis.R  $input_file ${meta_file[i]} ${output_dir[i]} Early;
-	slurmtaco.sh --g01 -m 20G -t 1 --30day -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript monocle3_de_analysis.R  $input_file ${meta_file[i]} ${output_dir[i]} Late;
-	slurmtaco.sh --g01 -m 20G -t 1 --30day -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript monocle3_de_analysis.R  $input_file ${meta_file[i]} ${output_dir[i]} All;
+	slurmtaco.sh --g01 -m 100G -t 1 --30day -- Rscript monocle3_de_analysis.R  $input_file ${meta_file[i]} ${output_dir[i]} Early;
+	slurmtaco.sh --g01 -m 100G -t 1 --30day -- Rscript monocle3_de_analysis.R  $input_file ${meta_file[i]} ${output_dir[i]} Late;
+	slurmtaco.sh --g01 -m 100G -t 1 --30day -- Rscript monocle3_de_analysis.R  $input_file ${meta_file[i]} ${output_dir[i]} All;
 done

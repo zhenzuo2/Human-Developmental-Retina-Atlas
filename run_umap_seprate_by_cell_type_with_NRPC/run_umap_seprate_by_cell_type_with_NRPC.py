@@ -22,7 +22,7 @@ def run_umap_scvi(adata):
     adata.obsm["X_scVI"] = vae.get_latent_representation()
     sc.pp.neighbors(adata, use_rep="X_scVI")
     sc.tl.umap(adata)
-    sc.tl.leiden(adata, resolution=2)
+    sc.tl.leiden(adata)
     scvi.settings.seed = 0
 
     lvae = scvi.model.SCANVI.from_scvi_model(
