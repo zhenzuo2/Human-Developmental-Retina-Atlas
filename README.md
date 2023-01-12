@@ -78,8 +78,9 @@
 | ------------- | ------------- |
 | plot_cell_type_composition | Plot cell type composition. |
 | summary_sample_meta | Summary sample meta information. | 
-
-
+| plot_umap_adult_annotated_object| Plot UMAP color by attributes for each cell type. |
+| plot_umap_seperate_time| Plot UMAP color by time. |
+| run_umap_seprate_by_cell_type_with_NRPC | Plot UMAP for each cell type branch. |
 
 
 
