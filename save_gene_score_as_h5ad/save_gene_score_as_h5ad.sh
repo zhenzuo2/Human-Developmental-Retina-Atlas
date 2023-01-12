@@ -1,0 +1,1 @@
+slurmtaco.sh -p short -m 50G -t 1 -- python3 save_gene_score_as_h5ad.py;

@@ -2,46 +2,26 @@
 
 # ATAC-seq analysis
 
-## ArchR_create_object
-Create ArchR object for all data with ATAC-seq.
-
-## ArchR_filter
-Filter Doublets.
+| Folder Name  | Functions and aims |
+| ------------- | ------------- |
+| ArchR_create_object  | Create ArchR object for all data with ATAC-seq.  |
+| ArchR_filter  | Filter Doublets.  |
 
 # Data annotation
 
-## QC_seurat
-First-round of QC. Read10X_h5() and saveRDS(). Generate QC figures to find optimal QC parameters for each sample.
-
-## QC_seurat_apply_filter
-Apply filters based on QC results from QC_seurat.
-
-## DoubletFinder
-Find Doublets.
-
-## scpred
-Run scPredict() on filtered cells to infer cell type.
-
-## merge_scpred_meta
-Merge all meta data.
-
-## run_umap_all_samples
-Run umap on all merged/filtered cells.
-
-## annotate_with_adult
-Assign subclass labels with adult data
-
-## add_adult_annotated_reference_to_object
-add_adult_annotated_reference_to_object
-
-## merge_annotated_h5ad
-Merge annotated object to one anndata object
-
-## run_umap_adult_annotated_object
-Run umap on objects with annotations from adults
-
-## plot_umap_adult_annotated_object
-Plot umap on objects with annotations from adults
+| Folder Name  | Functions and aims |
+| ------------- | ------------- |
+| QC_seurat  | First-round of QC. Read10X_h5() and saveRDS(). Generate QC figures to find optimal QC parameters for each sample.  |
+| QC_seurat_apply_filter  | Apply filters based on QC results from QC_seurat.  |
+| DoubletFinder | Find Doublets. |
+| scpred | Run scPredict() on filtered cells to infer cell type. |
+| merge_scpred_meta | Merge all meta data. |
+| run_umap_all_samples | Run umap on all merged/filtered cells. |
+| annotate_with_adult | Assign subclass labels with adult data. |
+| add_adult_annotated_reference_to_object | Add adult annotated reference to the object. |
+| merge_annotated_h5ad | Merge annotated object to one anndata object. |
+| run_umap_adult_annotated_object | Run umap on objects with annotations from adults. |
+| plot_umap_adult_annotated_object | Plot umap on objects with annotations from adults. |
 
 # Merge data
 ## merge_atac
