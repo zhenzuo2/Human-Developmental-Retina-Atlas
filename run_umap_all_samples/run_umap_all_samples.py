@@ -1,88 +1,71 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-import scanpy as sc
-import scvi
-import os
-import scvelo as scv
-import anndata
-import sys
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import scvi
+import scanpy as sc
+import tempfile
+import scvelo as scv
+import os
 
-input_path = sys.argv[1]
-output_path = sys.argv[2]
-meta_file = sys.argv[3]
 
-SAMPLES = [
-    os.path.join(input_path, folder + "/outs/filtered_feature_bc_matrix.h5")
-    for folder in os.listdir(input_path)
+sc.set_figure_params(figsize=(10, 10))
+scvi.settings.seed = 0
+
+adata = sc.read(
+    "/storage/singlecell/zz4/fetal_bash/results/merged_h5ad/merged_raw.h5ad"
+)
+
+meta = pd.read_csv(
+    "/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/merged_raw_filtered_meta_major_class.csv"
+)
+meta.index = meta["Unnamed: 0"].values
+
+adata = adata[
+    meta["Unnamed: 0"].values,
 ]
-names = os.listdir(input_path)
 
-# Read data
+adata.obs["majorclass"] = meta.loc[adata.obs.index.values, "majorclass"]
 
-adata = sc.read_10x_h5(SAMPLES[0])
-adata.var_names_make_unique()
-adata.obs_names_make_unique()
-adata.obs.index = [names[0] + "_" + x for x in list(adata.obs.index)]
-adata.obs["batch"] = names[0]
+adata = adata[
+    adata.obs.majorclass.isin(["AC", "BC", "Cone", "HC", "MG", "RGC", "Rod"]),
+]
 
-names = names[1:]
-for (i, f) in enumerate(SAMPLES[1:]):
-    print("Processing " + f)
-    temp = sc.read_10x_h5(f)
-    temp.obs.index = [names[i] + "_" + x for x in list(temp.obs.index)]
-    temp.obs["batch"] = names[i]
-    temp.var_names_make_unique()
-    temp.obs_names_make_unique()
-    adata = anndata.concat([adata, temp])
+def run_umap_scvi(adata):
+    f = tempfile.mkstemp(suffix=".h5ad")[1]
+    adata.write(f)
+    sc.pp.highly_variable_genes(
+        adata, flavor="seurat_v3", n_top_genes=10000, subset=True
+    )
+    scvi.settings.seed = 0
+    scvi.model.SCVI.setup_anndata(adata, batch_key="sampleid", labels_key="majorclass")
+    vae = scvi.model.SCVI(adata, n_layers=2, n_latent=30, gene_likelihood="nb")
+    vae.train()
+    adata.obsm["X_scVI"] = vae.get_latent_representation()
+    scvi.settings.seed = 0
 
-adata.var_names_make_unique()
-adata.obs_names_make_unique()
-adata.write(os.path.join(output_path, "merged_raw_filtered.h5ad"))
+    lvae = scvi.model.SCANVI.from_scvi_model(
+        vae,
+        adata=adata,
+        labels_key="majorclass",
+        unlabeled_category="Unknown",
+    )
+    lvae.train(max_epochs=100, batch_size=640)
+    adata.obsm["X_scANVI"] = lvae.get_latent_representation(adata)
 
-meta = pd.read_csv(meta_file, sep=",")
-meta.index = list(meta['Unnamed: 0'].values)
+    sc.pp.neighbors(adata, use_rep="X_scANVI")
+    sc.tl.leiden(adata)
+    sc.tl.umap(adata)
 
-adata = adata[list(meta['Unnamed: 0'].values),:]
+    temp = scv.read(f)
+    os.remove(f)
+    temp.obs["leiden"] = adata.obs.leiden
+    temp.obsm["X_scVI"] = adata.obsm["X_scVI"]
+    temp.obsm["X_scANVI"] = adata.obsm["X_scANVI"]
+    temp.obsm["X_umap"] = adata.obsm["X_umap"]
+    return temp
 
-adata.obs["scpred_prediction"] = meta.loc[adata.obs.index.to_list()].scpred_prediction
-adata.obs["Time"] = meta.loc[adata.obs.index.to_list()].Time
-adata.obs["Region"] = meta.loc[adata.obs.index.to_list()].Region
-adata.obs["Days"] = meta.loc[adata.obs.index.to_list()].Days
 
-adata.obs["scpred_prediction"] = adata.obs["scpred_prediction"].str.replace("MG", "RPC")
-adata.write(os.path.join(output_path, "merged_raw_filtered_annotated.h5ad"))
-
-sc.pp.highly_variable_genes(
-    adata, flavor="seurat_v3", n_top_genes=2000, batch_key="batch", subset=True
+adata = run_umap_scvi(adata)
+adata.write(
+    "/storage/singlecell/zz4/fetal_bash/results/merged_h5ad/merged_raw_filtered_umap_10000.h5ad"
 )
-
-scvi.settings.seed = 0
-scvi.model.SCVI.setup_anndata(adata, batch_key="batch", labels_key="scpred_prediction")
-vae = scvi.model.SCVI(adata, n_layers=2, n_latent=30, gene_likelihood="nb")
-vae.train()
-adata.obsm["X_scVI"] = vae.get_latent_representation()
-sc.pp.neighbors(adata, use_rep="X_scVI")
-sc.tl.umap(adata)
-sc.tl.leiden(adata)
-
-scvi.settings.seed = 0
-lvae = scvi.model.SCANVI.from_scvi_model(
-    vae, adata=adata, labels_key="scpred_prediction", unlabeled_category="Unknown"
-)
-lvae.train(max_epochs=20, n_samples_per_label=30000)
-adata.obsm["X_scANVI"] = lvae.get_latent_representation(adata)
-
-sc.pp.neighbors(adata, use_rep="X_scANVI")
-sc.tl.leiden(adata)
-sc.tl.umap(adata)
-
-temp = scv.read(os.path.join(output_path, "merged_raw_filtered_annotated.h5ad"))
-
-temp.obs["leiden"] = adata.obs.leiden
-temp.obsm["X_scVI"] = adata.obsm["X_scVI"]
-temp.obsm["X_umap"] = adata.obsm["X_umap"]
-temp.obsm["X_scANVI"] = adata.obsm["X_scANVI"]
-
-temp.obs.to_csv(os.path.join(output_path, "merged_raw_filtered_annotated_umap_obs.csv"))
-temp.write(os.path.join(output_path, "merged_raw_filtered_annotated_umap.h5ad"))

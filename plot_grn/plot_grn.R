@@ -70,3 +70,4 @@ grn_plot <- grn_plot + ggrepel::geom_label_repel(data = dat, aes(UMAP_1,
     max.overlaps = Inf, segment.color = "grey50", min.segment.length = 0)
 ggsave(filename = paste(output_dir, label, "_grn_plot.svg", sep = ""), plot = grn_plot,
     scale = 1, width = 10, height = 10)
+write.csv(dat,paste(output_dir, label, "_grn_plot.csv", sep = ""))

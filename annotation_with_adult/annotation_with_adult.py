@@ -63,7 +63,7 @@ try:
 except:
     print("An exception occurred! Fix the batch or run without batch now.")
     sc.pp.highly_variable_genes(
-        adata_query, flavor="seurat_v3", n_top_genes=2000, subset=True
+        adata_query, flavor="seurat_v3", n_top_genes=10000, subset=True
     )
 
 scvi.settings.seed = 0
@@ -113,13 +113,13 @@ adata.obs[batch_key] = adata.obs[batch_key].astype("str").astype("category")
 # Run UMAP on concated data
 try:
     sc.pp.highly_variable_genes(
-        adata, flavor="seurat_v3", n_top_genes=2000, batch_key=batch_key, subset=True
+        adata, flavor="seurat_v3", n_top_genes=10000, batch_key=batch_key, subset=True
     )
 
 except:
     print("An exception occurred! Fix the batch or run without batch now.")
     sc.pp.highly_variable_genes(
-        adata, flavor="seurat_v3", n_top_genes=2000, subset=True
+        adata, flavor="seurat_v3", n_top_genes=10000, subset=True
     )
 scvi.settings.seed = 0
 if labels_key == "":

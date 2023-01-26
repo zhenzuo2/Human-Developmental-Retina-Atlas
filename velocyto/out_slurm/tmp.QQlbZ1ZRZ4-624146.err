@@ -1,4 +1,0 @@
-Usage: velocyto run [OPTIONS] BAMFILE... GTFFILE
-Try 'velocyto run --help' for help.
-
-Error: Invalid value for 'BAMFILE...': File '/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/17W1D_Temporal_retina/outs/gex_possorted_bam.bam' does not exist.

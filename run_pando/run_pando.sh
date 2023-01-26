@@ -1,8 +1,8 @@
 input_rna_file="/storage/singlecell/zz4/fetal_bash/results/merged_rna/merged_rna.rds"
 input_atac_file="/storage/singlecell/zz4/fetal_bash/results/merged_atac/atac_tss_filtered.rds"
 cell_type=(
-AC
 BC
+AC
 Cone
 Rod
 HC
@@ -12,10 +12,11 @@ PRPC
 NRPC
 MG
 )
-n_features=5000
+n_features=10000
+n_cells=40000
 meta_file=(
-/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_AC.csv
 /storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_BC.csv
+/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_AC.csv
 /storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_Cone.csv
 /storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_Rod.csv
 /storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_HC.csv
@@ -26,8 +27,8 @@ meta_file=(
 /storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/MG.csv
 )
 output_dir=(
-/storage/singlecell/zz4/fetal_bash/results/AC_Pando/
 /storage/singlecell/zz4/fetal_bash/results/BC_Pando/
+/storage/singlecell/zz4/fetal_bash/results/AC_Pando/
 /storage/singlecell/zz4/fetal_bash/results/Cone_Pando/
 /storage/singlecell/zz4/fetal_bash/results/Rod_Pando/
 /storage/singlecell/zz4/fetal_bash/results/HC_Pando/
@@ -40,11 +41,18 @@ output_dir=(
 
 for i in "${!meta_file[@]}"
 do
-	slurmtaco.sh -p gpu -m 50G --30day -t 4 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} ${n_features} ${output_dir[i]} "TRUE" "All";
-	slurmtaco.sh -p gpu -m 50G --30day -t 4 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} ${n_features} ${output_dir[i]} "TRUE" "Macula";
-	slurmtaco.sh -p gpu -m 50G --30day -t 4 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} ${n_features} ${output_dir[i]} "TRUE" "Peripheral";
+	slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "FALSE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "All";
+	slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "FALSE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "Macula";
+	slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "FALSE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "Peripheral";
+	slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "TRUE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "All";
+	slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "TRUE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "Macula";
+	slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "TRUE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "Peripheral";
 done
 
-i=0
-slurmtaco.sh --g01 -m 100G -t 1 -- Rscript run_pando.R ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} ${n_features} ${output_dir[i]} "FALSE" "Macula";
-
+i=8
+slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "FALSE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "All";
+slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "FALSE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "Macula";
+slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "FALSE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "Peripheral";
+slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "TRUE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "All";
+slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "TRUE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "Macula";
+slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "TRUE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "Peripheral";

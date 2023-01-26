@@ -5,7 +5,7 @@ cat("output_results_path=/storage/singlecell/zz4/fetal_bash/results/DoubletFinde
 cat("output_figures_path=/storage/singlecell/zz4/fetal_bash/figures/DoubletFinder_UMAP/\n")
 
 for (i in 1:nrow(df)) {
-  cat(paste("slurmtaco.sh -p short -m 20G -t 1 -- /storage/chen/home/zz4/anaconda3/envs/r/bin/Rscript DoubletFinder.R",
+  cat(paste("slurmtaco.sh -p short -m 20G -t 1 -- Rscript DoubletFinder.R",
             " ", df$Samples_ID[i], " ", df$Samples[i],
             " $output_results_path", " $output_figures_path;", sep = ""))
   cat("\n")

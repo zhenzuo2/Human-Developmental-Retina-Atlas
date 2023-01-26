@@ -1,0 +1,1 @@
+slurmtaco.sh -p gpu -m 100G -t 1 -- Rscript create_seRNA.R;

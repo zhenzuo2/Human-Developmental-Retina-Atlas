@@ -1,0 +1,1 @@
+slurmtaco.sh -p short -m 100G -t 1 -- python3 merge_h5ad.py;
