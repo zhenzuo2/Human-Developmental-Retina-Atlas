@@ -28,7 +28,7 @@ except FileExistsError:
 adata = scv.read(adata_file)
 
 adata = adata[
-    adata.obs.scpred_prediction == cell_type,
+    adata.obs.majorclass == cell_type,
 ]
 
 # Read meta_cluster file with cluster information
@@ -56,10 +56,8 @@ adata.obs["majorclass"] = (
     .fillna(cell_type + " Precursor")
 )
 
-adata.obs["scpred_prediction"] = adata.obs["scpred_prediction"].astype(str)
-if adata.obs.majorclass.str.contains("MG").any():
-    adata.obs.loc[adata.obs.majorclass == "MG", "scpred_prediction"] = "MG"
-adata.obs["scpred_prediction"] = adata.obs["scpred_prediction"].astype(
+adata.obs["majorclass"] = adata.obs["majorclass"].astype(str)
+adata.obs["majorclass"] = adata.obs["majorclass"].astype(
     "category"
 )
 

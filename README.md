@@ -55,14 +55,9 @@
 | merge_h5ad | Merge all h5ad, add meta info, save, and save all filtered cells in another object.|
 | cell_type_annotation_major_class |Run first round of major class annotation.| 
 | run_umap_all_samples |Run second step of major class annotation.| 
-#| scpred | Run scPredict() on filtered cells to infer cell type. |
-#| merge_scpred_meta | Merge all meta data. |
-#| run_umap_all_samples | Merge samples and run umap on all merged/filtered cells. |
 | annotation_with_adult | Assign subclass labels with adult data. |
 | add_adult_annotated_reference_to_object | Add adult annotated reference to the object. |
-| merge_annotated_h5ad | Merge annotated object to one anndata object. |
-| run_umap_adult_annotated_object | Run umap on objects with annotations from adults. |
-| plot_umap_adult_annotated_object | Plot umap on objects with annotations from adults. |
+| merge_annotation_sub_major_class | Merge annotated object to one anndata object. |
 
 # Merge samples
 | Folder Name  | Functions and aims |
@@ -79,13 +74,12 @@
 | merge_looms | Merge all looms from velocyto results. |
 | convert_loom_to_h5ad | Convert merged loom file to anndata object. |
 | add_ldata_to_adata | Add merged loom h5ad object to anndata object. |
+| recover_dynamic | Recover dynamics for each cell type branch. |
 | compute_vk | Kernel which computes a transition matrix based on RNA velocity. |
 | infer_fate | Infer fate for all cells and save predicted terminal states. |
 | infer_fate_NRPC | Infer fate for NRPCs. |
 | infer_fate_NRPC_save_meta | Plot well known markers for each NRPC fate to validate prediction. |
-| recover_dynamic | Recover dynamics for each cell type branch. |
 | plot_dynamic | Plot scv.pl.velocity_embedding_stream(). |
-
 
 # multivelo
 | Folder Name  | Functions and aims |

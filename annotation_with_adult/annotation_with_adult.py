@@ -34,7 +34,7 @@ adata_query = scv.read(
     cache=False,
 )
 adata_query = adata_query[
-    adata_query.obs.scpred_prediction == cell_type,
+    adata_query.obs.majorclass == cell_type,
 ]
 adata_query.obs.Days = adata_query.obs.Days.astype(float)
 
@@ -48,7 +48,7 @@ del adata_query.raw
 del adata_ref.raw
 
 # Run UMAP on query adata to get leiden clusters
-batch_key = "batch"
+batch_key = "sampleid"
 labels_key = ""
 adata_query.obs[batch_key] = adata_query.obs[batch_key].astype("str").astype("category")
 try:
@@ -97,14 +97,13 @@ adata_query.obsm["X_umap"] = X_umap
 adata_query.obsm["X_scVI"] = X_scVI
 del adata_query.raw
 
-adata_ref.obs["batch"] = adata_ref.obs.sample_uuid
+adata_ref.obs[batch_key] = adata_ref.obs.sample_uuid
 adata_query.obs["sample_source"] = "fetal"
 adata_ref.obs["sample_source"] = "adult"
 
 # Concat ref adata and query adata
 adata = anndata.concat([adata_ref, adata_query])
 
-batch_key = "batch"
 labels_key = ""
 adata = adata.copy()
 adata.raw = adata  # keep full dimension safe

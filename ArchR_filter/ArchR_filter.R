@@ -21,7 +21,14 @@ cells <- getCellNames(projretina2)
 meta.data <- read.csv(input_meta)
 rownames(meta.data) <- meta.data$X
 meta.data$X2 <- stri_replace_last(rownames(meta.data), fixed = "_", "#")
-
+meta.data$scpred_prediction <- plyr::mapvalues(meta.data$majorclass, from = c("AC Precursor",
+                                                                              "BC Precursor", "Cone Precursor", "GABAergic", "Glycinergic", "HC0",
+                                                                              "HC1", "MG", "ML_Cone", "NRPC", "OFF-BC", "OFF_MGC", "ON-BC", "ON_MGC",
+                                                                              "PRPC", "RBC", "RGC Precursor", "Rod", "Rod Precursor", "SACs", "S_Cone",
+                                                                              "dual ACs"), to = c("AC", "BC", "Cone", "AC", "AC", "HC", "HC", "MG",
+                                                                                                  "Cone", "RPC", "BC", "RGC", "BC", "RGC", "RPC", "BC", "RGC", "Rod",
+                                                                                                  "Rod", "AC", "Cone", "AC"))
+                                                                                                  
 common_cells <- intersect(cells, meta.data$X2)
 
 projretina3 <- subsetArchRProject(projretina2, cells = common_cells, force = TRUE)

@@ -19,6 +19,33 @@ df = df.loc[
     df.Region == region,
 ]
 df = df.reset_index()
+df["scpred_prediction"] = df.majorclass.replace(
+    {
+        "AC Precursor": "AC",
+        "BC Precursor": "BC",
+        "Cone Precursor": "Cone",
+        "GABAergic": "AC",
+        "Glycinergic": "AC",
+        "HC0": "HC",
+        "HC1": "HC",
+        "MG": "MG",
+        "ML_Cone": "Cone",
+        "NRPC": "RPC",
+        "OFF-BC": "BC",
+        "OFF_MGC": "RGC",
+        "ON-BC": "BC",
+        "ON_MGC": "RGC",
+        "PRPC": "RPC",
+        "RBC": "BC",
+        "RGC Precursor": "RGC",
+        "Rod": "Rod",
+        "Rod Precursor": "Rod",
+        "SACs": "AC",
+        "S_Cone": "Cone",
+        "dual ACs": "AC",
+    }
+)
+
 df["Weeks"] = df.Days.map(
     {
         70: "FW10",
@@ -28,6 +55,8 @@ df["Weeks"] = df.Days.map(
         100: "FW16",
         103: "FW16",
         116: "FW16",
+        120: "FW16",
+        136: "FW20",
         137: "FW20",
         141: "FW20",
         142: "FW20",

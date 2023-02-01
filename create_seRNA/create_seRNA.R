@@ -50,6 +50,17 @@ Multiome_23w4d_FR <- import10xFeatureMatrix("/storage/singlecell/zz4/fetal_bash/
     names = "Multiome_23w4d_FR")
 Multiome_23w4d_NR <- import10xFeatureMatrix("/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/Multiome_23w4d_NR/outs/filtered_feature_bc_matrix.h5",
     names = "Multiome_23w4d_NR")
+multi_19W3D_I_ret <- import10xFeatureMatrix("/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/Multiome_23w4d_NR/outs/filtered_feature_bc_matrix.h5",
+    names = "multi_19W3D_I_ret")
+multi_19w3d_S_ret <- import10xFeatureMatrix("/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/Multiome_23w4d_NR/outs/filtered_feature_bc_matrix.h5",
+    names = "multi_19w3d_S_ret")
+multi_19W3d_T_ret <- import10xFeatureMatrix("/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/Multiome_23w4d_NR/outs/filtered_feature_bc_matrix.h5",
+    names = "multi_19W3d_T_ret")
+multi_19w3d_F_ret <- import10xFeatureMatrix("/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/Multiome_23w4d_NR/outs/filtered_feature_bc_matrix.h5",
+    names = "multi_19w3d_F_ret")
+multi_19W3D_N_RET <- import10xFeatureMatrix("/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/Multiome_23w4d_NR/outs/filtered_feature_bc_matrix.h5",
+    names = "multi_19W3D_N_RET")
+
 
 Multi_Fetal_11w2d_FR_2@rowRanges = Multi_Fetal_11w2d_FR@rowRanges
 Multi_Fetal_11w2d_NR@rowRanges = Multi_Fetal_11w2d_FR@rowRanges
@@ -75,6 +86,11 @@ Multiome_20w1d_FR@rowRanges = Multi_Fetal_11w2d_FR@rowRanges
 Multiome_20w1d_NR@rowRanges = Multi_Fetal_11w2d_FR@rowRanges
 Multiome_23w4d_FR@rowRanges = Multi_Fetal_11w2d_FR@rowRanges
 Multiome_23w4d_NR@rowRanges = Multi_Fetal_11w2d_FR@rowRanges
+multi_19W3D_I_ret@rowRanges = Multi_Fetal_11w2d_FR@rowRanges
+multi_19w3d_S_ret@rowRanges = Multi_Fetal_11w2d_FR@rowRanges
+multi_19W3d_T_ret@rowRanges = Multi_Fetal_11w2d_FR@rowRanges
+multi_19w3d_F_ret@rowRanges = Multi_Fetal_11w2d_FR@rowRanges
+multi_19W3D_N_RET@rowRanges = Multi_Fetal_11w2d_FR@rowRanges
 
 seRNA <- cbind(Multi_Fetal_11w2d_FR, Multi_Fetal_11w2d_FR_2)
 seRNA <- cbind(seRNA, Multi_Fetal_11w2d_NR)
@@ -100,5 +116,10 @@ seRNA <- cbind(seRNA, Multiome_20w1d_FR)
 seRNA <- cbind(seRNA, Multiome_20w1d_NR)
 seRNA <- cbind(seRNA, Multiome_23w4d_FR)
 seRNA <- cbind(seRNA, Multiome_23w4d_NR)
+seRNA <- cbind(seRNA, multi_19W3D_I_ret)
+seRNA <- cbind(seRNA, multi_19w3d_S_ret)
+seRNA <- cbind(seRNA, multi_19W3d_T_ret)
+seRNA <- cbind(seRNA, multi_19w3d_F_ret)
+seRNA <- cbind(seRNA, multi_19W3D_N_RET)
 
 saveRDS(seRNA, "/storage/singlecell/zz4/fetal_bash/results/seRNA/seRNA.rds")

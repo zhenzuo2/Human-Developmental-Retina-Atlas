@@ -24,6 +24,11 @@ inputs=(
 /storage/singlecell/zz4/fetal_bash/data/Retina_fetal/Multiome_20w1d_NR
 /storage/singlecell/zz4/fetal_bash/data/Retina_fetal/Multiome_23w4d_FR
 /storage/singlecell/zz4/fetal_bash/data/Retina_fetal/Multiome_23w4d_NR
+/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/multi_19w3d_F_ret
+/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/multi_19W3D_I_ret
+/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/multi_19W3D_N_RET
+/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/multi_19w3d_S_ret
+/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/multi_19W3d_T_ret
 )
 
 samples=(
@@ -52,6 +57,11 @@ Multiome_20w1d_FR
 Multiome_20w1d_NR
 Multiome_23w4d_FR
 Multiome_23w4d_NR
+multi_19w3d_F_ret
+multi_19W3D_I_ret
+multi_19W3D_N_RET
+multi_19w3d_S_ret
+multi_19W3d_T_ret
 )
 
 output_result_path=/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x/
