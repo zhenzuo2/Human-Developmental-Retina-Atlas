@@ -8,6 +8,7 @@ library(parallel)
 library(stringi)
 set.seed(1)
 setwd(input_path)
+library(BSgenome.Hsapiens.UCSC.hg38)
 
 # prepare to import atac-seq data
 addArchRGenome("hg38")
@@ -28,13 +29,13 @@ meta.data$scpred_prediction <- plyr::mapvalues(meta.data$majorclass, from = c("A
                                                                               "dual ACs"), to = c("AC", "BC", "Cone", "AC", "AC", "HC", "HC", "MG",
                                                                                                   "Cone", "RPC", "BC", "RGC", "BC", "RGC", "RPC", "BC", "RGC", "Rod",
                                                                                                   "Rod", "AC", "Cone", "AC"))
-                                                                                                  
+
 common_cells <- intersect(cells, meta.data$X2)
 
 projretina3 <- subsetArchRProject(projretina2, cells = common_cells, force = TRUE)
 rownames(meta.data) <- meta.data$X2
 for (col in colnames(meta.data)) {
-    projretina3@cellColData[, col] <- meta.data[rownames(projretina3),
+    projretina3@cellColData[, col] <- meta.data[rownames(projretina3@cellColData),
         col]
 }
 write.table(projretina3@cellColData, paste(output_results_path, "projretina3_cellColData.csv",

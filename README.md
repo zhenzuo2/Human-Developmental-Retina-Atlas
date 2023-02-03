@@ -87,6 +87,7 @@
 | multivelo_prepare_create_atac | Preprocessing the ATAC counts. |
 | multivelo_normalize_atac_TF | Enhancer peaks were aggregated with 10x annotated promoter peaks and then normalized. |
 | multivelo_shared_barcodes_RNA_ATAC | Find common cells. |
+| Pando_merge_object | Merge object for WNN. | 
 | multivelo_seurat_wnn | Run WNN on common cells. |
 | multivelo_knn_smooth_chrom | Smooth ATAC-seq data based on WNN results. |
 |multivelo_recover_dynamics_run_umap| Run UMAP.|

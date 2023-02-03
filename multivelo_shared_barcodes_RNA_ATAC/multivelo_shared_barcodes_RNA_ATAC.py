@@ -13,38 +13,43 @@ except FileExistsError:
     pass
 
 meta = pd.read_csv(
-    "/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/merged_h5ad_adult_annotated_obs.csv"
+    "/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/merged_raw_filtered_umap_10000_major_sub_class.obs.csv"
 )
 meta.index = meta["Unnamed: 0"].values
 
 adata_atac = scv.read(
-    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_10w_NR.h5ad"
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/multi_19w3d_F_ret.h5ad"
 )
 SAMPLES = [
-    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_14w5d_NR.h5ad",
-    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_10w_FR.h5ad",
-    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_11w2d_FR.h5ad",
-    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_14w5d_FR.h5ad",
-    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_13W_FR.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/multi_19W3D_I_ret.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/multi_19W3D_N_RET.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/multi_19w3d_S_ret.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/multi_19W3d_T_ret.h5ad",
     "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_11w2d_FR_2.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_11w2d_FR.h5ad",
     "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_11w2d_NR.h5ad",
-    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_12w3d_FR.h5ad",
-    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_20W2d_FR.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_13W_FR.h5ad",
     "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_13W_NR.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_14w5d_FR.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_14w5d_NR.h5ad",
     "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_19W4d_FR.h5ad",
-    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_23w1d_NR.h5ad",
-    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_12w3d_NR.h5ad",
     "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_19W4d_NR.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_20W2d_FR.h5ad",
     "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_20W2d_NR.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_23w1d_FR.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_23w1d_NR.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_10w_FR.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_10w_NR.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_12w3d_FR.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_12w3d_NR.h5ad",
     "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_14w2d_FR.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_14w2d_NR.h5ad",
     "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_16w4d_FR.h5ad",
     "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_16w4d_NR.h5ad",
-    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_23w4d_FR.h5ad",
     "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_20w1d_FR.h5ad",
-    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_23w4d_NR.h5ad",
-    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multi_Fetal_23w1d_FR.h5ad",
     "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_20w1d_NR.h5ad",
-    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_14w2d_NR.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_23w4d_FR.h5ad",
+    "/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/Multiome_23w4d_NR.h5ad",
 ]
 
 for f in SAMPLES:
@@ -65,13 +70,13 @@ len(shared_cells), len(shared_genes)
 adata_rna = adata_rna[shared_cells, shared_genes]
 adata_atac = adata_atac[shared_cells, shared_genes]
 
-adata_rna.obs["scpred_prediction"] = meta.loc[adata_rna.obs_names, "scpred_prediction"]
+adata_rna.obs["sampleid"] = meta.loc[adata_rna.obs_names, "sampleid"]
 adata_rna.obs["Time"] = meta.loc[adata_rna.obs_names, "Time"]
 adata_rna.obs["Region"] = meta.loc[adata_rna.obs_names, "Region"]
 adata_rna.obs["Days"] = meta.loc[adata_rna.obs_names, "Days"]
+adata_rna.obs["Data Type"] = meta.loc[adata_rna.obs_names, "Data Type"]
 adata_rna.obs["subclass"] = meta.loc[adata_rna.obs_names, "subclass"]
 adata_rna.obs["majorclass"] = meta.loc[adata_rna.obs_names, "majorclass"]
-adata_rna.obs["batch"] = meta.loc[adata_rna.obs_names, "batch"]
 
 # Write out filtered cells and prepare to run Seurat WNN --> R script can be found on Github.
 adata_rna.obs.to_csv(

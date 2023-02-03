@@ -18,7 +18,7 @@ input_path = sys.argv[1]
 
 adata_atac = scv.read(input_file_path)
 
-sc.pp.filter_cells(adata_atac, min_counts=2000)
+sc.pp.filter_cells(adata_atac, min_counts=1000)
 sc.pp.filter_cells(adata_atac, max_counts=60000)
 
 # We normalize aggregated peaks with TF-IDF.

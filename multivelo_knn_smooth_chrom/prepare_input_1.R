@@ -2,7 +2,15 @@ dir.create("/storage/singlecell/zz4/fetal_bash/results/multivelo_knn_smooth_chro
     showWarnings = FALSE)
 adata_atac_file = "/storage/singlecell/zz4/fetal_bash/results/MultiVelo_filtered_cells/adata_atac.h5ad"
 
-samples = c("AC", "BC", "Cone", "HC", "MG", "RGC", "Rod", "RPC", "All")
+samples = samples = c('AC',
+'BC',
+'Cone',
+'HC',
+'RGC',
+'Rod',
+'NRPC',
+'PRPC',
+"RPC")
 
 nn_idx_file = paste("/storage/singlecell/zz4/fetal_bash/results/multivelo_seurat_wnn/",
     samples, "_nn_idx.txt", sep = "")

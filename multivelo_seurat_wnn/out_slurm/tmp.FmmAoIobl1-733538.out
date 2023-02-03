@@ -1,0 +1,7 @@
+starting at Fri Feb  3 14:27:37 CST 2023 on mhgcp-g00.grid.bcm.edu
+SLURM_JOBID=733538
+An object of class Seurat 
+257702 features across 65383 samples within 2 assays 
+Active assay: peaks (221101 features, 221101 variable features)
+ 1 other assay present: RNA
+ 1 dimensional reduction calculated: lsi

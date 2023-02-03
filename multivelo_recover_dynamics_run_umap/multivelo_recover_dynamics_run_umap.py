@@ -22,9 +22,9 @@ except FileExistsError:
 def run_umap_scvi(adata):
     f = tempfile.mkstemp(suffix=".h5ad")[1]
     adata.write(f)
-    sc.pp.highly_variable_genes(adata, flavor="seurat_v3", n_top_genes=2000, subset=True)
+    sc.pp.highly_variable_genes(adata, flavor="seurat_v3", n_top_genes=10000, subset=True)
     scvi.settings.seed = 0
-    scvi.model.SCVI.setup_anndata(adata, batch_key="batch", labels_key="majorclass")
+    scvi.model.SCVI.setup_anndata(adata, batch_key="sampleid", labels_key="majorclass")
     vae = scvi.model.SCVI(adata, n_layers=2, n_latent=30, gene_likelihood="nb")
     vae.train()
     adata.obsm["X_scVI"] = vae.get_latent_representation()
@@ -39,7 +39,7 @@ def run_umap_scvi(adata):
         labels_key="majorclass",
         unlabeled_category="Unknown",
     )
-    lvae.train(max_epochs=20, n_samples_per_label=30000)
+    lvae.train(max_epochs=20)
     adata.obsm["X_scANVI"] = lvae.get_latent_representation(adata)
     sc.pp.neighbors(adata, use_rep="X_scANVI")
     sc.tl.umap(adata)

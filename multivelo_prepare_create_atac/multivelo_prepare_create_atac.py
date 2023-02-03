@@ -31,6 +31,8 @@ adata_atac = sc.read_10x_mtx(
 adata_atac = adata_atac[:, adata_atac.var["feature_types"] == "Peaks"]
 adata_atac.obs.index = sample + "_" + adata_atac.obs.index 
 
+print(adata_atac)
+
 if os.path.isfile(input_path + "/outs/peak_annotation.tsv"):
     adata_atac = mv.aggregate_peaks_10x(
         adata_atac,
@@ -47,4 +49,7 @@ if os.path.isfile(input_path + "/outs/atac_peak_annotation.tsv"):
     )
 plt.hist(adata_atac.X.sum(1), bins=100, range=(0, 100000))
 plt.savefig(output_figure_path +sample + ".svg")
+
+print(adata_atac)
+
 adata_atac.write(output_result_path + sample + ".h5ad")

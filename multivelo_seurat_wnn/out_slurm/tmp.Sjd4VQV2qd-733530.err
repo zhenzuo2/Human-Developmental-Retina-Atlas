@@ -1,0 +1,75 @@
+Attaching SeuratObject
+Performing log-normalization
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Calculating gene variances
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Calculating feature variances of standardized and clipped values
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+Centering and scaling data matrix
+  |                                                                              |                                                                      |   0%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================================================| 100%
+Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
+To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to 'correlation'
+This message will be shown once per session
+13:40:58 UMAP embedding parameters a = 0.9922 b = 1.112
+13:40:58 Read 26640 rows and found 50 numeric columns
+13:40:58 Using Annoy for neighbor search, n_neighbors = 30
+13:40:58 Building Annoy index with metric = cosine, n_trees = 50
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+13:41:04 Writing NN index file to temp file /storage/chen/tmp//Rtmp3eLhqB/file206cb1b3eccc6
+13:41:04 Searching Annoy index using 1 thread, search_k = 3000
+13:41:12 Annoy recall = 100%
+13:41:34 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+13:41:39 Initializing from normalized Laplacian + noise (using irlba)
+13:41:49 Commencing optimization for 200 epochs, with 1156148 positive edges
+Using method 'umap'
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+13:42:56 Optimization finished
+Performing TF-IDF normalization
+Warning message:
+In RunTFIDF.default(object = GetAssayData(object = object, slot = "counts"),  :
+  Some features contain 0 total counts
+Running SVD
+Scaling cell embeddings
+13:47:58 UMAP embedding parameters a = 0.9922 b = 1.112
+13:47:58 Read 26640 rows and found 49 numeric columns
+13:47:58 Using Annoy for neighbor search, n_neighbors = 30
+13:47:58 Building Annoy index with metric = cosine, n_trees = 50
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+13:48:02 Writing NN index file to temp file /storage/chen/tmp//Rtmp3eLhqB/file206cb6844c958
+13:48:02 Searching Annoy index using 1 thread, search_k = 3000
+13:48:14 Annoy recall = 100%
+13:48:20 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+13:48:24 Initializing from normalized Laplacian + noise (using irlba)
+13:48:29 Commencing optimization for 200 epochs, with 1157766 positive edges
+Using method 'umap'
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+13:49:12 Optimization finished
+Calculating cell-specific modality weights
+Finding 50 nearest neighbors for each modality.
+Calculating kernel bandwidths
+Finding multimodal neighbors
+Constructing multimodal KNN graph
+Constructing multimodal SNN graph
+13:51:00 UMAP embedding parameters a = 0.9922 b = 1.112
+13:51:01 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 50
+13:51:04 Initializing from normalized Laplacian + noise (using irlba)
+13:51:09 Commencing optimization for 200 epochs, with 1997540 positive edges
+Using method 'umap'
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+13:51:57 Optimization finished

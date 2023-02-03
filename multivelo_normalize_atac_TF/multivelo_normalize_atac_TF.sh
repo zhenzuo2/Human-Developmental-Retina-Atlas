@@ -24,6 +24,11 @@ input_file_path=(
 /storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x/Multiome_23w4d_NR.h5ad
 /storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x/Multiome_20w1d_NR.h5ad
 /storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x/Multiome_14w2d_NR.h5ad
+/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x/multi_19w3d_F_ret.h5ad
+/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x/multi_19W3D_I_ret.h5ad
+/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x/multi_19W3D_N_RET.h5ad
+/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x/multi_19w3d_S_ret.h5ad
+/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x/multi_19W3d_T_ret.h5ad
 )
 
 samples=(
@@ -52,6 +57,11 @@ Multiome_23w4d_FR
 Multiome_23w4d_NR
 Multiome_20w1d_NR
 Multiome_14w2d_NR
+multi_19w3d_F_ret
+multi_19W3D_I_ret
+multi_19W3D_N_RET
+multi_19w3d_S_ret
+multi_19W3d_T_ret
 )
 
 output_result_path=/storage/singlecell/zz4/fetal_bash/results/ATAC_aggregate_peaks_10x_noramlized/
