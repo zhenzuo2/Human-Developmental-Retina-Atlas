@@ -1,6 +1,4 @@
-output_dir = "/storage/singlecell/zz4/fetal_bash/figures/Pando_grn/PRPC/"
-label = "PRPC"
-dir.create(output_dir,showWarnings = FALSE)
+seurat_pando_object <- "/storage/singlecell/zz4/fetal_bash/results/PRPC_Pando/PRPC_seurat_object_All_feature_selection_FALSE.rds"
 library(Pando)
 library(tidyr)
 library(ggplot2)
@@ -10,15 +8,13 @@ library(monocle3)
 
 set.seed(0)
 # Read pando result rds object
-seurat_object <- readRDS("/storage/singlecell/zz4/fetal_bash/results/PRPC_Pando/PRPC_seurat_object_All_feature_selection_FALSE.rds")
+seurat_object <- readRDS(seurat_pando_object)
+# Read pseudotime object
+cds <- readRDS(time_cds)
 # Extract normalized matrix
-normalized_matrix <- seurat_object@assays$RNA@data
+normalized_matrix <- normalized_counts(cds)
 # Extract pseudotime
-time <- read.csv("/storage/singlecell/zz4/fetal_bash/results/multivelo_recover_dynamics_results/PRPC_obs.csv")
-rownames(time) <- time$X
-common_cells = intersect(rownames(time),colnames(normalized_matrix))
-time <- time[common_cells,]
-normalized_matrix <- normalized_matrix[,common_cells]
+time <- pseudotime(cds, reduction_method = "UMAP")
 # Find and filter modles
 seurat_object <- find_modules(seurat_object, p_thresh = 0.1, nvar_thresh = 2,
     min_genes_per_module = 1, rsq_thresh = 0.05)
@@ -51,7 +47,7 @@ TFS <- intersect(TFS, dat$name)
 
 for (gene in dat$name) {
     dat[gene, "SUM"] = sum(normalized_matrix[gene, ])
-    dat[gene, "TIME"] = sum(time$latent_time * normalized_matrix[gene, ])/sum(normalized_matrix[gene,
+    dat[gene, "TIME"] = sum(time * normalized_matrix[gene, ])/sum(normalized_matrix[gene,
         ])
 }
 dat$TIME <- scales::squish(dat$TIME, quantile(dat$TIME, c(0.01, 0.99)))

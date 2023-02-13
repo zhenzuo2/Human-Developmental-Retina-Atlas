@@ -7,7 +7,8 @@ samples = c('AC',
 'Rod',
 'NRPC',
 'PRPC',
-"RPC")
+"RPC",
+"MG")
 adata_atac_file = paste("/storage/singlecell/zz4/fetal_bash/results/multivelo_knn_smooth_chrom/",samples,".h5ad",sep = "")
 adata_rna_file = "/storage/singlecell/zz4/fetal_bash/results/MultiVelo_filtered_cells/adata_rna.h5ad"
 output_file = paste(output_dir,"_",samples,"/adata_umap.h5ad",sep = "")

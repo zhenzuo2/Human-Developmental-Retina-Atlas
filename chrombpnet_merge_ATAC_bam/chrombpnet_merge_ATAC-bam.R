@@ -1,0 +1,2 @@
+bams <- list.files("/storage/singlecell/zz4/fetal_bash/data/Retina_fetal",recursive = T,pattern = "*atac_possorted_bam.bam$",full.names = T)
+cat("samtools merge -f /storage/singlecell/zz4/fetal_bash/results/merged_bam/merged_unsorted_ATAC.bam ", paste(bams, collapse = ' '))

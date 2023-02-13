@@ -9,6 +9,7 @@ meta_file=(
 /storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC.csv
 /storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/PRPC.csv
 /storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/RPC.csv
+/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/MG.csv
 )
 
 samples=(
@@ -21,6 +22,7 @@ Rod
 NRPC
 PRPC
 RPC
+MG
 )
 output_file_path=/storage/singlecell/zz4/fetal_bash/results/multivelo_seurat_wnn/
 

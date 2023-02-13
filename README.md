@@ -42,6 +42,8 @@
 | ------------- | ------------- |
 | ArchR_create_object  | Create ArchR object for all data with ATAC-seq. |
 | ArchR_filter  | Filter Doublets. |
+| ArchR_add_seRNA  | Add SeRNA data to ArchR object. |
+| ArchR_save_PRPC| Subset PRPCs from object. |
 | getMatrixFromProject_GeneScoreMatrix | Extract gene score matrix from ArchR project. |
 | save_gene_score_as_h5ad | Save gene score matrix as h5ad file. |  
 
@@ -90,7 +92,7 @@
 | Pando_merge_object | Merge object for WNN. | 
 | multivelo_seurat_wnn | Run WNN on common cells. |
 | multivelo_knn_smooth_chrom | Smooth ATAC-seq data based on WNN results. |
-|multivelo_recover_dynamics_run_umap| Run UMAP.|
+| multivelo_recover_dynamics_run_umap | Run UMAP.|
 | multivelo_recover_dynamics_chrom | Recover dynamics with chrom. |
 
 # Pando

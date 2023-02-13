@@ -15,17 +15,18 @@ MG
 n_features=10000
 n_cells=40000
 meta_file=(
-/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_BC.csv
-/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_AC.csv
-/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_Cone.csv
-/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_Rod.csv
-/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_HC.csv
-/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC_RGC.csv
-/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/RPC.csv
-/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/PRPC.csv
-/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/NRPC.csv
-/storage/singlecell/zz4/fetal_bash/results/merged_annotation_adult_with_label/MG.csv
+/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_BC.csv
+/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_AC.csv
+/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_Cone.csv
+/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_Rod.csv
+/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_HC.csv
+/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_RGC.csv
+/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/RPC.csv
+/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/PRPC.csv
+/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC.csv
+/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/MG.csv
 )
+
 output_dir=(
 /storage/singlecell/zz4/fetal_bash/results/BC_Pando/
 /storage/singlecell/zz4/fetal_bash/results/AC_Pando/
@@ -48,11 +49,3 @@ do
 	slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "TRUE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "Macula";
 	slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "TRUE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "Peripheral";
 done
-
-i=8
-slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "FALSE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "All";
-slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "FALSE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "Macula";
-slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "FALSE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "Peripheral";
-slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "TRUE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "All";
-slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "TRUE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "Macula";
-slurmtaco.sh --g01 -m 50G --30day -t 8 -- Rscript run_pando.R  ${input_rna_file} ${input_atac_file} ${meta_file[i]} ${cell_type[i]} "TRUE" ${n_features} ${n_cells} ${output_dir[i]} "TRUE" "Peripheral";
