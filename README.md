@@ -44,6 +44,7 @@
 | ArchR_filter  | Filter Doublets. |
 | ArchR_add_seRNA  | Add SeRNA data to ArchR object. |
 | ArchR_save_PRPC| Subset PRPCs from object. |
+| Archr_PRPC_analysis | More PRPC analysis. | 
 | getMatrixFromProject_GeneScoreMatrix | Extract gene score matrix from ArchR project. |
 | save_gene_score_as_h5ad | Save gene score matrix as h5ad file. |  
 
@@ -113,6 +114,13 @@
 | Folder Name  | Functions and aims |
 | ------------- | ------------- |
 | cell_cycle_infer | Infer cell cycle for RPCs. |
+
+# chrombpnet
+| Folder Name  | Functions and aims |
+| ------------- | ------------- |
+| chrombpnet_PRPC_save_meta | Prepare PRPC cells for bam subsetting. |
+| chrombpnet_PRPC_subset_bam | Subset PRPCs from all bam files. |
+| chrombpnet_merge_ATAC_bam_PRPC | Merge all PRPCs ATAC bams. |
 
 # Others
 | Folder Name  | Functions and aims |
