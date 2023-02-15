@@ -83,3 +83,6 @@ mv.velocity_embedding_stream(adata_result, basis="umap", color="latent_time")
 adata_result.obs.to_csv(
     "/storage/singlecell/zz4/fetal_bash/results/multivelo_recover_dynamics_results/PRPC_obs.csv"
 )
+adata_result.var.to_csv(
+    "/storage/singlecell/zz4/fetal_bash/results/multivelo_recover_dynamics_results/PRPC_var.csv"
+)
