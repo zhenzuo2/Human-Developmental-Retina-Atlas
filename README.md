@@ -121,6 +121,10 @@
 | chrombpnet_PRPC_save_meta | Prepare PRPC cells for bam subsetting. |
 | chrombpnet_PRPC_subset_bam | Subset PRPCs from all bam files. |
 | chrombpnet_merge_ATAC_bam_PRPC | Merge all PRPCs ATAC bams. |
+| chrombpnet_call_peaks_PRPC | Call Peaks. |
+| chrombpnet_call_peak_blacklist_PRPC | Ensure that the peak regions do not intersect with the blacklist regions. |  
+| chrombpnet_non_peak | Generate non-peaks (background regions) |
+| chrombpnet_model_training | Train chrombpnet model | 
 
 # Others
 | Folder Name  | Functions and aims |
@@ -130,6 +134,3 @@
 | plot_umap_adult_annotated_object| Plot UMAP color by attributes for each cell type. |
 | plot_umap_seperate_time| Plot UMAP color by time. |
 | run_umap_seprate_by_cell_type_with_NRPC | Plot UMAP for each cell type branch. |
-
-
-
