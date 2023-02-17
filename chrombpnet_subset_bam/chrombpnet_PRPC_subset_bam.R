@@ -1,5 +1,5 @@
-subsetbam <- function(bam, cell_id, name, output) {
-  sink(paste("/storage/singlecell/zz4/fetal_bash/scripts/chrombpnet_subsetbam/",
+subsetbam <- function(bam, cell_id, name, sh_folder,output) {
+  sink(paste(sh_folder,
              name, ".sh", sep = ""))
   cat(paste("echo \"Processing ", name, "\"\n", sep = ""))
   cat(paste("samtools view -H ", bam, " > ", output, name, "_SAM_header",
@@ -17,6 +17,8 @@ subsetbam <- function(bam, cell_id, name, output) {
   sink()
 }
 
+sh_folder = "/storage/singlecell/zz4/fetal_bash/scripts/chrombpnet_subsetbam/earlyPRPC/"
+dir.create(sh_folder, showWarnings = FALSE)
 for (f in list.files("/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/earlyPRPC",
                      full.names = T)) {
   print(f)
@@ -25,9 +27,11 @@ for (f in list.files("/storage/singlecell/zz4/fetal_bash/results/cell_annotation
               name, "/outs/atac_possorted_bam.bam", sep = "")
   cell_id = f
   output = "/storage/singlecell/zz4/fetal_bash/results/chrombpnet_subsetbam/earlyPRPC/"
-  subsetbam(bam, cell_id, name, output)
+  subsetbam(bam, cell_id, name, sh_folder,output)
 }
 
+sh_folder = "/storage/singlecell/zz4/fetal_bash/scripts/chrombpnet_subsetbam/latePRPC/"
+dir.create(sh_folder, showWarnings = FALSE)
 for (f in list.files("/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/latePRPC",
                      full.names = T)) {
   print(f)
@@ -36,7 +40,7 @@ for (f in list.files("/storage/singlecell/zz4/fetal_bash/results/cell_annotation
               name, "/outs/atac_possorted_bam.bam", sep = "")
   cell_id = f
   output = "/storage/singlecell/zz4/fetal_bash/results/chrombpnet_subsetbam/latePRPC/"
-  subsetbam(bam, cell_id, name, output)
+  subsetbam(bam, cell_id, name, sh_folder,output)
 }
 
 ## cd /storage/singlecell/zz4/fetal_bash/scripts/chrombpnet_subsetbam

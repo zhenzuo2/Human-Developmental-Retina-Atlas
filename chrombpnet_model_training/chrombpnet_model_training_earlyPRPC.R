@@ -4,7 +4,7 @@ c = "/storage/singlecell/zz4/Reference/hg38.chrom.sizes"
 p = "/storage/singlecell/zz4/fetal_bash/results/chrombpnet_peaks/earlyPRPC/NA_peaks.narrowPeak_no_blacklist.bed"
 n = "/storage/singlecell/zz4/fetal_bash/results/chrombpnet_non_peaks/earlyPRPC/_negatives.bed"
 fl = "/storage/singlecell/zz4/fetal_bash/results/chrombpnet_splits_PRPC/fold_0.json"
-b = "/storage/singlecell/zz4/fetal_bash/results/chrombpnet_output/bias/models/bias.h5"
+b = "/storage/singlecell/zz4/fetal_bash/results/chrombpnet_trained_models/bias/models/bias.h5"
 output = "/storage/singlecell/zz4/fetal_bash/results/chrombpnet_trained_models/earlyPRPC/"
 sink("/storage/singlecell/zz4/fetal_bash/scripts/chrombpnet_model_training/earlyPRPC.sh")
 cat(paste("chrombpnet pipeline \\

@@ -24,7 +24,8 @@ save_meta <- function(dat, path) {
     }
 }
 
-save_meta(PRPC@cellColData[PRPC$Days_ %in% c("FW10", "FW13"), ], "/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/earlyPRPC/")
-
-save_meta(PRPC@cellColData[PRPC$Days_ %in% c("FW16", "FW19", "FW23"), ],
-    "/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/latePRPC/")
+save_meta(PRPC@cellColData[t %in% c("FW10"), ], "/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/PRPC_FW10/")
+save_meta(PRPC@cellColData[PRPC$Days_ %in% c("FW13"), ], "/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/PRPC_FW13/")
+save_meta(PRPC@cellColData[PRPC$Days_ %in% c("FW16"), ], "/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/PRPC_FW16/")
+save_meta(PRPC@cellColData[PRPC$Days_ %in% c("FW19"), ], "/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/PRPC_FW19/")
+save_meta(PRPC@cellColData[PRPC$Days_ %in% c("FW23"), ], "/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/PRPC_FW23/")
