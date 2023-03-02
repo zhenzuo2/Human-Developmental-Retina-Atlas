@@ -103,6 +103,8 @@
 | run_pando | Run Pando to infer GRNs. |
 | plot_grn_region | Plot GRNs. |
 | plot_grn_region_diff | Plot regional difference GRN. |
+| plot_any_gene_peak_pairs_heatmap| Plot a tf, target gene, cre heatmap. |
+| plot_gene_expression_smoothed_curve | Plot smoothed curve of gene vs pseudotime. |
 
 # DE analysis
 | Folder Name  | Functions and aims |

@@ -139,7 +139,7 @@ dev.off()
 # addMotifAnnotations
 PRPC <- addMotifAnnotations(ArchRProj = PRPC, motifSet = "cisbp", name = "Motif")
 motifPositions <- getPositions(PRPC)
-motifs <- c("NFIX")
+motifs <- c("ZFX")
 markerMotifs <- unlist(lapply(motifs, function(x) grep(x, names(motifPositions),
                                                        value = TRUE)))
 markerMotifs <- markerMotifs[markerMotifs %ni% "SREBF1_22"]
