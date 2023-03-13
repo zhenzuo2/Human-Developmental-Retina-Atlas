@@ -61,6 +61,7 @@
 | annotation_with_adult | Assign subclass labels with adult data. |
 | add_adult_annotated_reference_to_object | Add adult annotated reference to the object. |
 | merge_annotation_sub_major_class | Merge annotated object to one anndata object. |
+| rum_umap_NRPC| Run UMAP on NRPC cells (Only periphery and macula cells). |
 
 # Merge samples
 | Folder Name  | Functions and aims |
@@ -95,6 +96,7 @@
 | multivelo_knn_smooth_chrom | Smooth ATAC-seq data based on WNN results. |
 | multivelo_recover_dynamics_run_umap | Run UMAP.|
 | multivelo_recover_dynamics_chrom | Recover dynamics with chrom. |
+| plot_grn_from_pando_multivelo_model_proportion| Plot tf/target gene proportion in each multivelo model. |
 
 # Pando
 | Folder Name  | Functions and aims |
@@ -123,8 +125,8 @@
 | chrombpnet_PRPC_save_meta | Prepare PRPC cells for bam subsetting. |
 | chrombpnet_PRPC_subset_bam | Subset PRPCs from all bam files. |
 | chrombpnet_merge_ATAC_bam_PRPC | Merge all PRPCs ATAC bams. |
-| chrombpnet_call_peaks_PRPC | Call Peaks. |
-| chrombpnet_call_peak_blacklist_PRPC | Ensure that the peak regions do not intersect with the blacklist regions. |  
+| chrombpnet_call_peaks | Call Peaks. |
+| chrombpnet_call_peak_blacklist | Ensure that the peak regions do not intersect with the blacklist regions. |  
 | chrombpnet_non_peak | Generate non-peaks (background regions) |
 | chrombpnet_model_training | Train chrombpnet model | 
 

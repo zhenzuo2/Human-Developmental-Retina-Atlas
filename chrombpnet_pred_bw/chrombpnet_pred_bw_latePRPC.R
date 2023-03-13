@@ -5,6 +5,7 @@ REGIONS="/storage/singlecell/zz4/fetal_bash/results/chrombpnet_peaks/latePRPC/NA
 GENOME="/storage/singlecell/zz4/Reference/refdata-gex-GRCh38-2020-A/fasta/genome.fa"
 CHROM_SIZES="/storage/singlecell/zz4/Reference/hg38.chrom.sizes"
 OUT_PREFIX="/storage/singlecell/zz4/fetal_bash/results/chrombpnet_pred_bw/latePRPC/"
+BIGWIG = "/storage/singlecell/zz4/fetal_bash/results/chrombpnet_trained_models/latePRPC/auxiliary/data_unstranded.bw"
 
 sink("/storage/singlecell/zz4/fetal_bash/scripts/chrombpnet_pred_bw/latePRPC.sh")
 cat(paste("chrombpnet pred_bw \\
@@ -16,5 +17,5 @@ cat(paste("chrombpnet pred_bw \\
   -g ", GENOME, " \\
   -c ", CHROM_SIZES, " \\
   -op ", OUT_PREFIX, " \\
-", sep = ""))
+  -bw ", BIGWIG, sep = ""))
 sink()
