@@ -16,9 +16,10 @@ rownames(meta) <- meta$X
 cells <- meta$X
 common_cells <- intersect(cells, colnames(seurat_object))
 seurat_object <- subset(seurat_object, cells = common_cells)
+meta <- meta[common_cells,]
 
-seurat_object@meta.data$batch <- meta[rownames(seurat_object@meta.data),
-    "batch"]
+seurat_object@meta.data$sampleid <- meta[rownames(seurat_object@meta.data),
+    "sampleid"]
 seurat_object@meta.data$scpred_prediction <- meta[rownames(seurat_object@meta.data),
     "scpred_prediction"]
 seurat_object@meta.data$Time <- meta[rownames(seurat_object@meta.data),

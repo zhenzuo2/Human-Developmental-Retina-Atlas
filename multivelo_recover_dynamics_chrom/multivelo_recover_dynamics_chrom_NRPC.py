@@ -10,16 +10,16 @@ import matplotlib.pyplot as plt
 pd.options.display.max_columns = None
 scv.set_figure_params(dpi=600, dpi_save=600)
 
-adata_rna_file = "/storage/singlecell/zz4/fetal_bash/results/multivelo_recover_dynamics_run_umap_RPC/adata_umap.h5ad"
+adata_rna_file = "/storage/singlecell/zz4/fetal_bash/results/multivelo_recover_dynamics_run_umap_NRPC/adata_umap.h5ad"
 adata_atac_file = (
-    "/storage/singlecell/zz4/fetal_bash/results/multivelo_knn_smooth_chrom/RPC.h5ad"
+    "/storage/singlecell/zz4/fetal_bash/results/multivelo_knn_smooth_chrom/NRPC.h5ad"
 )
-output_file = "/storage/singlecell/zz4/fetal_bash/results/multivelo_recover_dynamics_results/RPC.h5ad"
+output_file = "/storage/singlecell/zz4/fetal_bash/results/multivelo_recover_dynamics_results/NRPC.h5ad"
 
 adata_rna = scv.read(adata_rna_file)
 
 All = pd.read_csv(
-    "/storage/singlecell/zz4/fetal_bash/results/RPC_Pando/RPC_modules_meta_All_feature_selection_FALSE.csv"
+    "/storage/singlecell/zz4/fetal_bash/results/NRPC_Pando/NRPC_modules_meta_All_feature_selection_FALSE.csv"
 )
 target = list(set(All.target))
 tf = list(set(All.tf))
