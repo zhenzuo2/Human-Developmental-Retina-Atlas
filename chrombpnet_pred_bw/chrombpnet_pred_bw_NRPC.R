@@ -16,6 +16,10 @@ for (name in names) {
 
     sink(paste("/storage/singlecell/zz4/fetal_bash/scripts/chrombpnet_pred_bw/",
         name, ".sh", sep = ""))
+    cat(paste("rm -rf ",OUT_PREFIX,sep=""))
+    cat("\n")
+    cat(paste("mkdir ",OUT_PREFIX,sep=""))
+    cat("\n")
     cat(paste("chrombpnet pred_bw \\
   -bm ", BIAS_MODEL, " \\
   -cm ",

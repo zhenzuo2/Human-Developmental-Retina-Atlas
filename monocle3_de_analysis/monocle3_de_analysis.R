@@ -47,7 +47,7 @@ cds <- new_cell_data_set(expression_matrix, cell_metadata = cell_metadata,
 cds <- preprocess_cds(cds, num_dim = 100)
 
 ## Step 2: Remove batch effects with cell alignment
-cds <- align_cds(cds, alignment_group = "batch")
+cds <- align_cds(cds, alignment_group = "sampleid")
 
 ## Step 3: Reduce the dimensions using UMAP
 cds <- reduce_dimension(cds)
@@ -59,7 +59,7 @@ cds <- cluster_cells(cds)
 cds <- learn_graph(cds, use_partition = FALSE)
 
 ## Step 6: Order cells
-root_cells <- colnames(cds)[cds$batch == "Multiome_10w_NR"]
+root_cells <- colnames(cds)[cds$sampleid == "Multiome_10w_NR"]
 if (length(root_cells) == 0) {
     root_cells <- colnames(cds)[cds$Days == min(unique(cds$Days))]
 }

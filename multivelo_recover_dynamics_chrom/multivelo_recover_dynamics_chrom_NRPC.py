@@ -23,7 +23,27 @@ All = pd.read_csv(
 )
 target = list(set(All.target))
 tf = list(set(All.tf))
-adata_rna = adata_rna[:, [x for x in adata_rna.var.index if x in target + tf]]
+
+M = pd.read_csv(
+    "/storage/singlecell/zz4/fetal_bash/results/NRPC_Pando/NRPC_modules_meta_Macula_feature_selection_FALSE.csv"
+)
+target2 = list(set(M.target))
+tf2 = list(set(M.tf))
+
+P = pd.read_csv(
+    "/storage/singlecell/zz4/fetal_bash/results/NRPC_Pando/NRPC_modules_meta_Peripheral_feature_selection_FALSE.csv"
+)
+target3 = list(set(P.target))
+tf3 = list(set(P.tf))
+
+adata_rna = adata_rna[
+    :,
+    [
+        x
+        for x in adata_rna.var.index
+        if x in target + target2 + target3 + tf + tf2 + tf3
+    ],
+]
 
 adata_atac = scv.read(adata_atac_file)
 
