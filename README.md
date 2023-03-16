@@ -128,7 +128,10 @@
 | chrombpnet_call_peaks | Call Peaks. |
 | chrombpnet_call_peak_blacklist | Ensure that the peak regions do not intersect with the blacklist regions. |  
 | chrombpnet_non_peak | Generate non-peaks (background regions) |
-| chrombpnet_model_training | Train chrombpnet model | 
+| chrombpnet_model_training | Train chrombpnet model. |
+| chrombpnet_pred_bw | Generate prediction bigwigs. ｜
+| chrombpnet_contribs_bw | Generate contribution score bigwigs. ｜
+｜chrombpnet_modisco_motifs | Denovo motif discovery. | 
 
 # Others
 | Folder Name  | Functions and aims |
@@ -138,3 +141,6 @@
 | plot_umap_adult_annotated_object| Plot UMAP color by attributes for each cell type. |
 | plot_umap_seperate_time| Plot UMAP color by time. |
 | run_umap_seprate_by_cell_type_with_NRPC | Plot UMAP for each cell type branch. |
+| figure1 | Plot figures for figure 1 in the paper. |
+| figure4 | Plot figures for figure 4 in the paper. |
+
