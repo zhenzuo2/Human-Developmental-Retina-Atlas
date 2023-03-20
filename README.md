@@ -143,4 +143,3 @@
 | run_umap_seprate_by_cell_type_with_NRPC | Plot UMAP for each cell type branch. |
 | figure1 | Plot figures for figure 1 in the paper. |
 | figure4 | Plot figures for figure 4 in the paper. |
-
