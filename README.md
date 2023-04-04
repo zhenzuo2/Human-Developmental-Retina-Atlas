@@ -122,9 +122,9 @@
 # chrombpnet
 | Folder Name  | Functions and aims |
 | ------------- | ------------- |
-| chrombpnet_PRPC_save_meta | Prepare PRPC cells for bam subsetting. |
-| chrombpnet_PRPC_subset_bam | Subset PRPCs from all bam files. |
-| chrombpnet_merge_ATAC_bam_PRPC | Merge all PRPCs ATAC bams. |
+| chrombpnet_save_meta | Prepare cells for bam subsetting. |
+| chrombpnet_subset_bam | Subset cells from all bam files. |
+| chrombpnet_merge_ATAC_bam | Merge all ATAC bams. |
 | chrombpnet_call_peaks | Call Peaks. |
 | chrombpnet_call_peak_blacklist | Ensure that the peak regions do not intersect with the blacklist regions. |  
 | chrombpnet_non_peak | Generate non-peaks (background regions) |

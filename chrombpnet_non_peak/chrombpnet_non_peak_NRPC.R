@@ -1,5 +1,6 @@
 cys = c("AC_NRPC", "BC_Rod_NRPC", "Cone_NRPC", "HC_NRPC", "RGC_NRPC")
 for (cy in cys) {
+    dir.create(paste("/storage/singlecell/zz4/fetal_bash/results/chrombpnet_non_peaks/",cy,sep=""),showWarnings=FALSE)
     sink(paste("/storage/singlecell/zz4/fetal_bash/scripts/chrombpnet_non_peaks/chrombpnet_non_peaks_",
         cy, ".sh", sep = ""))
     cat(paste("chrombpnet prep nonpeaks \\

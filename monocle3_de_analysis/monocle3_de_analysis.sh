@@ -34,9 +34,17 @@ output_dir=(
 /storage/singlecell/zz4/fetal_bash/results/MG_monocle3_DE_analysis/MG_
 )
 
+region=(
+Inferior
+Nasal
+Superior
+Temporal
+)
+
 for i in "${!meta_file[@]}"
 do
-	slurmtaco.sh --g01 -m 100G -t 1 --30day -- Rscript monocle3_de_analysis.R  $input_file ${meta_file[i]} ${output_dir[i]} Early;
-	slurmtaco.sh --g01 -m 100G -t 1 --30day -- Rscript monocle3_de_analysis.R  $input_file ${meta_file[i]} ${output_dir[i]} Late;
-	slurmtaco.sh --g01 -m 100G -t 1 --30day -- Rscript monocle3_de_analysis.R  $input_file ${meta_file[i]} ${output_dir[i]} All;
+	slurmtaco.sh --g00 -m 50G -t 1 --30day -- Rscript monocle3_de_analysis.R  $input_file ${meta_file[i]} ${output_dir[i]} All Inferior;
+	slurmtaco.sh --g00 -m 50G -t 1 --30day -- Rscript monocle3_de_analysis.R  $input_file ${meta_file[i]} ${output_dir[i]} All Nasal;
+	slurmtaco.sh --g00 -m 50G -t 1 --30day -- Rscript monocle3_de_analysis.R  $input_file ${meta_file[i]} ${output_dir[i]} All Superior;
+	slurmtaco.sh --g00 -m 50G -t 1 --30day -- Rscript monocle3_de_analysis.R  $input_file ${meta_file[i]} ${output_dir[i]} All Temporal;
 done

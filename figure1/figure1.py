@@ -119,7 +119,6 @@ scv.pl.umap(
     color_map="plasma",
 )
 
-
 adata = scv.read(
     "/storage/singlecell/zz4/fetal_bash/results/merged_h5ad/merged_raw_filtered_wadult_umap_10000.h5ad"
 )
@@ -127,7 +126,7 @@ adata = adata[~adata.obs.sampleid.isin(["17w1d_I_Ret"])]
 adata.obs["batch"] = adata.obs["batch"].replace(
     {"Query": "Fetal", "Reference": "Adult"}
 )
-
+adata = adata[adata.obs.majorclass.isin(["AC", "BC", "Cone", "HC", "MG", "RGC", "Rod"])]
 scv.pl.umap(
     adata,
     color="batch",

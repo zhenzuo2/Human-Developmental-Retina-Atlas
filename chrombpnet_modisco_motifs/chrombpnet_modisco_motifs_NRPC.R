@@ -10,6 +10,9 @@ for (name in names) {
 
     sink(paste("/storage/singlecell/zz4/fetal_bash/scripts/chrombpnet_modisco_motifs/profile_scores_",
         name, ".sh", sep = ""))
+    cat("mkdir /storage/singlecell/zz4/fetal_bash/results/chrombpnet_modisco_motifs/",
+        name, "\n", sep = "")
+    cat("mkdir ", OUTPUT_PREFIX[1], "\n", sep = "")
     cat(paste("chrombpnet modisco_motifs \\
   -i ", H5PY[1], " \\
   -n ",
@@ -20,6 +23,9 @@ for (name in names) {
 
     sink(paste("/storage/singlecell/zz4/fetal_bash/scripts/chrombpnet_modisco_motifs/counts_scores_",
         name, ".sh", sep = ""))
+    cat("mkdir /storage/singlecell/zz4/fetal_bash/results/chrombpnet_modisco_motifs/",
+        name, "\n", sep = "")
+    cat("mkdir ", OUTPUT_PREFIX[2], "\n", sep = "")
     cat(paste("chrombpnet modisco_motifs \\
   -i ", H5PY[2], " \\
   -n ",
