@@ -127,11 +127,11 @@
 | chrombpnet_merge_ATAC_bam | Merge all ATAC bams. |
 | chrombpnet_call_peaks | Call Peaks. |
 | chrombpnet_call_peak_blacklist | Ensure that the peak regions do not intersect with the blacklist regions. |  
-| chrombpnet_non_peak | Generate non-peaks (background regions) |
+| chrombpnet_non_peak | Generate non-peaks (background regions). |
 | chrombpnet_model_training | Train chrombpnet model. |
-| chrombpnet_pred_bw | Generate prediction bigwigs. ｜
-| chrombpnet_contribs_bw | Generate contribution score bigwigs. ｜
-｜chrombpnet_modisco_motifs | Denovo motif discovery. | 
+| chrombpnet_pred_bw | Generate prediction bigwigs. |
+| chrombpnet_contribs_bw | Generate contribution score bigwigs. |
+| chrombpnet_modisco_motifs | Denovo motif discovery. | 
 
 # Others
 | Folder Name  | Functions and aims |
