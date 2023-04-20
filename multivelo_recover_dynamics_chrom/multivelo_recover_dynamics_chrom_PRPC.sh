@@ -1,1 +1,1 @@
-slurmtaco.sh --g00 -m 50G -t 20 --30day -- python3 multivelo_recover_dynamics_chrom_PRPC.py;
+slurmtaco.sh -p short -m 10G -t 10 --30day -- python3.9 multivelo_recover_dynamics_chrom_PRPC.py;

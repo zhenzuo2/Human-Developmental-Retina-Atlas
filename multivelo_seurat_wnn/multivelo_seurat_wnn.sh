@@ -10,6 +10,9 @@ meta_file=(
 /storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/PRPC.csv
 /storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/RPC.csv
 /storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/MG.csv
+/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_BC_Rod_Cone.csv
+/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_AC_HC_RGC.csv
+/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/PRPC_MG.csv
 )
 
 samples=(
@@ -23,9 +26,12 @@ NRPC
 PRPC
 RPC
 MG
+BC_Rod_Cone
+AC_HC_RGC
+PRPC_MG
 )
 output_file_path=/storage/singlecell/zz4/fetal_bash/results/multivelo_seurat_wnn/
 
 for i in "${!meta_file[@]}"; do
-    slurmtaco.sh -p gpu -m 200G -t 1 -- Rscript multivelo_seurat_wnn.R ${input_file} ${meta_file[i]} ${samples[i]} ${output_file_path};
+    slurmtaco.sh --g00 -m 200G -t 1 -- Rscript multivelo_seurat_wnn.R ${input_file} ${meta_file[i]} ${samples[i]} ${output_file_path};
 done

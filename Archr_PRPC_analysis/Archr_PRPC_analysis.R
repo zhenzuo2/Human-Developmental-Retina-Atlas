@@ -219,21 +219,62 @@ plotFootprints(seFoot = seFoot, ArchRProj = PRPC, normMethod = "Divide",
 # getTrajectory()
 trajMM <- getTrajectory(ArchRProj = PRPC, name = "MyeloidU", useMatrix = "MotifMatrix",
     log2Norm = FALSE)
-p1 <- plotTrajectoryHeatmap(trajMM, pal = paletteContinuous(set = "solarExtra"))
-plotPDF(p1, name = "Plot-MyeloidU-Traj-Heatmaps.pdf", ArchRProj = PRPC,
+mat <- plotTrajectoryHeatmap(trajMM, pal = paletteContinuous(set = "solarExtra"),varCutOff = 0.7,returnMatrix = T)
+subset_gene_names <- str_extract(rownames(mat), "(?<=:).*?(?=_)")
+known_tfs <- c("AHR", "ASCL1", "ATOH7", "BARHL2", "BHLHE22", "CRX", "CTCF", 
+"DLX1", "DLX2", "EBF1", "EBF2", "EBF3", "EGR1", "EOMES", "ESRRB", "FEZF1", "FEZF2", "FOXC1", "FOXN3", "FOXN4", "FOXP1", 
+"HES1", "HES4", "ID1", "ID3", "IKZF2", "IKZF3", "INSM1", "INSM2", 
+"IRX5", "IRX6", "ISL1", "LHX2", "LHX4", "LHX9", "MEF2C", "MYT1L", 
+"NEUROD1", "NEUROD2", "NEUROD6", "NEUROG2", "NFIA", "NFIB", "NFIC", 
+"NFIX", "NR2E1", "NR2E3", "NR4A2", "NRF1", "NRL", "OLIG2", "ONECUT1", 
+"ONECUT2", "OTX2", "PAX6", "POU2F1", "POU2F2", "POU3F1", "POU4F2", 
+"PRDM1", "PRDM13", "PRDM8", "PROX1", "PTF1A", "REST", "RORB", 
+"SALL1", "SALL3", "SAMD11", "SMAD2", "SMAD3", "SMAD7", "SOX11", 
+"SOX4", "SOX8", "SOX9", "TBR1", "TBX2", "TBX5", "TFAP2A", "TFAP2B", 
+"TGIF1", "TGIF2", "THRB")
+labels <- rownames(mat)[subset_gene_names %in% known_tfs]
+p1 <- plotTrajectoryHeatmap(trajMM, pal = paletteContinuous(set = "solarExtra"),varCutOff = 0.7,labelMarkers = labels,labelTop=0)
+plotPDF(p1, name = "MotifMatrix.pdf", ArchRProj = PRPC,
     addDOC = FALSE, width = 6, height = 8)
 
 trajGSM <- getTrajectory(ArchRProj = PRPC, name = "MyeloidU", useMatrix = "GeneScoreMatrix", log2Norm = TRUE)
-p2 <- plotTrajectoryHeatmap(trajGSM,  pal = paletteContinuous(set = "horizonExtra"))
-plotPDF(p2, name = "Plot-MyeloidU-Traj-Heatmaps.pdf", ArchRProj = PRPC,
-    addDOC = FALSE, width = 6, height = 8)
-
-trajGSM <- getTrajectory(ArchRProj = PRPC, name = "MyeloidU", useMatrix = "PeakMatrix", log2Norm = TRUE)
-p2 <- plotTrajectoryHeatmap(trajGSM,  pal = paletteContinuous(set = "solarExtra"))
-plotPDF(p2, name = "Plot-MyeloidU-Traj-Heatmaps.pdf", ArchRProj = PRPC,
-    addDOC = FALSE, width = 6, height = 8)
+trajGSM <- trajGSM[rowData(trajGSM)$name %in% subset_strings,]
+mat <- plotTrajectoryHeatmap(trajGSM,varCutOff = 0.05,returnMatrix = T)
+gs <- rownames(mat)
 
 trajGSM <- getTrajectory(ArchRProj = PRPC, name = "MyeloidU", useMatrix = "GeneExpressionMatrix", log2Norm = TRUE)
-p2 <- plotTrajectoryHeatmap(trajGSM,  pal = paletteContinuous(set = "blueYellow"))
-plotPDF(p2, name = "Plot-MyeloidU-Traj-Heatmaps.pdf", ArchRProj = PRPC,
+trajGSM <- trajGSM[rowData(trajGSM)$name %in% subset_strings,]
+mat <- plotTrajectoryHeatmap(trajGSM,varCutOff = 0.1,returnMatrix = T)
+ge <- rownames(mat)
+common_gene <- intersect(gs,ge)
+
+trajGSM <- getTrajectory(ArchRProj = PRPC, name = "MyeloidU", useMatrix = "GeneExpressionMatrix", log2Norm = TRUE)
+trajGSM <- trajGSM[rownames(trajGSM) %in% common_gene,]
+mat <- plotTrajectoryHeatmap(trajGSM,varCutOff = 0.0,returnMatrix = T)
+subset_str <- sub(".*:", "", rownames(mat))
+labels <- rownames(mat)[subset_str %in% known_tfs]
+p2 <- plotTrajectoryHeatmap(trajGSM, pal = paletteContinuous(set = "blueYellow"),varCutOff = 0.0,labelMarkers = labels,labelTop=0)
+plotPDF(p2, name = "GeneExpressionMatrix.pdf", ArchRProj = PRPC,
+    addDOC = FALSE, width = 6, height = 8)
+
+trajGSM <- getTrajectory(ArchRProj = PRPC, name = "MyeloidU", useMatrix = "GeneScoreMatrix", log2Norm = TRUE)
+trajGSM <- trajGSM[rownames(trajGSM) %in% common_gene,]
+subset_str <- sub(".*:", "", rownames(mat))
+labels <- rownames(mat)[subset_str %in% known_tfs]
+p2 <- plotTrajectoryHeatmap(trajGSM, pal = paletteContinuous(set = "horizonExtra"),varCutOff = 0.0,labelMarkers = labels,labelTop=0,rowOrder = rownames(mat))
+plotPDF(p2, name = "GeneScoreMatrix.pdf", ArchRProj = PRPC,
+    addDOC = FALSE, width = 6, height = 8)
+
+
+trajGSM <- getTrajectory(ArchRProj = PRPC, name = "MyeloidU", useMatrix = "PeakMatrix", log2Norm = TRUE)
+mat <- plotTrajectoryHeatmap(trajGSM,returnMatrix = T)
+p2 <- plotTrajectoryHeatmap(trajGSM,  pal = paletteContinuous(set = "greenBlue"),labelTop)
+plotPDF(p2, name = "PeakMatrix.pdf", ArchRProj = PRPC,
+    addDOC = FALSE, width = 6, height = 8)
+
+PRPC$Days = as.numeric(PRPC$Days)
+PRPC <- addTrajectory(ArchRProj = PRPC, name = "MyeloidU", groupBy = "Days",
+    trajectory = trajectory, embedding = "UMAP", force = TRUE)
+p <- plotTrajectory(PRPC, trajectory = "MyeloidU", colorBy = "cellColData", name = "Days")
+plotPDF(p, name = "Plot-MyeloidU-Traj-Heatmaps.pdf", ArchRProj = PRPC,
     addDOC = FALSE, width = 6, height = 8)

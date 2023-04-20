@@ -11,7 +11,7 @@ import tempfile
 input_rna_file = sys.argv[1]
 input_atac_file = sys.argv[2]
 output_file_path = sys.argv[3]
-
+labels_key = "subclass"
 try:
     os.makedirs(os.path.dirname(output_file_path))
 except FileExistsError:
@@ -19,12 +19,14 @@ except FileExistsError:
     pass
 
 
-def run_umap_scvi(adata):
+def run_umap_scvi(adata,labels_key):
     f = tempfile.mkstemp(suffix=".h5ad")[1]
+    adata.obs[labels_key]=adata.obs[labels_key].astype(str)
+    adata = adata.copy()
     adata.write(f)
     sc.pp.highly_variable_genes(adata, flavor="seurat_v3", n_top_genes=10000, subset=True)
     scvi.settings.seed = 0
-    scvi.model.SCVI.setup_anndata(adata, batch_key="sampleid", labels_key="majorclass")
+    scvi.model.SCVI.setup_anndata(adata, labels_key=labels_key)
     vae = scvi.model.SCVI(adata, n_layers=2, n_latent=30, gene_likelihood="nb")
     vae.train()
     adata.obsm["X_scVI"] = vae.get_latent_representation()
@@ -36,7 +38,7 @@ def run_umap_scvi(adata):
     lvae = scvi.model.SCANVI.from_scvi_model(
         vae,
         adata=adata,
-        labels_key="majorclass",
+        labels_key=labels_key,
         unlabeled_category="Unknown",
     )
     lvae.train(max_epochs=20)
@@ -71,6 +73,6 @@ len(shared_cells), len(shared_genes)
 adata_rna = adata_rna[shared_cells, shared_genes]
 adata_atac = adata_atac[shared_cells, shared_genes]
 
-adata_rna = run_umap_scvi(adata_rna)
+adata_rna = run_umap_scvi(adata_rna,labels_key)
 
 adata_rna.write(output_file_path)

@@ -14,7 +14,6 @@ rownames(meta) <- meta$X
 cells = intersect(cells, stringi::stri_replace_last(meta$X, fixed = "_",
                                                     "#"))
 
-
 PRPC <- subsetArchRProject(projretina4, cells = cells, force = TRUE)
 
 PRPC <- addIterativeLSI(

@@ -11,7 +11,10 @@ samples = samples = c('AC',
 'NRPC',
 'PRPC',
 "RPC",
-"MG")
+"MG",
+"BC_Rod_Cone",
+"AC_HC_RGC",
+"PRPC_MG")
 
 nn_idx_file = paste("/storage/singlecell/zz4/fetal_bash/results/multivelo_seurat_wnn/",
     samples, "_nn_idx.txt", sep = "")

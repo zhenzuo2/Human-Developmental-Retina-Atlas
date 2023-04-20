@@ -13,6 +13,10 @@ output_file = sys.argv[3]
 adata_rna = scv.read(adata_rna_file)
 adata_atac = scv.read(adata_atac_file)
 
+sc.pp.highly_variable_genes(
+        adata_rna, flavor="seurat_v3", n_top_genes=1000, subset=True
+    )
+
 shared_cells = pd.Index(np.intersect1d(adata_rna.obs_names, adata_atac.obs_names))
 shared_genes = pd.Index(np.intersect1d(adata_rna.var_names, adata_atac.var_names))
 len(shared_cells), len(shared_genes)

@@ -40,7 +40,7 @@ seurat_object <- get_network_graph(seurat_object, graph_name = "umap_graph",
 # Save the initial plot
 grn_plot <- plot_network_graph(seurat_object, graph = "umap_graph", label_nodes = FALSE)
 grn_plot$layers[[2]] <- NULL
-#grn_plot$layers[[1]] <- NULL
+grn_plot$layers[[1]] <- NULL
 
 # Find all TFs in the GRN
 TFS <- unique(seurat_object@grn@networks$glm_network@modules@meta$tf)
@@ -74,6 +74,18 @@ ggsave(filename = paste(output_dir, label, "_grn_plot.svg", sep = ""),
     plot = grn_plot_final, scale = 1, width = 10, height = 10)
 write.csv(dat, paste(output_dir, label, "_grn_plot.csv", sep = ""))
 
+###TF only###
+dat <- dat[dat$labels != "",]
+grn_plot <- ggplot(dat) + geom_point(aes(x = UMAP_1, y = UMAP_2, size = SUM,
+    color = TIME), shape = shape) + scale_color_gradient(low = "blue",
+    high = "red") + scale_size(10)
+grn_plot_final <- grn_plot + ggrepel::geom_label_repel(data = dat, size = 6,
+    aes(UMAP_1, UMAP_2, label = labels, color = TIME), box.padding = 1,
+    point.padding = 0, label.size = 0, max.overlaps = Inf, segment.color = "grey50",
+    min.segment.length = 0, fill = NA)+ theme_void() + theme(legend.position = "none")
+ggsave(filename = paste(output_dir, label, "_grn_plot.svg", sep = ""),
+    plot = grn_plot_final, scale = 1, width = 15, height = 15)
+###TF only###
 
 TFs = c("FOXN4", "OTX2", "CRX")
 for (gene in TFs){
