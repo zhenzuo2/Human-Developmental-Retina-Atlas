@@ -26,6 +26,8 @@
 |Multiome_20w1d_NR     |20w1d|Peripheral|141 |Multiomics|
 |Multiome_23w4d_FR     |23w4d|Macula    |165 |Multiomics|
 |Multiome_23w4d_NR     |23w4d|Peripheral|165 |Multiomics|
+  
+|Samples               |Time |Region    |Days|Data Type |
 |17W1D_Temporal_retina |17w1d|Temporal  |120 |snRNA-seq |
 |17W1D_Nasal_retina    |17w1d|Nasal     |120 |snRNA-seq |
 |17W1D_Fovea_retina    |17w1d|Macula    |120 |snRNA-seq |
@@ -78,12 +80,12 @@
 | merge_looms | Merge all looms from velocyto results. |
 | convert_loom_to_h5ad | Convert merged loom file to anndata object. |
 | add_ldata_to_adata | Add merged loom h5ad object to anndata object. |
-| recover_dynamic | Recover dynamics for each cell type branch. |
+| recover_dynamic | Recover dynamics for all cells. |
+| plot_dynamic | Plot dynamics for all cells. | 
 | compute_vk | Kernel which computes a transition matrix based on RNA velocity. |
 | infer_fate | Infer fate for all cells and save predicted terminal states. |
 | infer_fate_NRPC | Infer fate for NRPCs. |
 | infer_fate_NRPC_save_meta | Plot well known markers for each NRPC fate to validate prediction. |
-| plot_dynamic | Plot scv.pl.velocity_embedding_stream(). |
 
 # multivelo
 | Folder Name  | Functions and aims |

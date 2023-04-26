@@ -37,7 +37,7 @@ adata = scv.read(
 )
 
 adata = adata[adata.obs.majorclass == "NRPC"]
-adata = adata[adata.obs.Region.isin(["Macula", "Peripheral"])]
+adata = adata[adata.obs.Region.isin(['Macula','Peripheral'])&(adata.obs['Data Type']=='Multiomics')]
 adata = run_umap_scvi(adata)
 
 fate = pd.read_csv(

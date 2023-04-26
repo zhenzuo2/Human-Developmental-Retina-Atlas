@@ -15,7 +15,7 @@ except FileExistsError:
 def velocity_graph_stochastic(input_path):
     print("Runing stochastic for " + input_path)
     adata = scv.read(input_path)
-    adata = adata[adata.obs.Region.isin(['Macula','Peripheral'])&(adata.obs['Data Type']=='Multiomics')]               
+    adata = adata[adata.obs.Region.isin(['Macula','Peripheral'])&(adata.obs['Data Type']=='Multiomics')]
     scv.pp.filter_genes(adata, min_shared_counts=20)
     scv.pp.normalize_per_cell(adata)
     scv.pp.filter_genes_dispersion(adata, n_top_genes=2000)
