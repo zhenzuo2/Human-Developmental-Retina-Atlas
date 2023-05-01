@@ -1,1 +1,0 @@
-slurmtaco.sh -p short -m 1G -t 1 -- Rscript DoubletFinder_filtered_cells.R

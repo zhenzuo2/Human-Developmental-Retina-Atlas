@@ -26,7 +26,7 @@
 |Multiome_20w1d_NR     |20w1d|Peripheral|141 |Multiomics|
 |Multiome_23w4d_FR     |23w4d|Macula    |165 |Multiomics|
 |Multiome_23w4d_NR     |23w4d|Peripheral|165 |Multiomics|
-  
+
 |Samples               |Time |Region    |Days|Data Type |
 |17W1D_Temporal_retina |17w1d|Temporal  |120 |snRNA-seq |
 |17W1D_Nasal_retina    |17w1d|Nasal     |120 |snRNA-seq |

@@ -71,7 +71,7 @@ metadata <- seurat_object@meta.data
 colnames(metadata)[ncol(metadata)] <- "doublet_finder"
 seurat_object@meta.data <- metadata
 
-svg(paste(output_figures_path, sample_id, "_log_seurat_QC.svg", sep = ""))
+svg(paste(output_figures_path, sample_id, ".svg", sep = ""))
 DimPlot(object = seurat_object,group.by = "doublet_finder")
 dev.off()
 

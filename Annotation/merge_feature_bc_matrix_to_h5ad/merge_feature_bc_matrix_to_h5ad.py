@@ -4,7 +4,13 @@ import scvelo as scv
 import anndata
 import pandas as pd
 
-input_path = "/storage/singlecell/zz4/fetal_bash/data/Retina_fetal/"
+input_path = "/storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/"
+
+try:
+   os.makedirs('/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/')
+except FileExistsError:
+   # directory already exists
+   pass
 
 SAMPLES = [
     os.path.join(input_path, folder + "/outs/filtered_feature_bc_matrix.h5")
@@ -33,7 +39,7 @@ for (i, f) in enumerate(SAMPLES[1:]):
 adata.var_names_make_unique()
 adata.obs_names_make_unique()
 
-meta =pd.read_csv("/storage/singlecell/zz4/fetal_bash/data/Retina_fetal_sample_meta.csv")
+meta =pd.read_csv("/storage/singlecell/zz4/fetal_snakemake/data/Sample_meta/Retina_fetal_sample_meta.csv")
 
 adata.obs["Time"] = adata.obs.sampleid.map(dict(zip(meta.Samples, meta.Time)))
 adata.obs["Region"] = adata.obs.sampleid.map(dict(zip(meta.Samples, meta.Region)))
@@ -42,14 +48,14 @@ adata.obs["Data Type"] = adata.obs.sampleid.map(
     dict(zip(meta.Samples, meta["Data Type"]))
 )
 
-adata.write("/storage/singlecell/zz4/fetal_bash/results/merged_h5ad/merged_raw.h5ad")
+adata.write("/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw.h5ad")
 cells = pd.read_csv(
-    "/storage/singlecell/zz4/fetal_bash/results/DoubletFinder_filtered_cells/DoubletFinder_filtered_cells.csv",
+    "/storage/singlecell/zz4/fetal_snakemake/results/DoubletFinder_filtered_cells/DoubletFinder_filtered_cells.csv",
     header=None,
 )
 adata_filter = adata[
     list(cells[0].values),
 ]
 adata_filter.write(
-    "/storage/singlecell/zz4/fetal_bash/results/merged_h5ad/merged_raw_filtered.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad"
 )

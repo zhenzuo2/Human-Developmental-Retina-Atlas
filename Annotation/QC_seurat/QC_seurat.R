@@ -4,17 +4,16 @@ sample_id <- args[1]
 input_file <- args[2]
 min_cells <- as.numeric(args[3])
 min_features <- as.numeric(args[4])
-output_figures_path <- args[5]
-output_results_path <- args[6]
-
+output_results_path <- args[5]
+output_figures_path <- args[6]
 # Read packages
 library(dplyr)
 library(Seurat)
 library(patchwork)
 set.seed(0)
 
-dir.create(output_figures_path, showWarnings = F)
-dir.create(output_results_path, showWarnings = F)
+dir.create(output_figures_path, showWarnings = FALSE)
+dir.create(output_results_path, showWarnings = FALSE)
 
 # Read h5 files
 counts <- Read10X_h5(input_file)
@@ -33,7 +32,7 @@ DefaultAssay(seurat_object) <- "RNA"
 # Rename cells with sample ID
 seurat_object <- RenameCells(object = seurat_object, add.cell.id = sample_id)
 seurat_object <- NormalizeData(seurat_object)
-seurat_object[["percent.mt"]] <- PercentageFeatureSet(seurat_object, pattern = "^mt-")
+seurat_object[["percent.mt"]] <- PercentageFeatureSet(seurat_object, pattern = "^MT-")
 DefaultAssay(seurat_object) <- "RNA"
 
 # Plot QC images
@@ -49,6 +48,4 @@ VlnPlot(seurat_object, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"),
 dev.off()
 
 # Save RDS
-saveRDS(seurat_object, paste(output_results_path, sample_id, "_min_cell_",
-    as.character(min_cells), "_min_features_", as.character(min_features),
-    ".rds", sep = ""))
+saveRDS(seurat_object, paste(output_results_path, sample_id,".rds", sep = ""))
