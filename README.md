@@ -39,6 +39,21 @@
 |multi_19w3d_F_ret     |19w3d|Macula    |136 |Multiomics|
 |multi_19w3d_S_ret     |19w3d|Superior  |136 |Multiomics|
 
+# Annotation
+| Folder Name  | Functions and aims |
+| ------------- | ------------- |
+| QC_seurat  | First-round of QC. Read10X_h5() and saveRDS(). Generate QC figures to find optimal QC parameters for each sample. |
+| QC_seurat_apply_filter | Apply filters based on QC results from QC_seurat.|
+| DoubletFinder | Find Doublets. |
+| DoubletFinder_save_filtered_cells | Save all filtered cell IDs into one csv file.|
+| merge_feature_bc_matrix_to_h5ad | Merge all h5ad, add meta info, save, and save all filtered cells in another object.|
+| cell_type_annotation_major_class |Run first round of major class annotation.| 
+| run_umap_all_samples |Run second step of major class annotation.| 
+| annotation_with_adult | Assign subclass labels with adult data. |
+| add_adult_annotated_reference_to_object | Add adult annotated reference to the object. |
+| merge_annotation_sub_major_class | Merge annotated object to one anndata object. |
+| rum_umap_NRPC| Run UMAP on NRPC cells (Only periphery and macula cells). |
+
 # ATAC-seq analysis
 | Folder Name  | Functions and aims |
 | ------------- | ------------- |
@@ -49,21 +64,6 @@
 | Archr_PRPC_analysis | More PRPC analysis. | 
 | getMatrixFromProject_GeneScoreMatrix | Extract gene score matrix from ArchR project. |
 | save_gene_score_as_h5ad | Save gene score matrix as h5ad file. |  
-
-# Data annotation
-| Folder Name  | Functions and aims |
-| ------------- | ------------- |
-| QC_seurat  | First-round of QC. Read10X_h5() and saveRDS(). Generate QC figures to find optimal QC parameters for each sample. |
-| QC_seurat_apply_filter | Apply filters based on QC results from QC_seurat.|
-| DoubletFinder | Find Doublets. |
-| DoubletFinder_filtered_cells | Save all filtered cell IDs into one csv file.|
-| merge_h5ad | Merge all h5ad, add meta info, save, and save all filtered cells in another object.|
-| cell_type_annotation_major_class |Run first round of major class annotation.| 
-| run_umap_all_samples |Run second step of major class annotation.| 
-| annotation_with_adult | Assign subclass labels with adult data. |
-| add_adult_annotated_reference_to_object | Add adult annotated reference to the object. |
-| merge_annotation_sub_major_class | Merge annotated object to one anndata object. |
-| rum_umap_NRPC| Run UMAP on NRPC cells (Only periphery and macula cells). |
 
 # Merge samples
 | Folder Name  | Functions and aims |

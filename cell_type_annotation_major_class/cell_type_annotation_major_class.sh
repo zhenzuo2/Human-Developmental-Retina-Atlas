@@ -1,1 +1,0 @@
-slurmtaco.sh --g01 -m 20G -t 1 -- python3 cell_type_annotation_major_class.py;

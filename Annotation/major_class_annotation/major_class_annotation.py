@@ -6,17 +6,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scvi
 import scanpy as sc
+import os
 
-sc.set_figure_params(figsize=(10, 10))
-scvi.settings.seed = 0
+try:
+    os.makedirs("/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/")
+except FileExistsError:
+    # directory already exists
+    pass
+
+try:
+    os.makedirs("/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/")
+except FileExistsError:
+    # directory already exists
+    pass
 
 # load reference
 adata_ref = sc.read(
-    "/storage/singlecell/zz4/fetal_bash/data/adult_reference/all/major_clean_major_scvi_Cluster_clean.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/data/adult_reference/all/major_clean_major_scvi_Cluster_clean.h5ad"
 )
 print(adata_ref)
-sc.pp.highly_variable_genes(adata_ref, flavor="seurat_v3", n_top_genes=10000)
-adata_ref = adata_ref[:, adata_ref.var.highly_variable].copy()
+sc.pp.highly_variable_genes(adata_ref, flavor="seurat_v3", n_top_genes=10000,subset = True)
 print(adata_ref)
 
 scvi.model.SCVI.setup_anndata(adata_ref, batch_key="sampleid")
@@ -39,9 +48,9 @@ sc.tl.leiden(adata_ref)
 sc.tl.umap(adata_ref)
 
 adata_query = sc.read(
-    "/storage/singlecell/zz4/fetal_bash/results/merged_h5ad/merged_raw_filtered.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad"
 )
-
+adata_query = adata_query[:, adata_ref.var_names].copy()
 scvi.model.SCVI.prepare_query_anndata(adata_query, vae_ref)
 
 vae_ref_scan = scvi.model.SCANVI.from_scvi_model(
@@ -79,18 +88,9 @@ sc.pp.neighbors(adata_full, use_rep="X_scANVI")
 sc.tl.leiden(adata_full)
 sc.tl.umap(adata_full)
 
-sc.pl.umap(
-    adata_full,
-    color=["batch", "majorclass"],
-    frameon=False,
-    ncols=1,
-    size=3,
-    save="adult_fetal.svg",
-)
-
 adata_full.write(
-    "/storage/singlecell/zz4/fetal_bash/results/merged_h5ad/merged_raw_filtered_wadult_umap_10000.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_wadult_umap_10000.h5ad"
 )
 adata_query.obs.to_csv(
-    "/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/merged_raw_filtered_meta_major_class.csv"
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class.csv"
 )
