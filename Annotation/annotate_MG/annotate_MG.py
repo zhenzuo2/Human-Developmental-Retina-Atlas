@@ -55,5 +55,5 @@ def run_umap_scvi(adata):
 
 adata = run_umap_scvi(adata)
 adata.write(
-    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_M_P.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000.h5ad"
 )

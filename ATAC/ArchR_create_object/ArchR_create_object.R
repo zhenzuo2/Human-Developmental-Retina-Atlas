@@ -1,8 +1,8 @@
-args <- commandArgs(trailingOnly = TRUE)
-input_meta_file = args[1]
-output_results_path <-args[2]
 #https://greenleaflab.github.io/ArchR_2020/Ex-Analyze-Multiome.html
 #https://www.archrproject.com/
+
+input_meta_file="/storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/ArchR_create_object/meta.csv"
+output_results_path="/storage/singlecell/zz4/fetal_snakemake/results/ArchR/"
 
 # import packages
 library(ArchR)
@@ -41,14 +41,14 @@ doubScores <- addDoubletScores(
 )
 
 # create project
-projretina1 <- ArchRProject(
+proj1 <- ArchRProject(
   ArrowFiles = ArrowFiles, 
-  outputDirectory = "projretina1",
+  outputDirectory = "proj1",
   copyArrows = TRUE #This is recommened so that if you modify the Arrow files you have an original copy for later usage.
 )
 
-paste0("Memory Size = ", round(object.size(projretina1) / 10^6, 3), " MB")
+paste0("Memory Size = ", round(object.size(proj1) / 10^6, 3), " MB")
 
-getAvailableMatrices(projretina1)
+getAvailableMatrices(proj1)
 
-saveArchRProject(ArchRProj = projretina1, outputDirectory = "Save-projretina1", load = FALSE)
+saveArchRProject(ArchRProj = proj1, outputDirectory = "Save-proj1", load = FALSE)

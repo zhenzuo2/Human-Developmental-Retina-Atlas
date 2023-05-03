@@ -8,10 +8,6 @@ sample2file = dict(zip(meta["Samples_ID"].tolist(), meta["Samples"].tolist()))
 labels = ["fetal", "fetal_adult"]
 cell_type=["AC", "BC", "Cone", "HC", "MG", "RGC", "Rod"]
 
-wildcard_constraints:
-    sample="[^/]+",
-
-
 def get_rawh5(wildcards):
     return sample2file[wildcards.sample]
 

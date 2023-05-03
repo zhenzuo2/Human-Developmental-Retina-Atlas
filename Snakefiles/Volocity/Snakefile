@@ -1,0 +1,46 @@
+import pandas as pd
+
+meta = pd.read_csv(
+    "/storage/singlecell/zz4/fetal_snakemake/scripts/Volocity/velocyto/meta.csv"
+)
+samples = meta["samples"].tolist()
+sample2barcodes = dict(zip(meta["samples"].tolist(), meta["barcodes"].tolist()))
+sample2bams = dict(zip(meta["samples"].tolist(), meta["bams"].tolist()))
+genome = "/storage/singlecell/zz4/Reference/refdata-cellranger-arc-GRCh38-2020-A/genes/genes.gtf"
+
+
+def get_barcodes(wildcards):
+    return sample2barcodes[wildcards.sample]
+
+
+def get_bam(wildcards):
+    return sample2bams[wildcards.sample]
+
+
+rule all:
+    input:
+        expand(
+            [
+                "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/{sample}/",
+            ],
+            sample=samples,
+        ),
+
+
+rule velocyto:
+    ## Run velocyto
+    input:
+        get_barcodes,
+        get_bam,
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/{sample}/",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate velocyto
+        export LC_ALL=en_US.utf-8
+        export LANG=en_US.utf-8
+        mkdir /storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/
+        mkdir /storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/{wildcards.sample}
+        velocyto run -o /storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/{wildcards.sample} -@ 12 --samtools-memory 10240 --bcfile /storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/{wildcards.sample}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz -e {wildcards.sample} /storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/{wildcards.sample}/outs/gex_possorted_bam.bam {genome}'
+        """

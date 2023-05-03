@@ -1,0 +1,31 @@
+import pandas as pd
+
+meta = pd.read_csv(
+    "/storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/ArchR_create_object/meta.csv"
+)
+samples = meta["Samples"].tolist()
+
+
+rule all:
+    ## Put input file here to run corresponding rules
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/Archr/Save-proj1/",
+
+
+rule ArchR_create_object:
+    ## Create ArchR project
+    input:
+        expand(
+            [
+                "/storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/{sample}/outs/atac_fragments.tsv.gz",
+            ],
+            sample=samples,
+        ),
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/Archr/Save-proj1/",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/ArchR_create_object/ArchR_create_object.R'
+        """
