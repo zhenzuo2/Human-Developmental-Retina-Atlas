@@ -9,7 +9,8 @@ samples = meta["Samples"].tolist()
 rule all:
     ## Put input file here to run corresponding rules
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/Archr/Save-proj1/",
+        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-proj1/Save-ArchR-Project.rds",
+        "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_filtered_cells/ATAC_Filtered_cell.csv",
 
 
 rule ArchR_create_object:
@@ -22,10 +23,23 @@ rule ArchR_create_object:
             sample=samples,
         ),
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/Archr/Save-proj1/",
+        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-proj1/Save-ArchR-Project.rds",
     shell:
         """
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
         Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/ArchR_create_object/ArchR_create_object.R'
+        """
+
+rule ArchR_filter:
+    ## Filter ArchR project
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-proj1/Save-ArchR-Project.rds"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_filtered_cells/ATAC_Filtered_cell.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/ArchR_filter/ArchR_filter.R'
         """

@@ -37,7 +37,7 @@ adata_query = adata_query[
     adata_query.obs.majorclass == cell_type,
 ]
 adata_query.obs.Days = adata_query.obs.Days.astype(float)
-
+adata_query = adata_query[adata_query.obs.Days > 0]
 # read reference data
 adata_ref = scv.read(
     adata_ref_file
@@ -55,7 +55,7 @@ try:
     sc.pp.highly_variable_genes(
         adata_query,
         flavor="seurat_v3",
-        n_top_genes=2000,
+        n_top_genes=10000,
         batch_key=batch_key,
         subset=True,
     )

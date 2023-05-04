@@ -6,7 +6,8 @@ meta = pd.read_csv(
 samples = meta["Samples_ID"].tolist()
 sample2file = dict(zip(meta["Samples_ID"].tolist(), meta["Samples"].tolist()))
 labels = ["fetal", "fetal_adult"]
-cell_type=["AC", "BC", "Cone", "HC", "MG", "RGC", "Rod"]
+cell_type = ["AC", "BC", "Cone", "HC", "MG", "RGC", "Rod"]
+
 
 def get_rawh5(wildcards):
     return sample2file[wildcards.sample]
@@ -15,9 +16,9 @@ def get_rawh5(wildcards):
 rule all:
     ## Put input file here to run corresponding rules
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_wadult_umap_10000.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class.csv",
-
+        directory(
+            "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/subclass_annotation/AC_annotation_adult/"
+        ),
 
 ####################################################################################################
 # Annotation
@@ -112,4 +113,51 @@ rule major_class_annotation:
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/major_class_annotation/major_class_annotation.py'
+        """
+
+
+rule filter_run_UMAP_to_annotate_MG:
+    ## Run scvi umap to annotate mg cells. Filter cells based on ATAC and RNA seq
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_filtered_cells/ATAC_Filtered_cell.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw.h5ad",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/run_UMAP_to_annotate_MG/run_UMAP_to_annotate_MG.py'
+        """
+
+
+rule annotate_MG_RPC:
+    ## Manually annotation. Annotate MG, PRPC, and NRPC. Clean.
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult.h5ad",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/annotate_MG_RPC/annotate_MG_RPC.py'
+        """
+
+
+rule subclass_annotation_with_adult:
+    ## Manually annotation. Annotate MG, PRPC, and NRPC. Clean.
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad",
+    output:
+        directory(
+            "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/subclass_annotation/AC_annotation_adult/"
+        ),
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        sh /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/subclass_annotation_with_adult/subclass_annotation_with_adult.sh'
         """
