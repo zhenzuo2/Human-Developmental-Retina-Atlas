@@ -15,7 +15,7 @@ adata_ref_file = sys.argv[3]
 output_file_path = sys.argv[4]
 output_fig_path = sys.argv[5]
 resolution = int(sys.argv[6])
-
+n_feature = int(sys.argv[7])
 try:
    os.makedirs(output_file_path)
 except FileExistsError:
@@ -55,7 +55,7 @@ try:
     sc.pp.highly_variable_genes(
         adata_query,
         flavor="seurat_v3",
-        n_top_genes=10000,
+        n_top_genes=n_feature,
         batch_key=batch_key,
         subset=True,
     )
@@ -63,7 +63,7 @@ try:
 except:
     print("An exception occurred! Fix the batch or run without batch now.")
     sc.pp.highly_variable_genes(
-        adata_query, flavor="seurat_v3", n_top_genes=10000, subset=True
+        adata_query, flavor="seurat_v3", n_top_genes=n_feature, subset=True
     )
 
 scvi.settings.seed = 0
@@ -112,13 +112,13 @@ adata.obs[batch_key] = adata.obs[batch_key].astype("str").astype("category")
 # Run UMAP on concated data
 try:
     sc.pp.highly_variable_genes(
-        adata, flavor="seurat_v3", n_top_genes=10000, batch_key=batch_key, subset=True
+        adata, flavor="seurat_v3", n_top_genes=n_feature, batch_key=batch_key, subset=True
     )
 
 except:
     print("An exception occurred! Fix the batch or run without batch now.")
     sc.pp.highly_variable_genes(
-        adata, flavor="seurat_v3", n_top_genes=10000, subset=True
+        adata, flavor="seurat_v3", n_top_genes=n_feature, subset=True
     )
 scvi.settings.seed = 0
 if labels_key == "":

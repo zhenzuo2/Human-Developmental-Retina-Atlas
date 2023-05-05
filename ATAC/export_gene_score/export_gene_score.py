@@ -5,17 +5,17 @@ import pandas as pd
 import anndata as ad
 
 rownames = pd.read_csv(
-    "/storage/singlecell/zz4/fetal_bash/results/Gene_score_matrix/gene_score_rownames.txt",
+    "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/gene_score/gene_score_rownames.txt",
     header=None,
 )[0].values
 
 colnames = pd.read_csv(
-    "/storage/singlecell/zz4/fetal_bash/results/Gene_score_matrix/gene_score_colnames.txt",
+    "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/gene_score/gene_score_colnames.txt",
     header=None,
 )[0].values
 
 gs = scipy.io.mmread(
-    "/storage/singlecell/zz4/fetal_bash/results/Gene_score_matrix/gene_score.txt",
+    "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/gene_score/gene_score.txt",
 )
 
 adata = ad.AnnData(X=gs.transpose().toarray(), obs=colnames, var=rownames)
@@ -27,5 +27,5 @@ adata.var.index = adata.var.gene_name.values
 adata.obs.index = adata.obs.cell_id.values
 
 adata.write(
-    "/storage/singlecell/zz4/fetal_bash/results/Gene_score_matrix/gene_score.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/gene_score/gene_score.h5ad"
 )

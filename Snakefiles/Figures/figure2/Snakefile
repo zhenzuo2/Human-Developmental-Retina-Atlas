@@ -5,7 +5,7 @@ rule all:
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Cell Birth Rate in the Peripheral.svg"
 
 ####################################################################################################
-# Annotation
+
 rule figure2_plot_cell_birth_rate:
     ## Seurat QC
     input:
@@ -20,3 +20,4 @@ rule figure2_plot_cell_birth_rate:
         mkdir /storage/singlecell/zz4/fetal_snakemake/figures/figure2
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure2/plot_cell_birth_rate.py'
         """
+

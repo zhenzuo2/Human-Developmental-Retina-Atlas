@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 set -x
-snakemake -j 20 -n -p
+snakemake -j 5 -n -p

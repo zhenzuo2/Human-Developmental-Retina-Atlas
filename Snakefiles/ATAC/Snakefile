@@ -9,8 +9,7 @@ samples = meta["Samples"].tolist()
 rule all:
     ## Put input file here to run corresponding rules
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-proj1/Save-ArchR-Project.rds",
-        "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_filtered_cells/ATAC_Filtered_cell.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_atac/atac.rds",
 
 
 rule ArchR_create_object:
@@ -42,4 +41,38 @@ rule ArchR_filter:
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
         Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/ArchR_filter/ArchR_filter.R'
+        """
+
+rule export_gene_score:
+    ## Filter ArchR project
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-proj1/Save-ArchR-Project.rds"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/gene_score/gene_score.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/export_gene_score/export_gene_score.R
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/export_gene_score/export_gene_score.py
+        '
+        """
+
+rule merge_atac:
+    ## Merge atac in R to a seurat object
+    input:
+        expand(
+            [
+                "/storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/{sample}/outs/atac_fragments.tsv.gz",
+            ],
+            sample=samples,
+        ),
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_atac/atac.rds",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/merge_atac/merge_atac.R'
         """
