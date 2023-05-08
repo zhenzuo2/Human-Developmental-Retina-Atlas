@@ -9,7 +9,7 @@ import joblib
 adata = scv.read(
     "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad"
 )
-adata = adata[adata.obs.majorclass == "PRPC"]
+adata = adata[adata.obs.majorclass.isin(["PRPC","MG"])]
 adata.obs.Days = adata.obs.Days.astype(float)
 adata = adata[adata.obs.Days > 0]
 
@@ -17,7 +17,7 @@ sc.pp.calculate_qc_metrics(adata, inplace=True)
 adata = adata[:, adata.var.mean_counts > 0]
 
 sc.pp.highly_variable_genes(
-        adata, flavor="seurat_v3", n_top_genes=10000, subset=True
+        adata, flavor="seurat_v3", n_top_genes=5000, subset=True
     )
 
 adata.layers["counts"] = adata.X
@@ -25,8 +25,6 @@ adata.layers["counts"] = adata.X
 sc.pp.normalize_total(adata)
 sc.pp.log1p(adata)
 sc.tl.pca(adata)
-
-sc.pp.subsample(adata, n_obs=20000)
 
 sc.pp.calculate_qc_metrics(adata, inplace=True)
 adata = adata[:, adata.var.mean_counts > 0]

@@ -1,6 +1,5 @@
-args <- commandArgs(trailingOnly = TRUE)
-input_path <- args[1]
-output_file <- args[2]
+input_path="/storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/"
+output_file="/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds"
 # Follow vignette at
 # https://satijalab.org/seurat/articles/integration_introduction.html
 # And https://github.com/satijalab/seurat/issues/1720
@@ -35,10 +34,7 @@ if (class(counts)=="dgCMatrix") {
     cat("\n")
 }
 
-seurat_object <- merge(get("17W1D_Fovea_retina"), y = c(get("17w1d_I_Ret"), get("17W1D_Nasal_retina"), 
-get("17w1d_S_Ret"), get("17W1D_Temporal_retina"), multi_19w3d_F_ret, 
-multi_19W3D_I_ret, multi_19W3D_N_RET, multi_19w3d_S_ret, 
-multi_19W3d_T_ret, Multi_Fetal_11w2d_FR, Multi_Fetal_11w2d_FR_2, 
+seurat_object <- merge(Multi_Fetal_11w2d_FR, y = c( Multi_Fetal_11w2d_FR_2, 
 Multi_Fetal_11w2d_NR, Multi_Fetal_13W_FR, Multi_Fetal_13W_NR, 
 Multi_Fetal_14w5d_FR, Multi_Fetal_14w5d_NR, Multi_Fetal_19W4d_FR, 
 Multi_Fetal_19W4d_NR, Multi_Fetal_20W2d_FR, Multi_Fetal_20W2d_NR, 

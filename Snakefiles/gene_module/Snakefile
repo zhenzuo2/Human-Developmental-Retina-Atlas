@@ -6,7 +6,8 @@ rule all:
 rule gene_module_analysis_PRPC:
     ## gene_module_analysis_PRPC
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult.h5ad"
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/scripts/gene_module/gene_module_analysis_PRPC.py"
     output:
         "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/PPRC_hs.create_modules.pkl",
         "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/PPRC_hs.adata.pkl"

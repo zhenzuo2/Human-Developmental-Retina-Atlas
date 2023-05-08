@@ -16,7 +16,8 @@ def get_rawh5(wildcards):
 rule all:
     ## Put input file here to run corresponding rules
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC.h5ad"
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds",
+
 
 ####################################################################################################
 # Annotation
@@ -83,6 +84,24 @@ rule DoubletFinder_save_filtered_cells:
         Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/DoubletFinder_save_filtered_cells/DoubletFinder_save_filtered_cells.R'
         """
 
+rule merge_rna_save_as_seurat_object:
+    ## Run UMAP without Adult on AC cells.
+    input:
+        expand(
+            [
+                "/storage/singlecell/zz4/fetal_snakemake/results/DoubletFinder_seurat_object/{sample}.rds",
+            ],
+            sample=samples,
+        ),
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds",
+    shell:
+        """
+        bash -c '
+        mkdir /storage/singlecell/zz4/fetal_snakemake/results/merged_rna/
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/merge_rna_save_as_seurat_object/merge_rna_save_as_seurat_object.R'
+        """
 
 rule merge_feature_bc_matrix_to_h5ad:
     ## Merge all samples and save as anndata object, save the object and filtered object
@@ -160,6 +179,7 @@ rule subclass_annotation_with_adult:
         sh /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/subclass_annotation_with_adult/subclass_annotation_with_adult.sh'
         """
 
+
 rule run_umap_all_cells_wo_adult:
     ## Run UMAP without Adult.
     input:
@@ -173,13 +193,14 @@ rule run_umap_all_cells_wo_adult:
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/run_umap_all_cells_wo_adult/run_umap_all_cells_wo_adult.py'
         """
 
+
 rule run_umap_AC_wo_adult:
-    ## Run UMAP without Adult.
+    ## Run UMAP without Adult on AC cells.
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv"
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC.h5ad"
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC.h5ad",
     shell:
         """
         bash -c '
@@ -187,3 +208,38 @@ rule run_umap_AC_wo_adult:
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/AC_run_umap.py'
         """
+
+
+rule Annotate_AC_subtype:
+    ## Run UMAP without Adult on AC cells.
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/subclass_annotation/AC_annotation_adult/AC_merged_object.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/data/manual_reference/AC_subclass_annotation.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/data/cell_subclass_majorclass_mapping.csv",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/AC_subtype.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC_subtype.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/AC_subtype_annotate.py'
+        """
+
+
+rule run_umap_PRPC_MG_wo_adult:
+    ## Run UMAP without Adult on AC cells.
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/PRPC_MG.h5ad",
+    shell:
+        """
+        bash -c '
+        mkdir /storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/PRPC_MG_run_umap.py'
+        """
+
