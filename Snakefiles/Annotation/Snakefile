@@ -16,7 +16,7 @@ def get_rawh5(wildcards):
 rule all:
     ## Put input file here to run corresponding rules
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG.h5ad"
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC.h5ad"
 
 ####################################################################################################
 # Annotation
@@ -171,4 +171,19 @@ rule run_umap_all_cells_wo_adult:
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/run_umap_all_cells_wo_adult/run_umap_all_cells_wo_adult.py'
+        """
+
+rule run_umap_AC_wo_adult:
+    ## Run UMAP without Adult.
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC.h5ad"
+    shell:
+        """
+        bash -c '
+        mkdir /storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/AC_run_umap.py'
         """

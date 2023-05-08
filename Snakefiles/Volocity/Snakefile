@@ -59,5 +59,5 @@ rule velocyto_adult:
         export LC_ALL=en_US.utf-8
         export LANG=en_US.utf-8
         mkdir /storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/
-        velocyto run -o /storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/ -@ 12 --samtools-memory 10240 --bcfile /storage/singlecell/zz4/fetal_snakemake/data/adult_data/10x3_Lobe_19_D019_NeuN-v7/filtered_feature_bc_matrix/barcodes.tsv.gz -e 10x3_Lobe_19_D019_NeuN-v7 /storage/singlecell/zz4/fetal_snakemake/data/adult_data/10x3_Lobe_19_D019_NeuN-v7/possorted_genome_bam.bam {genome}'
+        velocyto run -o /storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/ -@ 12 --samtools-memory 20240 --bcfile /storage/singlecell/zz4/fetal_snakemake/data/adult_data/10x3_Lobe_19_D019_NeuN-v7/filtered_feature_bc_matrix/barcodes.tsv.gz -e 10x3_Lobe_19_D019_NeuN-v7 /storage/singlecell/zz4/fetal_snakemake/data/adult_data/10x3_Lobe_19_D019_NeuN-v7/possorted_genome_bam.bam {genome}'
         """
