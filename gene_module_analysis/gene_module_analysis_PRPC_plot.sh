@@ -1,1 +1,0 @@
-slurmtaco.sh -p short -m 20G -t 1 -- python3 gene_module_analysis_PRPC_plot.py;

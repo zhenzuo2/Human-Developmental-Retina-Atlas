@@ -1,0 +1,94 @@
+samples=[
+"Multi_Fetal_11w2d_FR",
+"Multi_Fetal_11w2d_FR_2",
+"Multi_Fetal_11w2d_NR",
+"Multi_Fetal_13W_FR",
+"Multi_Fetal_13W_NR",
+"Multi_Fetal_14w5d_FR",
+"Multi_Fetal_14w5d_NR",
+"Multi_Fetal_19W4d_FR",
+"Multi_Fetal_19W4d_NR",
+"Multi_Fetal_20W2d_FR",
+"Multi_Fetal_20W2d_NR",
+"Multi_Fetal_23w1d_FR",
+"Multi_Fetal_23w1d_NR",
+"Multiome_10w_FR",
+"Multiome_10w_NR",
+"Multiome_12w3d_FR",
+"Multiome_12w3d_NR",
+"Multiome_14w2d_FR",
+"Multiome_14w2d_NR",
+"Multiome_16w4d_FR",
+"Multiome_16w4d_NR",
+"Multiome_20w1d_FR",
+"Multiome_20w1d_NR",
+"Multiome_23w4d_FR",
+"Multiome_23w4d_NR",
+]
+
+output_result_path="/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x/"
+output_figure_path="/storage/singlecell/zz4/fetal_snakemake/figures/ATAC_aggregate_peaks_10x/"
+
+rule all:
+    ## Put input file here to run corresponding rules
+    input:
+        expand(
+            [
+                "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/{sample}.h5ad",
+            ],
+            sample=samples,
+        ),
+
+
+####################################################################################################
+# Annotation
+rule multivelo_prepare_create_atac:
+    ## multivelo_prepare_create_atac
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/{sample}/outs/atac_peak_annotation.tsv",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x/{sample}.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_prepare_create_atac/multivelo_prepare_create_atac.py /storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/{wildcards.sample} {wildcards.sample} {output_result_path} {output_figure_path};'
+        """
+
+output_result_path="/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/"
+
+rule multivelo_normalize_atac_TF:
+    ## multivelo_normalize_atac_TF
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x/{sample}.h5ad",
+    output:
+       "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/{sample}.h5ad"
+    shell:
+        """
+        bash -c '
+        mkdir /storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_normalize_atac_TF/multivelo_normalize_atac_TF.py /storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x/{wildcards.sample}.h5ad {wildcards.sample} {output_result_path};'
+        """
+
+rule multivelo_shared_barcodes_RNA_ATAC:
+    ## multivelo_shared_barcodes_RNA_ATAC
+    input:
+        expand(
+            [
+                "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/{sample}.h5ad",
+            ],
+            sample=samples,
+        ),
+    output:
+       "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/adata_atac.h5ad",
+       "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/adata_rna.h5ad",
+       "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/filtered_cells.csv",
+
+    shell:
+        """
+        bash -c '
+        mkdir /storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_shared_barcodes_RNA_ATAC/multivelo_shared_barcodes_RNA_ATAC.py'
+        """

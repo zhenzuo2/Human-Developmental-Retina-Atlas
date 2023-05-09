@@ -9,6 +9,8 @@ import joblib
 adata = scv.read(
     "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad"
 )
+time = pd.read_csv("/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_SCENT.csv")
+
 adata = adata[adata.obs.majorclass.isin(["PRPC","MG"])]
 adata.obs.Days = adata.obs.Days.astype(float)
 adata = adata[adata.obs.Days > 0]
@@ -29,6 +31,8 @@ sc.tl.pca(adata)
 sc.pp.calculate_qc_metrics(adata, inplace=True)
 adata = adata[:, adata.var.mean_counts > 0]
 adata
+
+adata.obsm["latent_time"] = np.asarray([[x] for x in adata.obs["latent_time"]])
 
 hs = hotspot.Hotspot(
     adata,

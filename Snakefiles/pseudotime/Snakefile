@@ -1,0 +1,30 @@
+rule all:
+    input:
+         "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_monocle3_pseudotime.csv",
+         "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_SCENT.csv",
+
+rule PRPC_MG_monocle3:
+    ## Run monocle3 to infer pseudotime on PRPC_MG
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_monocle3_pseudotime.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/pseudotime/monocle3/PRPC_MG_monocle3.R'
+        """
+
+rule PRPC_MG_SCENT:
+    ## Run SCENT to infer pseudotime on PRPC_MG to estimate the differentiation potency
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_SCENT.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/pseudotime/SCENT/PRPC_MG_SCENT.R'
+        """
