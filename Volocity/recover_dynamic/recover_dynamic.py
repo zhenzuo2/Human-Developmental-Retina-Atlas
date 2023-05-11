@@ -31,7 +31,7 @@ def velocity_graph_stochastic(input_path):
 
 velocity_graph_stochastic(input_path).write(output_path)
 
-input_path = "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_ldata.h5ad"
-output_path = "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_ldata_dynamics.h5ad"
+input_path = "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG_ldata.h5ad"
+output_path = "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG_ldata_dynamics.h5ad"
 
 velocity_graph_stochastic(input_path).write(output_path)

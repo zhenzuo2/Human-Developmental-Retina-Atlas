@@ -3,9 +3,9 @@ import scvelo as scv
 import anndata
 import os
 
-adata_file = "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult.h5ad"
+adata_file = "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad"
 ldata_file = "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/combined.h5ad"
-output_file = "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_ldata.h5ad"
+output_file = "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG_ldata.h5ad"
 
 try:
    os.makedirs(os.path.dirname(output_file))
