@@ -16,7 +16,12 @@ def get_rawh5(wildcards):
 rule all:
     ## Put input file here to run corresponding rules
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/BC.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/BC_subtype.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/BC_subtype.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Rod.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Cone.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/RGC.h5ad",
 
 
 ####################################################################################################
@@ -84,6 +89,7 @@ rule DoubletFinder_save_filtered_cells:
         Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/DoubletFinder_save_filtered_cells/DoubletFinder_save_filtered_cells.R'
         """
 
+
 rule merge_rna_save_as_seurat_object:
     ## Merge all samples and save as seurat object.
     input:
@@ -102,6 +108,7 @@ rule merge_rna_save_as_seurat_object:
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
         Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/merge_rna_save_as_seurat_object/merge_rna_save_as_seurat_object.R'
         """
+
 
 rule merge_feature_bc_matrix_to_h5ad:
     ## Merge all samples and save as anndata object, save the object and filtered object
@@ -243,6 +250,7 @@ rule run_umap_PRPC_MG_wo_adult:
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/PRPC_MG_run_umap.py'
         """
 
+
 rule run_umap_BC_wo_adult:
     ## Run UMAP without adult on BC.
     input:
@@ -256,4 +264,86 @@ rule run_umap_BC_wo_adult:
         mkdir /storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/BC_run_umap.py'
+        """
+
+
+rule Annotate_BC_subtype:
+    ## Annotate BC based on UMAP.
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/BC.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/subclass_annotation/BC_annotation_adult/BC_merged_object.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/data/manual_reference/BC_subclass_annotation.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/data/cell_subclass_majorclass_mapping.csv",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/BC_subtype.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/BC_subtype.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/BC_subtype_annotate.py'
+        """
+
+
+rule run_umap_Rod_wo_adult:
+    ## Run UMAP without adult on BC.
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Rod.h5ad",
+    shell:
+        """
+        bash -c '
+        mkdir /storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/Rod_run_umap.py'
+        """
+
+
+rule run_umap_Cone_wo_adult:
+    ## Run UMAP without adult on BC.
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Cone.h5ad",
+    shell:
+        """
+        bash -c '
+        mkdir /storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/Cone_run_umap.py'
+        """
+
+
+rule run_umap_RGC_wo_adult:
+    ## Run UMAP without adult on BC.
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/RGC.h5ad",
+    shell:
+        """
+        bash -c '
+        mkdir /storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/RGC_run_umap.py'
+        """
+
+
+rule run_umap_HC_wo_adult:
+    ## Run UMAP without adult on BC.
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC.h5ad",
+    shell:
+        """
+        bash -c '
+        mkdir /storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/HC_run_umap.py'
         """

@@ -19,7 +19,7 @@ def get_bam(wildcards):
 
 rule all:
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics_vk_g.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics_g.h5ad",
 
 
 rule velocyto:
@@ -159,10 +159,5 @@ rule infer_fate:
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics_vk.h5ad",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics_vk_g.h5ad",
-    shell:
-        """
-        bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Volocity/infer_fate/infer_fate.py'
-        """
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics_g.h5ad",
+        """         bash -c '         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Volocity/infer_fate/infer_fate.py'         """,

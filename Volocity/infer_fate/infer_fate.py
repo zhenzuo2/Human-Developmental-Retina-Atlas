@@ -6,12 +6,12 @@ import numpy as np
 import pandas as pd
 
 adata = scv.read(
-    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_ldata_dynamics.h5ad",
+    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics.h5ad",
     cache=False,
 )
 
 vk = joblib.load(
-   "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_ldata_dynamics_vk.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics_vk.h5ad"
 )
 ck = ConnectivityKernel(adata).compute_transition_matrix()
 combined_kernel = 0.8 * vk + 0.2 * ck
@@ -33,8 +33,11 @@ temp = pd.DataFrame(g.adata.obsm["to_terminal_states"])
 temp.columns = list(g.adata.obsm["to_terminal_states"].names)
 temp.index = g.adata.obs.index
 
-temp.to_csv("/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/to_terminal_states.csv")
+temp.to_csv(
+    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/to_terminal_states.csv"
+)
 
-g.adata.write(
-    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_ldata_dynamics_g.h5ad",
+joblib.dump(
+    g,
+    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics_g.h5ad",
 )
