@@ -20,7 +20,7 @@ def get_bam(wildcards):
 rule all:
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_ldata.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG_ldata.h5ad",
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics_vk.h5ad",
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics_g.h5ad",
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/to_terminal_states.csv",
@@ -102,7 +102,7 @@ rule convert_loom_to_h5ad:
 rule add_loom_to_h5ad_with_or_without_2_adult:
     ## Add loom file to merged without adult
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad"
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad",
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG.h5ad",
         "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/combined.h5ad",
     output:
