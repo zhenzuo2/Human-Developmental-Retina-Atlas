@@ -7,7 +7,7 @@ adata = sc.read(
 
 # Annotate NRPC
 adata.obs["majorclass"] = adata.obs["majorclass"].astype(str)
-adata.obs.loc[adata.obs.leiden.isin(["8"]), "majorclass"] = "NRPC"
+#adata.obs.loc[adata.obs.leiden.isin(["8"]), "majorclass"] = "NRPC"
 adata.obs.loc[adata.obs.majorclass == "MG", "majorclass"] = "NRPC"
 
 # Annotate MG

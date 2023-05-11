@@ -45,5 +45,5 @@ adata = adata[meta["Unnamed: 0"]]
 adata = run_umap_scvi(adata)
 
 adata.write(
-    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/BC.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Cone.h5ad"
 )

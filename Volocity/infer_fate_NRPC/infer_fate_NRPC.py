@@ -32,16 +32,19 @@ def run_umap_scvi(adata):
 
 
 adata = scv.read(
-    "/storage/singlecell/zz4/fetal_bash/results/merged_h5ad/merged_raw_filtered_umap_10000_major_sub_class.h5ad",
-    cache=False,
+    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad"
+)
+meta = pd.read_csv(
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv"
 )
 
-adata = adata[adata.obs.majorclass == "NRPC"]
-adata = adata[adata.obs.Region.isin(['Macula','Peripheral'])&(adata.obs['Data Type']=='Multiomics')]
+meta = meta[(meta.majorclass == "NRPC") & (meta.Time != "Adult")]
+adata = adata[meta["Unnamed: 0"]]
+
 adata = run_umap_scvi(adata)
 
 fate = pd.read_csv(
-    "/storage/singlecell/zz4/fetal_bash/results/vk/to_terminal_states.csv"
+    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/to_terminal_states.csv"
 )
 fate.index = fate["Unnamed: 0"].values
 
@@ -57,5 +60,5 @@ for x in cell_types:
 adata.obs["terminal_state"] = adata.obs.loc[:, cell_types].idxmax(axis=1)
 adata.obs["terminal_state_p"] = adata.obs.loc[:, cell_types].max(axis=1)
 
-adata.obs.to_csv("/storage/singlecell/zz4/fetal_bash/results/NRPC_fate/NRPC_fate.csv")
-adata.write("/storage/singlecell/zz4/fetal_bash/results/NRPC_fate/NRPC_fate.h5ad")
+adata.obs.to_csv("/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.csv")
+adata.write("/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.h5ad")
