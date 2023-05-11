@@ -1,2 +1,2 @@
 set -x
-snakemake -j 1
+snakemake -j 14

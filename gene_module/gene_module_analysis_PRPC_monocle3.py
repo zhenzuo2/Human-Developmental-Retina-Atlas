@@ -5,39 +5,38 @@ import numpy as np
 import hotspot
 import joblib
 
-
+output_path = "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/monocle3/"
 adata = scv.read(
     "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad"
 )
-time = pd.read_csv("/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_SCENT.csv")
 
 adata = adata[adata.obs.majorclass.isin(["PRPC","MG"])]
 adata.obs.Days = adata.obs.Days.astype(float)
 adata = adata[adata.obs.Days > 0]
 
+meta = pd.read_csv("/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_monocle3_pseudotime.csv",sep = " ")
+adata.obs["monocle3"]=meta.loc[adata.obs.index,"x"]
+
 sc.pp.calculate_qc_metrics(adata, inplace=True)
 adata = adata[:, adata.var.mean_counts > 0]
 
 sc.pp.highly_variable_genes(
-        adata, flavor="seurat_v3", n_top_genes=5000, subset=True
+        adata, flavor="seurat_v3", n_top_genes=10000, subset=True
     )
 
 adata.layers["counts"] = adata.X
-
-sc.pp.normalize_total(adata)
-sc.pp.log1p(adata)
-sc.tl.pca(adata)
 
 sc.pp.calculate_qc_metrics(adata, inplace=True)
 adata = adata[:, adata.var.mean_counts > 0]
 adata
 
-adata.obsm["latent_time"] = np.asarray([[x] for x in adata.obs["latent_time"]])
+adata.obsm["monocle3"] = np.asarray([[x] for x in adata.obs["monocle3"]])
 
 hs = hotspot.Hotspot(
     adata,
     model="danb",
-    latent_obsm_key="X_pca",
+    layer_key="counts",
+    latent_obsm_key="monocle3",
     umi_counts_obs_key="total_counts",
 )
 
@@ -53,15 +52,15 @@ modules = hs.create_modules(min_gene_threshold=100, core_only=True, fdr_threshol
 module_scores = hs.calculate_module_scores()
 
 local_correlations.to_csv(
-    "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/PRPC_hs_local_correlations.csv"
+    output_path + "PRPC_hs_local_correlations.csv"
 )
 module_scores.to_csv(
-    "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/PRPC_hs_module_scores.csv"
+    output_path + "PRPC_hs_module_scores.csv"
 )
 joblib.dump(
     hs,
-    "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/PPRC_hs.create_modules.pkl",
+    output_path + "PPRC_hs.create_modules.pkl",
 )
 joblib.dump(
-    adata, "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/PPRC_hs.adata.pkl"
+    adata, output_path + "PPRC_hs.adata.pkl"
 )

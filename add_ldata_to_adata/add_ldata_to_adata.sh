@@ -1,1 +1,0 @@
-slurmtaco.sh -p short -m 20G -t 1 -- python3 add_ldata_to_adata.py /storage/singlecell/zz4/fetal_bash/results/merged_h5ad/merged_raw_filtered_umap_10000_major_sub_class.h5ad /storage/singlecell/zz4/fetal_bash/results/RNA_velocity/combined.loom /storage/singlecell/zz4/fetal_bash/results/merged_h5ad/merged_raw_filtered_umap_10000_major_sub_class_ldata.h5ad;

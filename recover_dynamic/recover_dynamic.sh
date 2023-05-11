@@ -1,1 +1,0 @@
-slurmtaco.sh --g01 -m 20G -t 1 -- python3 recover_dynamic.py /storage/singlecell/zz4/fetal_bash/results/merged_h5ad/merged_raw_filtered_umap_10000_major_sub_class_ldata.h5ad /storage/singlecell/zz4/fetal_bash/results/merged_h5ad/merged_raw_filtered_umap_10000_major_sub_class_ldata_dynamic.h5ad;

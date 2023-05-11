@@ -85,7 +85,7 @@ rule DoubletFinder_save_filtered_cells:
         """
 
 rule merge_rna_save_as_seurat_object:
-    ## Run UMAP without Adult on AC cells.
+    ## Merge all samples and save as seurat object.
     input:
         expand(
             [
@@ -119,7 +119,7 @@ rule merge_feature_bc_matrix_to_h5ad:
 
 
 rule major_class_annotation:
-    ## Merge all samples and save as anndata object, save the object and filtered object
+    ## Annote major cell types with adult data. Progenitors were labeled as MG.
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
     output:
@@ -134,7 +134,7 @@ rule major_class_annotation:
 
 
 rule filter_run_UMAP_to_annotate_MG:
-    ## Run scvi umap to annotate mg cells. Filter cells based on ATAC and RNA seq
+    ## Run scvi umap to annotate MG cells. Filter cells based on ATAC and RNA seq
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class.csv",
         "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_filtered_cells/ATAC_Filtered_cell.csv",
@@ -165,7 +165,7 @@ rule annotate_MG_RPC:
 
 
 rule subclass_annotation_with_adult:
-    ## Manually annotation. Annotate MG, PRPC, and NRPC. Clean.
+    ## Run subclass annotation within each major class.
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad",
     output:
@@ -181,7 +181,7 @@ rule subclass_annotation_with_adult:
 
 
 rule run_umap_all_cells_wo_adult:
-    ## Run UMAP without Adult.
+    ## Run UMAP without adult sample on all samples.
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad",
     output:
@@ -195,7 +195,7 @@ rule run_umap_all_cells_wo_adult:
 
 
 rule run_umap_AC_wo_adult:
-    ## Run UMAP without Adult on AC.
+    ## Run UMAP without adult on AC.
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
         "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
@@ -229,7 +229,7 @@ rule Annotate_AC_subtype:
 
 
 rule run_umap_PRPC_MG_wo_adult:
-    ## Run UMAP without Adult on PRPC MG.
+    ## Run UMAP without adult on PRPC MG.
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
         "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
@@ -244,7 +244,7 @@ rule run_umap_PRPC_MG_wo_adult:
         """
 
 rule run_umap_BC_wo_adult:
-    ## Run UMAP without Adult on BC.
+    ## Run UMAP without adult on BC.
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
         "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",

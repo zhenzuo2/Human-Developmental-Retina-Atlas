@@ -3,7 +3,8 @@ rule all:
     input:
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/gene_score_heatmap.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/gene_expression_heatmap.svg",
-        "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_cell_type.svg"
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_cell_type.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_atac_umap_by_cell_type.svg",
 
 ####################################################################################################
 
@@ -28,11 +29,28 @@ rule figure1_plot_overall_umap:
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG.h5ad"
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_cell_type.svg"
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_cell_type.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_days.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_region.svg",
     shell:
         """
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure1/plot_overall_umap.py'
+        """
+
+rule figure1_plot_atac_umap_output_umap_from_archr:
+    ## Output ATAC umap to csv file, and plot UMAP
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-proj2/Save-ArchR-Project.rds"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_atac_umap_by_cell_type.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure1/plot_ATAC_seq_UMAP.R
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure1/plot_ATAC_seq_UMAP.py'
         """
 

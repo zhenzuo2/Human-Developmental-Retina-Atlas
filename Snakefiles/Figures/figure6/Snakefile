@@ -1,0 +1,38 @@
+rule all:
+    ## Put input file here to run corresponding rules
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure6/PRPC_gene_module_heatmap.svg",
+
+####################################################################################################
+
+rule figure_6_plot_PRPC_MG_SCENT:
+    ## Seurat QC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_SCENT.csv"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure6/CCAT_Region.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure6/CCAT_WEEK.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure6/CCAT_Days.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure6/plot_PRPC_MG_SCENT.py'
+        """
+
+rule figure_6_plot_gene_module_and_module_score:
+    ## Seurat QC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/SCENT/PPRC_hs.create_modules.pkl",
+        "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/SCENT/PPRC_hs.adata.pkl",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/PRPC_MG.h5ad",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure6/PRPC_gene_module_heatmap.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure6/plot_gene_module_SCENT.py'
+        """
+
+

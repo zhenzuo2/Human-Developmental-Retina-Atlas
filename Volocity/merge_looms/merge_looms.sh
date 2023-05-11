@@ -1,1 +1,0 @@
-slurmtaco.sh -p short -m 40G -t 1 -- python3 merge_looms.py;

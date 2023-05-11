@@ -19,13 +19,8 @@ def get_bam(wildcards):
 
 rule all:
     input:
-        expand(
-            [
-                "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/{sample}.loom",
-            ],
-            sample=samples,
-        ),
-        "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/10x3_Lobe_19_D019_NeuN-v7.loom"
+       "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_ldata_dynamics.h5ad",
 
 
 rule velocyto:
@@ -45,13 +40,14 @@ rule velocyto:
         velocyto run -o /storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/ -@ 12 --samtools-memory 10240 --bcfile /storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/{wildcards.sample}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz -e {wildcards.sample} /storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/{wildcards.sample}/outs/gex_possorted_bam.bam {genome}'
         """
 
+
 rule velocyto_adult:
     ## Run velocyto
     input:
         "/storage/singlecell/zz4/fetal_snakemake/data/adult_data/10x3_Lobe_19_D019_NeuN-v7/filtered_feature_bc_matrix/barcodes.tsv.gz",
         "/storage/singlecell/zz4/fetal_snakemake/data/adult_data/10x3_Lobe_19_D019_NeuN-v7/possorted_genome_bam.bam",
     output:
-       "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/10x3_Lobe_19_D019_NeuN-v7.loom",
+        "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/10x3_Lobe_19_D019_NeuN-v7.loom",
     shell:
         """
         bash -c '
@@ -60,4 +56,81 @@ rule velocyto_adult:
         export LANG=en_US.utf-8
         mkdir /storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/
         velocyto run -o /storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/ -@ 12 --samtools-memory 20240 --bcfile /storage/singlecell/zz4/fetal_snakemake/data/adult_data/10x3_Lobe_19_D019_NeuN-v7/filtered_feature_bc_matrix/barcodes.tsv.gz -e 10x3_Lobe_19_D019_NeuN-v7 /storage/singlecell/zz4/fetal_snakemake/data/adult_data/10x3_Lobe_19_D019_NeuN-v7/possorted_genome_bam.bam {genome}'
+        """
+
+rule merge_looms:
+    ##
+    input:
+        expand(
+            [
+                "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/{sample}.loom",
+            ],
+            sample=samples,
+        ),
+        "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/10x3_Lobe_19_D019_NeuN-v7.loom",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/combined.loom",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        mkdir /storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Volocity/merge_looms/merge_looms.py'
+        """
+
+rule convert_loom_to_h5ad:
+    ##
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/combined.loom",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/combined.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        mkdir /storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Volocity/convert_loom_to_h5ad/convert_loom_to_h5ad.py'
+        """
+
+rule add_loom_to_h5ad:
+    ## Add loom file to merged object
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/combined.h5ad",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_ldata.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Volocity/add_ldata_to_adata/add_ldata_to_adata.py'
+        """
+
+rule add_loom_to_h5ad_wo_adult:
+    ## Add loom file to merged without adult
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/RNA_velocity/combined.h5ad",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Volocity/add_ldata_to_adata_wo_adult/add_ldata_to_adata_wo_adult.py'
+        """
+
+rule recover_dynamic:
+    ## Add loom file to merged without adult
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_ldata.h5ad",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_ldata_dynamics.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Volocity/recover_dynamic/recover_dynamic.py'
         """

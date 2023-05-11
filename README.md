@@ -27,18 +27,6 @@
 |Multiome_23w4d_FR     |23w4d|Macula    |165 |Multiomics|
 |Multiome_23w4d_NR     |23w4d|Peripheral|165 |Multiomics|
 
-|Samples               |Time |Region    |Days|Data Type |
-|17W1D_Temporal_retina |17w1d|Temporal  |120 |snRNA-seq |
-|17W1D_Nasal_retina    |17w1d|Nasal     |120 |snRNA-seq |
-|17W1D_Fovea_retina    |17w1d|Macula    |120 |snRNA-seq |
-|17w1d_I_Ret           |17w1d|Inferior  |120 |snRNA-seq |
-|17w1d_S_Ret           |17w1d|Superior  |120 |snRNA-seq |
-|multi_19W3D_I_ret     |19w3d|Inferior  |136 |Multiomics|
-|multi_19W3D_N_RET     |19w3d|Nasal     |136 |Multiomics|
-|multi_19W3d_T_ret     |19w3d|Temporal  |136 |Multiomics|
-|multi_19w3d_F_ret     |19w3d|Macula    |136 |Multiomics|
-|multi_19w3d_S_ret     |19w3d|Superior  |136 |Multiomics|
-
 # Annotation
 | Folder Name  | Functions and aims |
 | ------------- | ------------- |
