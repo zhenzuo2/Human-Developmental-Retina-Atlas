@@ -13,7 +13,7 @@ except FileExistsError:
     pass
 
 meta = pd.read_csv(
-    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/merged_raw_filtered_umap_10000_major_sub_class.obs.csv"
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv"
 )
 meta.index = meta["Unnamed: 0"].values
 
@@ -69,8 +69,6 @@ adata_rna.obs["sampleid"] = meta.loc[adata_rna.obs_names, "sampleid"]
 adata_rna.obs["Time"] = meta.loc[adata_rna.obs_names, "Time"]
 adata_rna.obs["Region"] = meta.loc[adata_rna.obs_names, "Region"]
 adata_rna.obs["Days"] = meta.loc[adata_rna.obs_names, "Days"]
-adata_rna.obs["Data Type"] = meta.loc[adata_rna.obs_names, "Data Type"]
-adata_rna.obs["subclass"] = meta.loc[adata_rna.obs_names, "subclass"]
 adata_rna.obs["majorclass"] = meta.loc[adata_rna.obs_names, "majorclass"]
 
 # Write out filtered cells and prepare to run Seurat WNN --> R script can be found on Github.

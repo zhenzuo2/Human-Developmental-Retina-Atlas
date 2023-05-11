@@ -1,7 +1,6 @@
-args <- commandArgs(trailingOnly = TRUE)
-input_RNA_path <- args[1]
-input_ATAC_path <- args[2]
-output_file <- args[3]
+input_RNA_path="/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds"
+input_ATAC_path="/storage/singlecell/zz4/fetal_snakemake/results/merged_atac/atac.rds"
+output_file="/storage/singlecell/zz4/fetal_snakemake/results/Pando_merged/seurat_object.rds"
 
 library(Seurat)
 library(Pando)

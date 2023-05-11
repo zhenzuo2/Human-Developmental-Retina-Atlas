@@ -32,12 +32,7 @@ output_figure_path="/storage/singlecell/zz4/fetal_snakemake/figures/ATAC_aggrega
 rule all:
     ## Put input file here to run corresponding rules
     input:
-        expand(
-            [
-                "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/{sample}.h5ad",
-            ],
-            sample=samples,
-        ),
+        "/storage/singlecell/zz4/fetal_snakemake/results/Pando_merged/seurat_object.rds"
 
 
 ####################################################################################################
@@ -91,4 +86,18 @@ rule multivelo_shared_barcodes_RNA_ATAC:
         mkdir /storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_shared_barcodes_RNA_ATAC/multivelo_shared_barcodes_RNA_ATAC.py'
+        """
+
+rule Pando_merge_rna_atac:
+    ## multivelo_shared_barcodes_RNA_ATAC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds",
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_atac/atac.rds",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/Pando_merged/seurat_object.rds"
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/Pando_merge_rna_atac/Pando_merge_rna_atac.R'
         """

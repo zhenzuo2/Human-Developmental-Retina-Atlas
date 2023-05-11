@@ -2,7 +2,9 @@ rule all:
     ## Put input file here to run corresponding rules
     input:
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Cell Birth Rate in the Macula.svg",
-        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Cell Birth Rate in the Peripheral.svg"
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Cell Birth Rate in the Peripheral.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/woadult_scv.pl.velocity_embedding_stream_scpred_prediction.png",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/wadult_scv.pl.velocity_embedding_stream_scpred_prediction.png",
 
 ####################################################################################################
 
@@ -21,3 +23,16 @@ rule figure2_plot_cell_birth_rate:
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure2/plot_cell_birth_rate.py'
         """
 
+rule scv_pl_velocity_embedding_stream:
+    ## Seurat QC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/woadult_scv.pl.velocity_embedding_stream_scpred_prediction.png",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/wadult_scv.pl.velocity_embedding_stream_scpred_prediction.png"
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure2/scv.pl.velocity_embedding_stream.py'
+        """
