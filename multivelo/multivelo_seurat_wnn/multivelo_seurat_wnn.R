@@ -1,8 +1,8 @@
 args <- commandArgs(trailingOnly = TRUE)
-input_file <- args[1]
-meta_file <- args[2]
-sample_name <- args[3]
-output_path <- args[4]
+input_file <- "/storage/singlecell/zz4/fetal_snakemake/results/Pando_merged/seurat_object.rds"
+meta_file <- args[1]
+sample_name <- args[2]
+output_path <- "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_seurat_wnn/"
 
 dir.create(output_path, showWarnings = FALSE)
 
@@ -20,7 +20,7 @@ seurat_object <- readRDS(input_file)
 # subset for the same cells in the jointly filtered anndata object
 barcodes <- read.csv(meta_file)
 
-filtered_cells <- read.csv("/storage/singlecell/zz4/fetal_bash/results/MultiVelo_filtered_cells/filtered_cells.csv")
+filtered_cells <- read.csv("/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/filtered_cells.csv")
 seurat_object <- subset(seurat_object, cells = intersect(barcodes$X,filtered_cells$X))
 seurat_object
 

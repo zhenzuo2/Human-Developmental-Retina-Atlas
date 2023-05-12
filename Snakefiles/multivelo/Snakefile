@@ -32,7 +32,8 @@ output_figure_path="/storage/singlecell/zz4/fetal_snakemake/figures/ATAC_aggrega
 rule all:
     ## Put input file here to run corresponding rules
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/Pando_merged/seurat_object.rds"
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/AC.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/PRPC_MG.h5ad"
 
 
 ####################################################################################################
@@ -100,4 +101,41 @@ rule Pando_merge_rna_atac:
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
         Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/Pando_merge_rna_atac/Pando_merge_rna_atac.R'
+        """
+rule multivelo_seurat_wnn:
+    ## multivelo_shared_barcodes_RNA_ATAC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/Pando_merged/seurat_object.rds"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_seurat_wnn/AC_nn_idx.txt",
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_seurat_wnn/PRPC_MG_nn_idx.txt"
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        meta_file=/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_AC.csv
+        sam=AC
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_seurat_wnn/multivelo_seurat_wnn.R $meta_file $sam;
+        meta_file=/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/PRPC_MG.csv
+        sam=PRPC_MG
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_seurat_wnn/multivelo_seurat_wnn.R $meta_file $sam;'
+        """
+
+rule multivelo_knn_smooth_chrom:
+    ## multivelo_shared_barcodes_RNA_ATAC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/adata_atac.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_seurat_wnn/AC_nn_idx.txt",
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_seurat_wnn/PRPC_MG_nn_idx.txt"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/AC.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/PRPC_MG.h5ad"
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        sam=AC
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_knn_smooth_chrom/multivelo_knn_smooth_chrom.py $sam;
+        sam=PRPC_MG
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_knn_smooth_chrom/multivelo_knn_smooth_chrom.py $sam;'
         """

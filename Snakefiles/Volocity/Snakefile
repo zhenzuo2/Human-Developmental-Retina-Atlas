@@ -25,6 +25,7 @@ rule all:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics_g.h5ad",
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/to_terminal_states.csv",
         "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_RGC.csv",
 
 
 
@@ -174,4 +175,19 @@ rule infer_fate_NRPC:
         export CUDA_VISIBLE_DEVICES=1
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Volocity/infer_fate_NRPC/infer_fate_NRPC.py'
+        """
+
+rule infer_fate_NRPC_save_meta:
+    ## Add loom file to merged without adult
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/to_terminal_states.csv",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_RGC.csv",
+    shell:
+        """
+        bash -c '
+        export CUDA_VISIBLE_DEVICES=1
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Volocity/infer_fate_NRPC_save_meta/infer_fate_NRPC_save_meta.py'
         """

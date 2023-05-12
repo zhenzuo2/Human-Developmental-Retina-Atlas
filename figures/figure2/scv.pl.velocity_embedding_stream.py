@@ -7,7 +7,7 @@ import pandas as pd
 output_file_path = "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/"
 
 adata = scv.read(
-    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG_ldata_dynamics.h5ad"
 )
 adata.obs["Days"] = adata.obs["Days"].astype(float)
 
