@@ -7,7 +7,7 @@ import pandas as pd
 output_file_path = "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/"
 
 adata = scv.read(
-    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG_ldata_dynamics.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics.h5ad"
 )
 adata.obs["Days"] = adata.obs["Days"].astype(float)
 
@@ -37,7 +37,7 @@ scv.pl.velocity_embedding_stream(
     legend_fontsize=20,
     title="",
     color="Days",
-    size=20,
+    size=10,
     colorbar=True,
     dpi=600,
     figsize=(10, 10),
@@ -58,7 +58,7 @@ scv.pl.velocity_embedding_stream(
     legend_fontsize=20,
     title="",
     color="scpred_prediction",
-    size=20,
+    size=10,
     colorbar=True,
     dpi=600,
     figsize=(10, 10),
@@ -77,7 +77,7 @@ plt.savefig(
 
 
 adata = scv.read(
-    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_ldata_dynamics.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG_ldata_dynamics.h5ad"
 )
 adata.obs["Days"] = adata.obs["Days"].astype(float)
 adata.obs["Days"] = adata.obs["Days"].replace(-1, np.nan)
@@ -108,7 +108,7 @@ scv.pl.velocity_embedding_stream(
     legend_fontsize=20,
     title="",
     color="Days",
-    size=20,
+    size=10,
     colorbar=True,
     dpi=600,
     figsize=(10, 10),
@@ -129,7 +129,7 @@ scv.pl.velocity_embedding_stream(
     legend_fontsize=20,
     title="",
     color="scpred_prediction",
-    size=20,
+    size=10,
     colorbar=True,
     dpi=600,
     figsize=(10, 10),

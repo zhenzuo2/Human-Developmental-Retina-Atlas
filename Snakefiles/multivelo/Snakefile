@@ -32,8 +32,8 @@ output_figure_path="/storage/singlecell/zz4/fetal_snakemake/figures/ATAC_aggrega
 rule all:
     ## Put input file here to run corresponding rules
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/AC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/PRPC_MG.h5ad"
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC_MG.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/AC.h5ad"
 
 
 ####################################################################################################
@@ -138,4 +138,38 @@ rule multivelo_knn_smooth_chrom:
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_knn_smooth_chrom/multivelo_knn_smooth_chrom.py $sam;
         sam=PRPC_MG
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_knn_smooth_chrom/multivelo_knn_smooth_chrom.py $sam;'
+        """
+
+rule multivelo_recover_dynamics_run_umap:
+    ## multivelo_shared_barcodes_RNA_ATAC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/AC.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/PRPC_MG.h5ad"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_AC/adata_umap.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_PRPC_MG/adata_umap.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        sam=AC
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_recover_dynamics_run_umap/multivelo_recover_dynamics_run_umap.py $sam;
+        sam=PRPC_MG
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_recover_dynamics_run_umap/multivelo_recover_dynamics_run_umap.py $sam;'
+        """
+
+rule multivelo_recover_dynamics:
+    ## multivelo_shared_barcodes_RNA_ATAC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_AC/adata_umap.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_PRPC_MG/adata_umap.h5ad",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC_MG.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/AC.h5ad"
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_recover_dynamics_chrom/multivelo_recover_dynamics_chrom.py AC &
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_recover_dynamics_chrom/multivelo_recover_dynamics_chrom.py PRPC_MG;'
         """

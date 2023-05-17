@@ -80,7 +80,7 @@ plt.legend(
 )
 plt.xlabel("")
 plt.ylabel("Post Conception Week")
-plt.savefig(output_file_path + region + ".svg", bbox_inches="tight")
+plt.savefig(output_file_path + region + "_cell_type_composition.svg", bbox_inches="tight")
 
 ############################################################################################################################################
 region = "Peripheral"
@@ -156,4 +156,4 @@ plt.legend(
 )
 plt.xlabel("")
 plt.ylabel("Post Conception Week")
-plt.savefig(output_file_path + region + ".svg", bbox_inches="tight")
+plt.savefig(output_file_path + region + "_cell_type_composition.svg", bbox_inches="tight")

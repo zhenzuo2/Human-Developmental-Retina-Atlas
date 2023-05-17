@@ -5,6 +5,9 @@ rule all:
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/gene_expression_heatmap.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_cell_type.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_atac_umap_by_cell_type.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_days.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_subtype.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_cell_type_Peripheral_PCW20.svg"
 
 ####################################################################################################
 
@@ -32,6 +35,8 @@ rule figure1_plot_overall_umap:
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_cell_type.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_days.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_region.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_subtype.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_cell_type_Peripheral_PCW20.svg"
     shell:
         """
         bash -c '

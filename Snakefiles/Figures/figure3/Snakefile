@@ -1,0 +1,21 @@
+import pandas as pd
+
+rule all:
+    ## Put input file here to run corresponding rules
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_Days.svg",
+####################################################################################################
+
+rule figure3_plot_NRPC_markers:
+    ## Seurat QC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.h5ad"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_Days.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        mkdir /storage/singlecell/zz4/fetal_snakemake/figures/figure3
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure3/plotnrpcmarker.py'
+        """

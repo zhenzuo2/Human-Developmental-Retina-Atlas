@@ -1,19 +1,11 @@
 # Import packages
 import scanpy as sc
-import scvi
-import os
 import scvelo as scv
-import anndata
-import sys
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
-import tempfile
 
-scv.settings.verbosity = 3
-
-scv.set_figure_params(dpi=200, dpi_save=600)
+scv.set_figure_params(dpi=600, dpi_save=600)
 
 gs = scv.read(
     "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/gene_score/gene_score.h5ad"

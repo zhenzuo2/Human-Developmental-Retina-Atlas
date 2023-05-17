@@ -7,11 +7,12 @@ import multivelo as mv
 import sys
 import scvi
 import tempfile
-
-input_rna_file = sys.argv[1]
-input_atac_file = sys.argv[2]
-output_file_path = sys.argv[3]
-labels_key = "subclass"
+samples = sys.argv[1]
+output_dir = "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap"
+input_rna_file = "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/adata_rna.h5ad"
+input_atac_file = "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/"+samples+".h5ad"
+output_file_path = output_dir+"_"+samples+"/adata_umap.h5ad"
+labels_key = "majorclass"
 try:
     os.makedirs(os.path.dirname(output_file_path))
 except FileExistsError:

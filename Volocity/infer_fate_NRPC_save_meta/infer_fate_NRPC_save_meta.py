@@ -189,7 +189,13 @@ adata.obs["temp"] = pd.cut(adata.obs["temp"], 100)
 sc.pl.umap(
     adata, color="temp", palette=colors, legend_loc=None, frameon=False, title=""
 )
-
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/AC_NRPC_leiden.svg",
+    dpi=600,
+    bbox_inches="tight",
+)
 
 # In[ ]:
 
@@ -287,10 +293,10 @@ sc.pl.umap(NRPC, color="BC")
 # In[ ]:
 
 
-clusters = ["9", "10"]
+clusters = ["9"]
 adata.obs["temp"] = np.nan
 adata.obs.loc[
-    NRPC.obs[(NRPC.obs.leiden.isin(clusters)) & (NRPC.obs.BC > 0.05)].index, "temp"
+    NRPC.obs[(NRPC.obs.leiden.isin(clusters)) ].index, "temp"
 ] = NRPC.obs[NRPC.obs.leiden.isin(clusters)].BC
 adata.obs.loc[adata.obs.scpred_prediction == "BC", "temp"] = 1.01
 adata.obs["temp"] = pd.cut(adata.obs["temp"], 100)
@@ -401,7 +407,7 @@ sc.pl.umap(NRPC, color="NR2E3", vmax="p99", vmin="p0")
 pd.concat(
     [
         adata[
-            NRPC[(NRPC.obs.leiden.isin(clusters)) & (NRPC.obs.Rod > 0.8)].obs.index
+            NRPC[(NRPC.obs.leiden.isin(clusters))].obs.index
         ].obs,
         adata[adata.obs.scpred_prediction == "Rod"].obs,
     ]

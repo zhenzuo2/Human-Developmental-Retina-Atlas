@@ -41,7 +41,7 @@ adata.obsm["X_umap"] = meta[
 scv.pl.umap(
     adata,
     color="scpred_prediction",
-    size=1,
+    size=5,
     legend_loc="right margin",
     title="",
 )

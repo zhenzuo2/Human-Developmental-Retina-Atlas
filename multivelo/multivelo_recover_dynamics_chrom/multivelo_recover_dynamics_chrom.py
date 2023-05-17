@@ -6,15 +6,15 @@ import scvelo as scv
 import multivelo as mv
 import sys
 import matplotlib.pyplot as plt
-
+samples = sys.argv[1]
 pd.options.display.max_columns = None
 scv.set_figure_params(dpi=600, dpi_save=600)
-
-adata_rna_file = "/storage/singlecell/zz4/fetal_bash/results/multivelo_recover_dynamics_run_umap_PRPC/adata_umap.h5ad"
+input_dir = "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap"
+adata_rna_file = input_dir+"_"+samples+"/adata_umap.h5ad"
 adata_atac_file = (
-    "/storage/singlecell/zz4/fetal_bash/results/multivelo_knn_smooth_chrom/PRPC.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/"+samples +".h5ad"
 )
-output_file = "/storage/singlecell/zz4/fetal_bash/results/multivelo_recover_dynamics_results/PRPC_1000.h5ad"
+output_file = "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/"+samples+".h5ad"
 
 adata_rna = scv.read(adata_rna_file)
 
