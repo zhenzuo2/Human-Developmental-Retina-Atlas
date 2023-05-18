@@ -36,6 +36,8 @@ rule all:
         "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Cone_subtype.h5ad",
         "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/Rod_subtype.csv",
         "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Rod_subtype.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC_subtype_NRPC.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC_subtype_NRPC_obs.csv",
 
 
 
@@ -373,6 +375,21 @@ rule AC_NRPC_run_umap:
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/AC_NRPC_run_umap.py'
+        """
+
+rule HC_NRPC_run_umap:
+    ## Run UMAP without adult on PRPC MG.
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_HC.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC_subtype.h5ad"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC_subtype_NRPC.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC_subtype_NRPC_obs.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/HC_NRPC_run_umap.py'
         """
 
 rule Annotate_HC_subtype:

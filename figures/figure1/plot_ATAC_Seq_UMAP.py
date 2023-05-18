@@ -51,4 +51,5 @@ plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_atac_umap_by_cell_type.svg",
     dpi=600,
     bbox_inches="tight",
+    transparent=True,
 )

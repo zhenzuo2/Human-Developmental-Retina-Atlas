@@ -1,39 +1,60 @@
-samples=[
-"Multi_Fetal_11w2d_FR",
-"Multi_Fetal_11w2d_FR_2",
-"Multi_Fetal_11w2d_NR",
-"Multi_Fetal_13W_FR",
-"Multi_Fetal_13W_NR",
-"Multi_Fetal_14w5d_FR",
-"Multi_Fetal_14w5d_NR",
-"Multi_Fetal_19W4d_FR",
-"Multi_Fetal_19W4d_NR",
-"Multi_Fetal_20W2d_FR",
-"Multi_Fetal_20W2d_NR",
-"Multi_Fetal_23w1d_FR",
-"Multi_Fetal_23w1d_NR",
-"Multiome_10w_FR",
-"Multiome_10w_NR",
-"Multiome_12w3d_FR",
-"Multiome_12w3d_NR",
-"Multiome_14w2d_FR",
-"Multiome_14w2d_NR",
-"Multiome_16w4d_FR",
-"Multiome_16w4d_NR",
-"Multiome_20w1d_FR",
-"Multiome_20w1d_NR",
-"Multiome_23w4d_FR",
-"Multiome_23w4d_NR",
+samples = [
+    "Multi_Fetal_11w2d_FR",
+    "Multi_Fetal_11w2d_FR_2",
+    "Multi_Fetal_11w2d_NR",
+    "Multi_Fetal_13W_FR",
+    "Multi_Fetal_13W_NR",
+    "Multi_Fetal_14w5d_FR",
+    "Multi_Fetal_14w5d_NR",
+    "Multi_Fetal_19W4d_FR",
+    "Multi_Fetal_19W4d_NR",
+    "Multi_Fetal_20W2d_FR",
+    "Multi_Fetal_20W2d_NR",
+    "Multi_Fetal_23w1d_FR",
+    "Multi_Fetal_23w1d_NR",
+    "Multiome_10w_FR",
+    "Multiome_10w_NR",
+    "Multiome_12w3d_FR",
+    "Multiome_12w3d_NR",
+    "Multiome_14w2d_FR",
+    "Multiome_14w2d_NR",
+    "Multiome_16w4d_FR",
+    "Multiome_16w4d_NR",
+    "Multiome_20w1d_FR",
+    "Multiome_20w1d_NR",
+    "Multiome_23w4d_FR",
+    "Multiome_23w4d_NR",
 ]
 
-output_result_path="/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x/"
-output_figure_path="/storage/singlecell/zz4/fetal_snakemake/figures/ATAC_aggregate_peaks_10x/"
+output_result_path = (
+    "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x/"
+)
+output_figure_path = (
+    "/storage/singlecell/zz4/fetal_snakemake/figures/ATAC_aggregate_peaks_10x/"
+)
+groups = ["AC", "PRPC_MG", "HC", "NRPC"]
+meta_list = [
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_AC.csv",
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/PRPC_MG.csv",
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_HC.csv",
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC.csv",
+]
+sample2meta = dict(zip(groups, meta_list))
+
+
+def get_meta(wildcards):
+    return sample2meta[wildcards.sam]
+
 
 rule all:
     ## Put input file here to run corresponding rules
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC_MG.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/AC.h5ad"
+        expand(
+            [
+                "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/{sam}.h5ad",
+            ],
+            sam=groups,
+        ),
 
 
 ####################################################################################################
@@ -51,14 +72,16 @@ rule multivelo_prepare_create_atac:
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_prepare_create_atac/multivelo_prepare_create_atac.py /storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/{wildcards.sample} {wildcards.sample} {output_result_path} {output_figure_path};'
         """
 
-output_result_path="/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/"
+
+output_result_path = "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/"
+
 
 rule multivelo_normalize_atac_TF:
     ## multivelo_normalize_atac_TF
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x/{sample}.h5ad",
     output:
-       "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/{sample}.h5ad"
+        "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/{sample}.h5ad",
     shell:
         """
         bash -c '
@@ -66,6 +89,7 @@ rule multivelo_normalize_atac_TF:
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_normalize_atac_TF/multivelo_normalize_atac_TF.py /storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x/{wildcards.sample}.h5ad {wildcards.sample} {output_result_path};'
         """
+
 
 rule multivelo_shared_barcodes_RNA_ATAC:
     ## multivelo_shared_barcodes_RNA_ATAC
@@ -77,10 +101,9 @@ rule multivelo_shared_barcodes_RNA_ATAC:
             sample=samples,
         ),
     output:
-       "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/adata_atac.h5ad",
-       "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/adata_rna.h5ad",
-       "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/filtered_cells.csv",
-
+        "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/adata_atac.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/adata_rna.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/filtered_cells.csv",
     shell:
         """
         bash -c '
@@ -89,87 +112,75 @@ rule multivelo_shared_barcodes_RNA_ATAC:
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_shared_barcodes_RNA_ATAC/multivelo_shared_barcodes_RNA_ATAC.py'
         """
 
+
 rule Pando_merge_rna_atac:
     ## multivelo_shared_barcodes_RNA_ATAC
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds",
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_atac/atac.rds",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/Pando_merged/seurat_object.rds"
+        "/storage/singlecell/zz4/fetal_snakemake/results/Pando_merged/seurat_object.rds",
     shell:
         """
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
         Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/Pando_merge_rna_atac/Pando_merge_rna_atac.R'
         """
+
+
 rule multivelo_seurat_wnn:
-    ## multivelo_shared_barcodes_RNA_ATAC
+    ## multivelo_seurat_wnn
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/Pando_merged/seurat_object.rds"
+        "/storage/singlecell/zz4/fetal_snakemake/results/Pando_merged/seurat_object.rds",
+        meta = get_meta,
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_seurat_wnn/AC_nn_idx.txt",
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_seurat_wnn/PRPC_MG_nn_idx.txt"
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_seurat_wnn/{sam}_nn_idx.txt",
     shell:
         """
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        meta_file=/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_AC.csv
-        sam=AC
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_seurat_wnn/multivelo_seurat_wnn.R $meta_file $sam;
-        meta_file=/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/PRPC_MG.csv
-        sam=PRPC_MG
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_seurat_wnn/multivelo_seurat_wnn.R $meta_file $sam;'
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_seurat_wnn/multivelo_seurat_wnn.R {input.meta} {wildcards.sam};'
         """
+
 
 rule multivelo_knn_smooth_chrom:
-    ## multivelo_shared_barcodes_RNA_ATAC
+    ## multivelo_knn_smooth_chrom
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/adata_atac.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_seurat_wnn/AC_nn_idx.txt",
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_seurat_wnn/PRPC_MG_nn_idx.txt"
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_seurat_wnn/{sam}_nn_idx.txt",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/AC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/PRPC_MG.h5ad"
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/{sam}.h5ad",
     shell:
         """
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        sam=AC
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_knn_smooth_chrom/multivelo_knn_smooth_chrom.py $sam;
-        sam=PRPC_MG
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_knn_smooth_chrom/multivelo_knn_smooth_chrom.py $sam;'
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_knn_smooth_chrom/multivelo_knn_smooth_chrom.py {wildcards.sam};'
         """
+
 
 rule multivelo_recover_dynamics_run_umap:
-    ## multivelo_shared_barcodes_RNA_ATAC
+    ## multivelo_recover_dynamics_run_umap
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/AC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/PRPC_MG.h5ad"
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/{sam}.h5ad",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_AC/adata_umap.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_PRPC_MG/adata_umap.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_{sam}/adata_umap.h5ad"
     shell:
         """
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        sam=AC
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_recover_dynamics_run_umap/multivelo_recover_dynamics_run_umap.py $sam;
-        sam=PRPC_MG
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_recover_dynamics_run_umap/multivelo_recover_dynamics_run_umap.py $sam;'
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_recover_dynamics_run_umap/multivelo_recover_dynamics_run_umap.py {wildcards.sam};'
         """
 
+
 rule multivelo_recover_dynamics:
-    ## multivelo_shared_barcodes_RNA_ATAC
+    ## multivelo_recover_dynamics
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_AC/adata_umap.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_PRPC_MG/adata_umap.h5ad",
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_{sam}/adata_umap.h5ad",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC_MG.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/AC.h5ad"
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/{sam}.h5ad",
     shell:
         """
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_recover_dynamics_chrom/multivelo_recover_dynamics_chrom.py AC &
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_recover_dynamics_chrom/multivelo_recover_dynamics_chrom.py PRPC_MG;'
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_recover_dynamics_chrom/multivelo_recover_dynamics_chrom.py {wildcards.sam};'
         """

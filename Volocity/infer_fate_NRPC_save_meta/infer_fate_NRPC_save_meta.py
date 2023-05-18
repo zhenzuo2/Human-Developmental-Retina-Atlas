@@ -8,6 +8,7 @@ import scvelo as scv
 import scanpy as sc
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 sc.set_figure_params(scanpy=True, dpi=200)
 colors = [
@@ -245,7 +246,7 @@ sc.pl.umap(NRPC, color="HC")
 # In[ ]:
 
 
-clusters = ["0", "1"]
+clusters = ["1"]
 adata.obs["temp"] = np.nan
 adata.obs.loc[NRPC.obs[NRPC.obs.leiden.isin(clusters)].index, "temp"] = NRPC.obs[
     NRPC.obs.leiden.isin(clusters)
@@ -293,7 +294,7 @@ sc.pl.umap(NRPC, color="BC")
 # In[ ]:
 
 
-clusters = ["9"]
+clusters = ["9","10"]
 adata.obs["temp"] = np.nan
 adata.obs.loc[
     NRPC.obs[(NRPC.obs.leiden.isin(clusters)) ].index, "temp"

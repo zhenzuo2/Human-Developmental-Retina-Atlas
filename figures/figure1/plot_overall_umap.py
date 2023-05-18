@@ -41,6 +41,7 @@ plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_cell_type.svg",
     dpi=600,
     bbox_inches="tight",
+    transparent=True,
 )
 
 scv.pl.umap(
@@ -56,6 +57,7 @@ plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_region.svg",
     dpi=600,
     bbox_inches="tight",
+    transparent=True,
 )
 
 adata.obs["Days"] = adata.obs["Days"].astype(float)
@@ -72,6 +74,7 @@ plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_days.svg",
     dpi=600,
     bbox_inches="tight",
+    transparent=True,
 )
 #############################################################################################################################
 ## Plot subtype
@@ -107,6 +110,7 @@ plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_subtype.svg",
     dpi=600,
     bbox_inches="tight",
+    transparent=True,
 )
 
 adata.obs["Weeks"] = adata.obs.Days.map(
@@ -179,4 +183,5 @@ for region in set(adata.obs.Region):
             + ".svg",
             dpi=600,
             bbox_inches="tight",
+            transparent=True,
         )

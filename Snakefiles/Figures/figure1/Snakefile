@@ -53,8 +53,8 @@ rule figure1_plot_atac_umap_output_umap_from_archr:
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure1/plot_ATAC_seq_UMAP.R
+        #source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        #Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure1/plot_ATAC_seq_UMAP.R
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure1/plot_ATAC_seq_UMAP.py'
         """

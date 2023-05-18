@@ -29,7 +29,6 @@ adata.obs["majorclass"] = adata.obs.majorclass.replace(
     }
 )
 gs.obs = adata.obs
-
 Markers = {
     "BC": [
         "VSX1",
@@ -80,6 +79,26 @@ Markers = {
         "PRPH2",
         "SAG",
     ],
+    "MG": [
+        "SLC1A3",
+        "SLN",
+        "RLBP1",
+        "SOX2",
+        "NFIA",
+        "CRYM",
+        "CLU",
+        "LINC00461",
+    ],
+     "RPC": [
+        "VIM",
+        "SOX2",
+        "SFRP2",
+        "MKI67",
+        "UBE2C",
+        "FGF19",
+        "CCND1",
+        "ID3",
+    ],
     "RGC": [
         "POU4F2",
         "RBPMS",
@@ -116,26 +135,6 @@ Markers = {
         "TFAP2A",
         "ESRRB",
     ],
-    "MG": [
-        "SLC1A3",
-        "SLN",
-        "RLBP1",
-        "SOX2",
-        "NFIA",
-        "CRYM",
-        "CLU",
-        "LINC00461",
-    ],
-    "RPC": [
-        "VIM",
-        "SOX2",
-        "SFRP2",
-        "MKI67",
-        "UBE2C",
-        "FGF19",
-        "CCND1",
-        "ID3",
-    ],
 }
 
 df = pd.DataFrame(gs.obs)
@@ -152,18 +151,22 @@ downsampled_data = downsampled_data.reset_index(drop=True)
 
 sc.set_figure_params(scanpy=True, dpi_save=600, fontsize=25)
 gs_subset = gs[downsampled_data.cell_id]
-ax = sc.pl.heatmap(
+gs_subset.obs["majorclass"] = pd.Categorical(
+    list(gs_subset.obs["majorclass"]),
+    categories=["BC","Cone","Rod","MG","RPC","RGC","AC","HC"],
+)
+sc.pl.heatmap(
     gs_subset,
     Markers,
     groupby="majorclass",
     cmap="viridis",
-    dendrogram=True,
+    dendrogram=False,
     show_gene_labels=True,
-    vmax=np.quantile(gs_subset.X, 0.95),
-)
+    vmax=np.quantile(gs_subset.X, 0.95),)
 plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/gene_score_heatmap.svg",
     bbox_inches="tight",
+    transparent=True,
 )
 ##########################################################################################################################
 adata_subset = adata[downsampled_data.cell_id]
@@ -179,4 +182,5 @@ ax = sc.pl.heatmap(
 plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/gene_expression_heatmap.svg",
     bbox_inches="tight",
+    transparent=True,
 )

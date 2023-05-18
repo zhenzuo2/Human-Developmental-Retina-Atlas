@@ -18,6 +18,7 @@ rule all:
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/AC_mv.velocity_embedding_stream.latent_time.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/AC_NRPC_DE.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/find_AC_NRPC.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/HC_Macula_PCW10.svg",
 ####################################################################################################
 
 rule figure2_plot_cell_birth_rate:
@@ -102,6 +103,18 @@ rule AC_umap_seperate_by_time:
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure2/AC_umap_seperate_by_time.py'
+        """
+
+rule HC_umap_seperate_by_time:
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC_subtype_NRPC.h5ad"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/HC_Macula_PCW10.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure2/HC_umap_seperate_by_time.py'
         """
 
 rule AC_precursor_DE_heatmap:
