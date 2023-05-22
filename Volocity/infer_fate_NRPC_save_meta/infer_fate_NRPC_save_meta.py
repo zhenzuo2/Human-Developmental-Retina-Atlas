@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
 import scvelo as scv
 import scanpy as sc
 import pandas as pd
@@ -115,10 +112,6 @@ colors = [
     "#5A5A5A",
 ]
 
-
-# In[ ]:
-
-
 adata = scv.read(
     "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG.h5ad"
 )
@@ -132,30 +125,14 @@ adata.obs["scpred_prediction"] = adata.obs.majorclass.replace(
     }
 )
 
-
-# In[ ]:
-
-
 sc.pp.normalize_total(adata, exclude_highly_expressed=True)
 sc.pp.log1p(adata)
-
-
-# In[ ]:
-
 
 sc.pl.umap(NRPC, color="leiden", legend_loc="on data")
 
 
 # # AC
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="AC")
-
-
-# In[ ]:
-
 
 for clusters in set(NRPC.obs.leiden):
     print(clusters)
@@ -175,11 +152,7 @@ for clusters in set(NRPC.obs.leiden):
         title="",
     )
 
-
-# In[ ]:
-
-
-clusters = ["2", "13"]
+clusters = ["2", "13", "12"]
 print(clusters)
 adata.obs["temp"] = np.nan
 adata.obs.loc[NRPC.obs[NRPC.obs.leiden.isin(clusters)].index, "temp"] = NRPC.obs[
@@ -198,32 +171,13 @@ plt.savefig(
     bbox_inches="tight",
 )
 
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="NEUROD4", vmax="p95", vmin="p0")
-
-
-# In[ ]:
-
 
 sc.pl.umap(NRPC, color="TFAP2A", vmax="p95", vmin="p0")
 
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="TFAP2B", vmax="p95", vmin="p0")
 
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="ZEB2", vmax="p99", vmin="p0")
-
-
-# In[ ]:
-
 
 pd.concat(
     [
@@ -236,17 +190,9 @@ pd.concat(
 
 
 # # HC
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="HC")
 
-
-# In[ ]:
-
-
-clusters = ["1"]
+clusters = ["0", "1", "18"]
 adata.obs["temp"] = np.nan
 adata.obs.loc[NRPC.obs[NRPC.obs.leiden.isin(clusters)].index, "temp"] = NRPC.obs[
     NRPC.obs.leiden.isin(clusters)
@@ -257,21 +203,9 @@ sc.pl.umap(
     adata, color="temp", palette=colors, legend_loc=None, frameon=False, title=""
 )
 
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="PROX1", vmax="p95", vmin="p0")
 
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="LHX1", vmax="p99", vmin="p0")
-
-
-# In[ ]:
-
 
 pd.concat(
     [
@@ -284,84 +218,36 @@ pd.concat(
 
 
 # # BC
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="BC")
 
-
-# In[ ]:
-
-
-clusters = ["9","10"]
+clusters = ["9", "10"]
 adata.obs["temp"] = np.nan
-adata.obs.loc[
-    NRPC.obs[(NRPC.obs.leiden.isin(clusters)) ].index, "temp"
-] = NRPC.obs[NRPC.obs.leiden.isin(clusters)].BC
+adata.obs.loc[NRPC.obs[(NRPC.obs.leiden.isin(clusters))].index, "temp"] = NRPC.obs[
+    NRPC.obs.leiden.isin(clusters)
+].BC
 adata.obs.loc[adata.obs.scpred_prediction == "BC", "temp"] = 1.01
 adata.obs["temp"] = pd.cut(adata.obs["temp"], 100)
 sc.pl.umap(
     adata, color="temp", palette=colors, legend_loc=None, frameon=False, title=""
 )
 
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="OTX2", vmax="p99", vmin="p0")
-
-
-# In[ ]:
-
 
 sc.pl.umap(NRPC, color="VSX2", vmax="p99", vmin="p0")
 
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="ISL1", vmax="p99", vmin="p0")
-
-
-# In[ ]:
-
 
 sc.pl.umap(NRPC, color="IRX6", vmax="p99", vmin="p0")
 
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="GSG1", vmax="p99", vmin="p0")
-
-
-# In[ ]:
-
 
 sc.pl.umap(NRPC, color="TRNP1", vmax="p99", vmin="p0")
 
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="TMEM215", vmax="p99", vmin="p0")
-
-
-# In[ ]:
-
 
 sc.pl.umap(NRPC, color="BHLHE22", vmax="p99", vmin="p0")
 
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="FEZF2", vmax="p99", vmin="p0")
-
-
-# In[ ]:
-
 
 pd.concat(
     [
@@ -374,15 +260,7 @@ pd.concat(
 
 
 # # Rod
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="Rod")
-
-
-# In[ ]:
-
 
 clusters = ["4"]
 adata.obs["temp"] = np.nan
@@ -395,21 +273,11 @@ sc.pl.umap(
     adata, color="temp", palette=colors, legend_loc=None, frameon=False, title=""
 )
 
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="NR2E3", vmax="p99", vmin="p0")
-
-
-# In[ ]:
-
 
 pd.concat(
     [
-        adata[
-            NRPC[(NRPC.obs.leiden.isin(clusters))].obs.index
-        ].obs,
+        adata[NRPC[(NRPC.obs.leiden.isin(clusters))].obs.index].obs,
         adata[adata.obs.scpred_prediction == "Rod"].obs,
     ]
 ).to_csv(
@@ -418,15 +286,7 @@ pd.concat(
 
 
 # # Cone
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="Cone")
-
-
-# In[ ]:
-
 
 clusters = ["17"]
 adata.obs["temp"] = np.nan
@@ -439,27 +299,11 @@ sc.pl.umap(
     adata, color="temp", palette=colors, legend_loc=None, frameon=False, title=""
 )
 
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="OTX2", vmax="p99", vmin="p0")
-
-
-# In[ ]:
-
 
 sc.pl.umap(NRPC, color="CRX", vmax="p99", vmin="p0")
 
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="PRDM1", vmax="p99", vmin="p0")
-
-
-# In[ ]:
-
 
 pd.concat(
     [
@@ -470,17 +314,8 @@ pd.concat(
     "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_Cone.csv"
 )
 
-
 # # RGC
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="RGC")
-
-
-# In[ ]:
-
 
 clusters = ["7", "14"]
 adata.obs["temp"] = np.nan
@@ -493,21 +328,9 @@ sc.pl.umap(
     adata, color="temp", palette=colors, legend_loc=None, frameon=False, title=""
 )
 
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="ATOH7", vmax="p99", vmin="p0")
 
-
-# In[ ]:
-
-
 sc.pl.umap(NRPC, color="POU4F2", vmax="p99", vmin="p0")
-
-
-# In[ ]:
-
 
 pd.concat(
     [

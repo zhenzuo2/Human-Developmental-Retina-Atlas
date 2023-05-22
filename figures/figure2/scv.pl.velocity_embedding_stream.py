@@ -57,7 +57,7 @@ scv.pl.velocity_embedding_stream(
     basis="umap",
     legend_fontsize=20,
     title="",
-    color="scpred_prediction",
+    color="majorclass",
     size=10,
     colorbar=True,
     dpi=600,

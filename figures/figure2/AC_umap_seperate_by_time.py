@@ -39,26 +39,17 @@ adata.obs["Weeks"] = adata.obs.Days.map(
         165: "PCW23",
     }
 )
+cells = []
+for sp in set(adata.obs.majorclass):
+    cells = cells + [adata[adata.obs.majorclass == sp].obs.index[0]]
+
 for time in set(adata.obs["Weeks"]):
     for region in set(adata.obs.Region):
         adata.obs["temp"] = (
             (adata.obs.Weeks == time) & (adata.obs.Region == region)
         ).astype(str)
         adata.obs.loc[
-            [
-                "Multi_Fetal_11w2d_FR_2_ACGATTCAGGCTATGT-1",
-                "Multi_Fetal_11w2d_NR_AAAGCTTGTCTAACCT-1",
-                "Multi_Fetal_11w2d_FR_2_GACGCAACAATATAGG-1",
-                "Multi_Fetal_13W_NR_AGCTAAACAATATAGG-1",
-                "Multi_Fetal_19W4d_FR_AAACAGCCAATAACCT-1",
-                "Multi_Fetal_19W4d_NR_AGTTGCAGTGGGTGAA-1",
-                "Multi_Fetal_11w2d_FR_2_TTTAACCTCAAATCGC-1",
-                "Multi_Fetal_11w2d_NR_AAACCGAAGGAGTCGG-1",
-                "Multi_Fetal_13W_FR_AAATGGCCAGTTTGGC-1",
-                "Multi_Fetal_13W_NR_AACAGGATCGATTTGA-1",
-                "Multi_Fetal_19W4d_FR_AAACCAACACCAGGTT-1",
-                "Multi_Fetal_19W4d_NR_AGAACCAAGGGTTAGA-1",
-            ],
+            cells,
             "temp",
         ] = "True"
         adata.obs.loc[adata.obs["temp"] == "True", "temp"] = adata.obs.loc[

@@ -1,27 +1,28 @@
 import pandas as pd
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
+import scanpy as sc
 
-df = pd.read_csv(
-    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv"
+NRPC = sc.read(
+    "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.h5ad"
 )
-mapping = {"NRPC": "RPC", "PRPC": "RPC"}
-df["majorclass"] = df["majorclass"].replace(mapping)
+NRPC.obs["subclass"] = np.nan
 
-df["majorclass"] = pd.Categorical(
-    list(df["majorclass"]),
-    categories=[
-        "RPC",
-        "RGC",
-        "Cone",
-        "HC",
-        "AC",
-        "Rod",
-        "BC",
-        "MG",
-    ],
-)
+clusters = ["2", "13", "12"]
+NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "AC"
+clusters = ["0", "1", "18"]
+NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "HC"
+clusters = ["9", "10"]
+NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "BC"
+clusters = ["4"]
+NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "Rod"
+clusters = ["17"]
+NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "Cone"
+clusters = ["7", "14"]
+NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "RGC"
+
+df = NRPC.obs
+df["majorclass"] = df["subclass"]
 df = df[df.Days > 0]
 
 # define the sample size
@@ -61,7 +62,7 @@ def plot_normal_distributions(means, stds, labels, size):
     for line in leg.get_lines():
         line.set_linewidth(5.0)
     plt.savefig(
-        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Cell Birth Rate in the Macula.svg"
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Cell Birth Rate in the Macula.svg",transparent=True
     )
 
 
@@ -98,7 +99,7 @@ def plot_normal_distributions(means, stds, labels, size):
     for line in leg.get_lines():
         line.set_linewidth(5.0)
     plt.savefig(
-        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Cell Birth Rate in the Peripheral.svg"
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Cell Birth Rate in the Peripheral.svg",transparent=True
     )
 
 
