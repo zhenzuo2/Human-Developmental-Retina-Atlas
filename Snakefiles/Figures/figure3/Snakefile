@@ -4,6 +4,10 @@ rule all:
     ## Put input file here to run corresponding rules
     input:
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_Days.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_DE_genes_dotplot.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_DE_genes_score_dotplot.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/HC_mv.velocity_embedding_stream.latent_time.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_DEGs_DARs_Compare_Barplot.svg",
 ####################################################################################################
 
 rule figure3_plot_NRPC_markers:
@@ -18,4 +22,59 @@ rule figure3_plot_NRPC_markers:
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         mkdir /storage/singlecell/zz4/fetal_snakemake/figures/figure3
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure3/plotnrpcmarker.py'
+        """
+
+rule plot_NRPC_DE_genes_dotplot:
+    ## Seurat QC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.h5ad"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_DE_genes_dotplot.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        mkdir /storage/singlecell/zz4/fetal_snakemake/figures/figure3
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure3/plot_NRPC_DE_genes_dotplot.py'
+        """
+
+rule plot_NRPC_DE_genes_score_dotplot:
+    ## Seurat QC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.h5ad"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_DE_genes_score_dotplot.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        mkdir /storage/singlecell/zz4/fetal_snakemake/figures/figure3
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure3/plot_NRPC_DE_genes_score_dotplot.py'
+        """
+
+rule HC_mv_velocity_embedding_stream:
+    ## Seurat QC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/HC.h5ad"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/HC_mv.velocity_embedding_stream.latent_time.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        mkdir /storage/singlecell/zz4/fetal_snakemake/figures/figure3
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure3/HC_mv.velocity_embedding_stream.py'
+        """
+
+rule NRPC_DEGs_DARs_Compare_Barplot:
+    ## Seurat QC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.h5ad"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_DEGs_DARs_Compare_Barplot.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure3/NRPC_DEGs_DARs_Compare_Barplot.py'
         """

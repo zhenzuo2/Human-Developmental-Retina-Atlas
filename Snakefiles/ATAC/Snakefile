@@ -10,7 +10,9 @@ rule all:
     ## Put input file here to run corresponding rules
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_atac/atac.rds",
-
+        "/storage/singlecell/zz4/fetal_snakemake/results/seRNA/seRNA.rds",
+        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/NRPC_gene_peak_pairs_subclass.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/NRPC_gene_peak_pairs_Weeks.svg"
 
 rule ArchR_create_object:
     ## Create ArchR project
@@ -75,4 +77,29 @@ rule merge_atac:
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
         Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/merge_atac/merge_atac.R'
+        """
+
+rule create_seRNA:
+    ## Merge atac in R to a seurat object
+    input:
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/seRNA/seRNA.rds",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/create_seRNA/create_seRNA.R'
+        """
+
+rule NRPC_gene_peak_pairs_subclass:
+    ## Merge atac in R to a seurat object
+    input:
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/NRPC_gene_peak_pairs_subclass.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/NRPC_gene_peak_pairs_Weeks.svg"
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/NRPC/NRPC_gene_peak_pairs_subclass.R'
         """

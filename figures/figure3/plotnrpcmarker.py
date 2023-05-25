@@ -7,13 +7,14 @@ import numpy as np
 import scanpy as sc
 import seaborn as sns
 
-sc.set_figure_params(transparent=True, fontsize=60)
+sc.set_figure_params(transparent=True, fontsize=80)
 NRPC = scv.read(
     "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.h5ad"
 )
+NRPC = NRPC[NRPC.obs.leiden!="12"]
 NRPC.obs["subclass"] = np.nan
 
-clusters = ["2", "13", "12"]
+clusters = ["2", "13"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "AC"
 clusters = ["0", "1", "18"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "HC"
@@ -42,39 +43,6 @@ sc.pl.umap(
         "Rod": "#bcbd22",
     },
 ),
-fig = plt.gcf()
-fig.set_size_inches(10, 10)
-plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass.svg",
-    dpi=600,
-    bbox_inches="tight",
-)
-plt.clf()
-
-for sp in [
-    "AC",
-    "BC",
-    "Cone",
-    "HC",
-    "RGC",
-    "Rod",
-]:
-    sc.pl.umap(
-        NRPC,
-        size=40,
-        color="subclass",
-        title="",
-        frameon=False,
-        legend_loc="None",
-        palette={
-            "AC": "#1f77b4",
-            "BC": "#ff7f0e",
-            "Cone": "#2ca02c",
-            "HC": "#d62728",
-            "RGC": "#7f7f7f",
-            "Rod": "#bcbd22",
-        },
-    ),
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(

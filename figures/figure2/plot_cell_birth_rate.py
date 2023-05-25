@@ -8,7 +8,7 @@ NRPC = sc.read(
 )
 NRPC.obs["subclass"] = np.nan
 
-clusters = ["2", "13", "12"]
+clusters = ["2", "13"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "AC"
 clusters = ["0", "1", "18"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "HC"
