@@ -8,6 +8,8 @@ rule all:
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_DE_genes_score_dotplot.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/HC_mv.velocity_embedding_stream.latent_time.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_DEGs_DARs_Compare_Barplot.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/GABAergic_cor_genes.png",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/AC_annotation.svg",
 ####################################################################################################
 
 rule figure3_plot_NRPC_markers:
@@ -77,4 +79,30 @@ rule NRPC_DEGs_DARs_Compare_Barplot:
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure3/NRPC_DEGs_DARs_Compare_Barplot.py'
+        """
+
+rule plot_AC_subtype_high_cor_lineage_genes:
+    ## Seurat QC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cellrank_result/AC_g.h5ad",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/GABAergic_cor_genes.png",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure3/plot_AC_subtype_high_cor_lineage_genes.py'
+        """
+
+rule AC_annotation_process:
+    ## Seurat QC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/subclass_annotation/AC_annotation_adult/AC_merged_object.h5ad",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/AC_annotation.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure3/AC_annotation_process.py'
         """

@@ -3,6 +3,7 @@ rule all:
          "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_monocle3_pseudotime.csv",
          "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_SCENT.csv",
          "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/AC_NRPC_SCENT.csv",
+         "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/AC_monocle3_pseudotime.csv",
 
 rule PRPC_MG_monocle3:
     ## Run monocle3 to infer pseudotime on PRPC_MG
@@ -41,4 +42,17 @@ rule AC_NRPC_SCENT:
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
         Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/pseudotime/SCENT/AC_NRPC_SCENT.R'
+        """
+
+rule AC_monocle3:
+    ## Run monocle3 to infer pseudotime on PRPC_MG
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/AC_monocle3_pseudotime.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/pseudotime/monocle3/AC_monocle3.R'
         """

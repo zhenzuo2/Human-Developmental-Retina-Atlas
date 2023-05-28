@@ -152,7 +152,7 @@ for clusters in set(NRPC.obs.leiden):
         title="",
     )
 
-clusters = ["2", "13", "12"]
+clusters = ["2", "13"]
 print(clusters)
 adata.obs["temp"] = np.nan
 adata.obs.loc[NRPC.obs[NRPC.obs.leiden.isin(clusters)].index, "temp"] = NRPC.obs[

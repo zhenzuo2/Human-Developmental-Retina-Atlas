@@ -30,6 +30,20 @@ for majorclass in set(meta_file.majorclass):
 
 adata_result.obs["Days"] = adata_result.obs["Days"].astype(float)
 
+sc.pl.umap(
+    adata_result,
+    color="subclass",
+    legend_loc="on data",
+    frameon=False,
+    title="",
+)
+fig = plt.gcf()
+fig.set_size_inches(5, 5)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/AC_UMAP_subtype.svg",
+    bbox_inches="tight",
+)
+
 mv.velocity_embedding_stream(adata_result, basis="umap")
 
 mv.velocity_embedding_stream(

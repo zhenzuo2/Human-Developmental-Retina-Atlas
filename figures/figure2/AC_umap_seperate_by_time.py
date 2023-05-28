@@ -2,6 +2,7 @@ import scanpy as sc
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import scvelo as scv
 
 adata = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/AC.h5ad")
 output_file_path = "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/"
@@ -56,9 +57,9 @@ for time in set(adata.obs["Weeks"]):
             adata.obs["temp"] == "True", "majorclass"
         ]
         adata.obs["temp"] = adata.obs.temp.replace({"False": np.nan})
-        sc.pl.umap(adata, color="temp", frameon=False, title="",size = 30)
+        sc.pl.umap(adata, color="temp", frameon=False, title="",size = 60.0)
         fig = plt.gcf()
-        fig.set_size_inches(10, 10)
+        fig.set_size_inches(5, 5)
         plt.legend('',frameon=False)
         plt.savefig(
             output_file_path + region + "_" + time + ".svg",

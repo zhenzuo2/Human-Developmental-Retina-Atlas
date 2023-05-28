@@ -3,7 +3,7 @@ dir.create(output_results_path, showWarnings = FALSE)
 library(ArchR)
 library(parallel)
 library(stringi)
-set.seed(1)
+set.seed(0)
 setwd("/storage/singlecell/zz4/fetal_snakemake/results/ArchR/")
 library(BSgenome.Hsapiens.UCSC.hg38)
 
@@ -50,9 +50,6 @@ proj2 <- addReproduciblePeakSet(ArchRProj = proj2, groupBy = "subclass",
 
 proj2 <- addPeakMatrix(proj2)
 
-p2g <- getPeak2GeneLinks(ArchRProj = proj2, corCutOff = 0.45, resolution = 1,
-    returnLoops = FALSE)
-
 proj2 <- addIterativeLSI(ArchRProj = proj2, useMatrix = "TileMatrix", name = "IterativeLSI",
     iterations = 2, clusterParams = list(resolution = c(0.2), sampleCells = 10000,
         n.start = 10), varFeatures = 25000, dimsToUse = 1:30)
@@ -64,24 +61,31 @@ proj2$Weeks = plyr::mapvalues(proj2$Days, from = c(70, 79, 87, 91, 100,
     103, 116, 120, 136, 137, 141, 142, 162, 165), to = c("PCW10", "PCW10",
     "PCW13", "PCW13", "PCW16", "PCW16", "PCW16", "PCW16", "PCW20", "PCW20",
     "PCW20", "PCW20", "PCW23", "PCW23"))
+
 colp = c("#440154FF", "#3B528BFF", "#21908CFF", "#5DC863FF", "#FDE725FF")
 names(colp) = c("PCW10", "PCW13", "PCW16", "PCW20", "PCW23")
 p <- plotPeak2GeneHeatmap(ArchRProj = proj2, groupBy = "Weeks", k = 6,
     palGroup = colp)
 svg("/storage/singlecell/zz4/fetal_snakemake/results/ArchR/NRPC_gene_peak_pairs_Weeks.svg",
-    width = 12, height = 8)
+    width = 15, height = 8)
 p
 dev.off()
 
-p <- plotPeak2GeneHeatmap(ArchRProj = proj2, groupBy = "subclass", k = 6)
+colp = c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#7f7f7f", "#bcbd22")
+names(colp) = c("AC", "BC", "Cone", "HC", "RGC", "Rod")
+p <- plotPeak2GeneHeatmap(ArchRProj = proj2, groupBy = "subclass", k = 6,
+    palGroup = colp)
 svg("/storage/singlecell/zz4/fetal_snakemake/results/ArchR/NRPC_gene_peak_pairs_subclass.svg",
-    width = 12, height = 8)
+    width = 15, height = 8)
 p
 dev.off()
 
-p <- plotPeak2GeneHeatmap(ArchRProj = proj2, groupBy = "Region", k = 6)
+colp = c("#e6194B", "#000075")
+names(colp) = c("Macula", "Peripheral")
+p <- plotPeak2GeneHeatmap(ArchRProj = proj2, groupBy = "Region", k = 6,
+    palGroup = colp)
 svg("/storage/singlecell/zz4/fetal_snakemake/results/ArchR/NRPC_gene_peak_pairs_Region.svg",
-    width = 12, height = 8)
+    width = 15, height = 8)
 p
 dev.off()
 
