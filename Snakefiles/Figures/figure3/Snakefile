@@ -10,6 +10,8 @@ rule all:
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_DEGs_DARs_Compare_Barplot.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/GABAergic_cor_genes.png",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/AC_annotation.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/AC_subtype_DEGs.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/plot_AC_subgroup_DEG_dotplot.svg",
 ####################################################################################################
 
 rule figure3_plot_NRPC_markers:
@@ -105,4 +107,32 @@ rule AC_annotation_process:
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure3/AC_annotation_process.py'
+        """
+
+rule plot_AC_subgroup_DEG:
+    ## Seurat QC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG.h5ad",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/AC_subtype_DEGs.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure3/plot_AC_subgroup_DEG.py
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure3/plot_AC_subgroup_DEG.R'
+        """
+
+rule plot_AC_subgroup_DEG_dotplot:
+    ## Seurat QC
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG.h5ad",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/plot_AC_subgroup_DEG_dotplot.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure3/plot_AC_subgroup_DEG_dotplot.py'
         """
