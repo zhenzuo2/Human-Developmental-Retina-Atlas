@@ -3,7 +3,7 @@ name = args[1]
 library(monocle3)
 library(Seurat)
 library(dplyr)
-seurat_object@assays$RNA@counts
+
 cells <- read.csv("/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class.csv")
 output_dir = "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/"
 
@@ -27,8 +27,8 @@ cds <- new_cell_data_set(expression_matrix, cell_metadata = cell_metadata,
 ## Step 1: Normalize and pre-process the data
 cds <- preprocess_cds(cds, num_dim = 100)
 
-## Step 2: Remove batch effects with cell alignment cds <-
-align_cds(cds, alignment_group = 'sampleid')
+## Step 2: Remove batch effects with cell alignment 
+cds <- align_cds(cds, alignment_group = 'sampleid')
 
 ## Step 3: Reduce the dimensions using UMAP
 cds <- reduce_dimension(cds)
@@ -40,12 +40,12 @@ cds <- cluster_cells(cds)
 cds <- learn_graph(cds, use_partition = FALSE)
 
 ## Step 6: Order cells
-root = colnames(seurat_object)[!(colnames(seurat_object) %in% cells$X)]
+root_cells = colnames(seurat_object)[!(colnames(seurat_object) %in% cells$X)]
 
 cds <- order_cells(cds, root_cells = root_cells)
 
 cds
 
-saveRDS(cds, paste(output_dir, name, "_monocle3.rds", sep = ""))
+saveRDS(cds, paste(output_dir, name, "_wadult_monocle3.rds", sep = ""))
 write.table(pseudotime(cds, reduction_method = "UMAP"), paste(output_dir,
-    name, "_monocle3_pseudotime.csv", sep = ""))
+    name, "_wadult_monocle3_pseudotime.csv", sep = ""))

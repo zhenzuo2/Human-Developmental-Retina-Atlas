@@ -19,6 +19,7 @@ rule all:
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/AC_NRPC_DE.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/find_AC_NRPC.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/HC_Macula_PCW10.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/NRPC_grn_plot.svg",
 ####################################################################################################
 
 rule figure2_plot_cell_birth_rate:
@@ -153,4 +154,16 @@ rule Find_AC_NRPC:
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure2/Find_AC_NRPC.py'
+        """
+
+rule plot_NRPC_GRN:
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/pando_results/Annotated_NRPC_seurat_object.rds",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/NRPC_grn_plot.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/figures/figure2/plot_NRPC_GRN.R'
         """
