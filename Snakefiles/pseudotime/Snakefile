@@ -1,23 +1,26 @@
-names = ["AC","BC","Rod","Cone","RGC","HC"]
+names = ["AC", "BC", "Rod", "Cone", "RGC", "HC"]
+
 
 rule all:
     input:
-         "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_monocle3_pseudotime.csv",
-         "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_SCENT.csv",
-         "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/AC_NRPC_SCENT.csv",
-         "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/AC_monocle3_pseudotime.csv",
-         "/storage/singlecell/zz4/fetal_snakemake/results/count_matrx_with_adult/AC.csv",
-         expand(
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_monocle3_pseudotime.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_SCENT.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/AC_NRPC_SCENT.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/AC_monocle3_pseudotime.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/count_matrx_with_adult/AC.csv",
+        expand(
             [
                 "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/{sam}_wadult_monocle3.rds",
             ],
             sam=names,
         ),
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_latent_time.csv",
+
 
 rule PRPC_MG_monocle3:
     ## Run monocle3 to infer pseudotime on PRPC_MG
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds"
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds",
     output:
         "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_monocle3_pseudotime.csv",
     shell:
@@ -27,10 +30,11 @@ rule PRPC_MG_monocle3:
         Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/pseudotime/monocle3/PRPC_MG_monocle3.R'
         """
 
+
 rule PRPC_MG_SCENT:
     ## Run SCENT to infer pseudotime on PRPC_MG to estimate the differentiation potency
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds"
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds",
     output:
         "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_SCENT.csv",
     shell:
@@ -40,10 +44,11 @@ rule PRPC_MG_SCENT:
         Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/pseudotime/SCENT/PRPC_MG_SCENT.R'
         """
 
+
 rule AC_NRPC_SCENT:
     ## Run SCENT to infer pseudotime on PRPC_MG to estimate the differentiation potency
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds"
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds",
     output:
         "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/AC_NRPC_SCENT.csv",
     shell:
@@ -53,10 +58,11 @@ rule AC_NRPC_SCENT:
         Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/pseudotime/SCENT/AC_NRPC_SCENT.R'
         """
 
+
 rule AC_monocle3:
     ## Run monocle3 to infer pseudotime on PRPC_MG
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds"
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds",
     output:
         "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/AC_monocle3_pseudotime.csv",
     shell:
@@ -66,10 +72,11 @@ rule AC_monocle3:
         Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/pseudotime/monocle3/AC_monocle3.R'
         """
 
+
 rule W_Adult_monocle3:
     ## Run monocle3 to infer pseudotime on PRPC_MG
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad"
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad",
     output:
         "/storage/singlecell/zz4/fetal_snakemake/results/count_matrx_with_adult/AC.csv",
     shell:
@@ -83,7 +90,7 @@ rule W_Adult_monocle3:
 rule W_Adult_monocle3_run_monocle3:
     ## Run monocle3 to infer pseudotime on PRPC_MG
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class.csv"
+        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class.csv",
     output:
         "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/{sam}_wadult_monocle3.rds",
     shell:
@@ -91,4 +98,17 @@ rule W_Adult_monocle3_run_monocle3:
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
         Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/pseudotime/monocle3/W_Adult_monocle3.R {wildcards.sam}'
+        """
+
+
+rule PRPC_MG_latent_time:
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC_MG.h5ad",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_latent_time.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/pseudotime/latent_time/PRPC_MG.py'
         """

@@ -1,5 +1,4 @@
 # Import packages
-# Import packages
 import scvelo as scv
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -49,6 +48,7 @@ plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass.svg",
     dpi=600,
     bbox_inches="tight",
+    backend = "cairo"
 )
 plt.clf()
 

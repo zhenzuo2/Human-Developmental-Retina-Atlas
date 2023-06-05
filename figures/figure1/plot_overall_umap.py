@@ -42,6 +42,7 @@ plt.savefig(
     dpi=600,
     bbox_inches="tight",
     transparent=True,
+    backend = "cairo"
 )
 
 scv.pl.umap(
@@ -58,6 +59,7 @@ plt.savefig(
     dpi=600,
     bbox_inches="tight",
     transparent=True,
+    backend = "cairo"
 )
 
 adata.obs["Days"] = adata.obs["Days"].astype(float)
@@ -75,6 +77,7 @@ plt.savefig(
     dpi=600,
     bbox_inches="tight",
     transparent=True,
+    backend = "cairo"
 )
 #############################################################################################################################
 ## Plot subtype
@@ -111,6 +114,7 @@ plt.savefig(
     dpi=600,
     bbox_inches="tight",
     transparent=True,
+    backend = "cairo"
 )
 
 adata.obs["Weeks"] = adata.obs.Days.map(
@@ -184,4 +188,5 @@ for region in set(adata.obs.Region):
             dpi=600,
             bbox_inches="tight",
             transparent=True,
+            backend = "cairo"
         )

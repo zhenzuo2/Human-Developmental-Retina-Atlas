@@ -52,4 +52,5 @@ plt.savefig(
     dpi=600,
     bbox_inches="tight",
     transparent=True,
+    backend = "cairo"
 )

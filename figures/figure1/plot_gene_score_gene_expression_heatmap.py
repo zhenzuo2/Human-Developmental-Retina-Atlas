@@ -167,6 +167,7 @@ plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/gene_score_heatmap.svg",
     bbox_inches="tight",
     transparent=True,
+    backend = "cairo"
 )
 ##########################################################################################################################
 adata_subset = adata[downsampled_data.cell_id]
@@ -183,4 +184,5 @@ plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/gene_expression_heatmap.svg",
     bbox_inches="tight",
     transparent=True,
+    backend = "cairo"
 )

@@ -5,8 +5,8 @@ rule all:
     input:
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Cell Birth Rate in the Macula.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Cell Birth Rate in the Peripheral.svg",
-        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/woadult_scv.pl.velocity_embedding_stream_scpred_prediction.png",
-        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/wadult_scv.pl.velocity_embedding_stream_scpred_prediction.png",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/woadult_scv.pl.velocity_embedding_stream_scpred_prediction.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/wadult_scv.pl.velocity_embedding_stream_scpred_prediction.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Macula_cell_type_composition.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Peripheral_cell_type_composition.svg",
         "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/AC_mv.velocity_embedding_stream.majorclass.svg",
@@ -42,8 +42,8 @@ rule scv_pl_velocity_embedding_stream:
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv"
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/woadult_scv.pl.velocity_embedding_stream_scpred_prediction.png",
-        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/wadult_scv.pl.velocity_embedding_stream_scpred_prediction.png"
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/woadult_scv.pl.velocity_embedding_stream_scpred_prediction.svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/wadult_scv.pl.velocity_embedding_stream_scpred_prediction.svg"
     shell:
         """
         bash -c '

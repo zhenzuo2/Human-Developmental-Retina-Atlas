@@ -3,7 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 df = pd.read_csv(
-    "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_SCENT.csv"
+    "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_latent_time.csv"
 )
 output_file_path = "/storage/singlecell/zz4/fetal_snakemake/figures/figure6/"
 df["Weeks"] = df.Days.map(
@@ -27,32 +27,42 @@ df["Weeks"] = df.Days.map(
 
 sns.boxplot(
     x="Weeks",
-    y="ccat",
+    y="latent_time",
     hue="Region",
     data=df,
     order=["PCW10", "PCW13", "PCW16", "PCW20", "PCW23"],
     showfliers=False,
 )
-plt.ylabel("Differentiation Potency")
+plt.ylabel("Gene-shared latent time")
 plt.xlabel("Post Conception Week")
 plt.legend(
     bbox_to_anchor=(1.01, 1),
     loc="upper left",
     borderaxespad=0,
 )
-plt.savefig(output_file_path + "CCAT_WEEK.svg", bbox_inches="tight")
+plt.savefig(
+    output_file_path + "latent_time_WEEK.svg",
+    bbox_inches="tight",
+    transparent=True,
+    backend="cairo",
+)
 
-sns.boxplot(x="Days", y="ccat", hue="Region", data=df, showfliers=False)
-plt.ylabel("Differentiation Potency")
+sns.boxplot(x="Days", y="latent_time", hue="Region", data=df, showfliers=False)
+plt.ylabel("Gene-shared latent time")
 plt.xlabel("Post Conception Days")
 plt.legend(
     bbox_to_anchor=(1.01, 1),
     loc="upper left",
     borderaxespad=0,
 )
-plt.savefig(output_file_path + "CCAT_Days.svg", bbox_inches="tight")
+plt.savefig(
+    output_file_path + "latent_time_Days.svg",
+    bbox_inches="tight",
+    transparent=True,
+    backend="cairo",
+)
 
-sns.boxplot(x="majorclass", y="ccat", data=df, showfliers=False)
+sns.boxplot(x="majorclass", y="latent_time", data=df, showfliers=False)
 plt.ylabel("Differentiation Potency")
 plt.xlabel("Cell Type")
 plt.legend(
@@ -60,4 +70,9 @@ plt.legend(
     loc="upper left",
     borderaxespad=0,
 )
-plt.savefig(output_file_path + "CCAT_Region.svg", bbox_inches="tight")
+plt.savefig(
+    output_file_path + "latent_time_Region.svg",
+    bbox_inches="tight",
+    transparent=True,
+    backend="cairo",
+)

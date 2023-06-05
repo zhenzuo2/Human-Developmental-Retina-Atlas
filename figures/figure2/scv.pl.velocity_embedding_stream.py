@@ -48,8 +48,10 @@ scv.pl.velocity_embedding_stream(
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
-    output_file_path + "woadult_scv.pl.velocity_embedding_stream_Days.png",
+    output_file_path + "woadult_scv.pl.velocity_embedding_stream_Days.svg",
     bbox_inches="tight",
+    backend = "cairo",
+    transparent=True,
 )
 
 scv.pl.velocity_embedding_stream(
@@ -69,8 +71,10 @@ scv.pl.velocity_embedding_stream(
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
-    output_file_path + "woadult_scv.pl.velocity_embedding_stream_scpred_prediction.png",
+    output_file_path + "woadult_scv.pl.velocity_embedding_stream_scpred_prediction.svg",
     bbox_inches="tight",
+    backend = "cairo",
+    transparent=True,
 )
 
 ################################################################################################
@@ -119,8 +123,10 @@ scv.pl.velocity_embedding_stream(
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
-    output_file_path + "wadult_scv.pl.velocity_embedding_stream_Days.png",
+    output_file_path + "wadult_scv.pl.velocity_embedding_stream_Days.svg",
     bbox_inches="tight",
+    backend = "cairo",
+    transparent=True,
 )
 
 scv.pl.velocity_embedding_stream(
@@ -140,6 +146,8 @@ scv.pl.velocity_embedding_stream(
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
-    output_file_path + "wadult_scv.pl.velocity_embedding_stream_scpred_prediction.png",
+    output_file_path + "wadult_scv.pl.velocity_embedding_stream_scpred_prediction.svg",
     bbox_inches="tight",
+    backend = "cairo",
+    transparent=True,
 )
