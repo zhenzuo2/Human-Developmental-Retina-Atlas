@@ -24,7 +24,7 @@ sc.pp.calculate_qc_metrics(adata, inplace=True)
 adata = adata[:, adata.var.mean_counts > 0]
 
 sc.pp.highly_variable_genes(
-        adata, flavor="seurat_v3", n_top_genes=10000, subset=True
+        adata, flavor="seurat_v3", n_top_genes=2000, subset=True
     )
 
 adata.layers["counts"] = adata.X

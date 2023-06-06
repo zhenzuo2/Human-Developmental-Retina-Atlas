@@ -9,6 +9,8 @@ import numpy as np
 import pandas as pd
 import os
 import seaborn as sns
+import matplotlib
+matplotlib.rcParams.update({'font.size': 30})
 
 output_file_path = "/storage/singlecell/zz4/fetal_snakemake/figures/figure6/"
 hs = joblib.load(
@@ -19,27 +21,30 @@ adata = joblib.load(
 )
 
 modules = hs.create_modules(min_gene_threshold=250, core_only=True, fdr_threshold=0.05)
-modules.to_csv("/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/modules.csv")
+modules.to_csv(
+    "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/modules.csv"
+)
 
-hs.modules = hs.modules.replace({4: 1, 1: 4})
+hs.modules = hs.modules.replace({4: 1, 1: 4, 2: 3, 3: 2})
 
 hs.plot_local_correlations()
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
     output_file_path + "PRPC_gene_module_heatmap.svg",
-    dpi=600,
     bbox_inches="tight",
     transparent=True,
-    backend="cairo",
+    dpi = 600
 )
 
 module_scores = hs.calculate_module_scores()
 adata_result = joblib.load(
     "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/PPRC_hs.adata.pkl"
 )
-PRPC_MG = scv.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_PRPC_MG/adata_umap.h5ad")
-adata_result.obsm['X_umap'] = PRPC_MG[adata_result.obs.index].obsm['X_umap']
+PRPC_MG = scv.read(
+    "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_PRPC_MG/adata_umap.h5ad"
+)
+adata_result.obsm["X_umap"] = PRPC_MG[adata_result.obs.index].obsm["X_umap"]
 
 adata_result.obs["Module1"] = module_scores.loc[adata_result.obs.index, 1].values
 adata_result.obs["Module2"] = module_scores.loc[adata_result.obs.index, 2].values
@@ -54,25 +59,20 @@ module_list = [
 ]
 cols = [
     "#636EFA",
-    "#EF553B",
-    "#00CC96",
     "#FFA15A",
-    "#AB63FA",
-    "#19D3F3",
-    "#FF6692",
-    "#B6E880",
-    "#FF97FF",
-    "#FECB52",
+    "#00CC96",
+    "#EF553B",
 ]
 for i in range(len(module_list)):
     width = 1000
     height = 1000
     legend_size = 3
-    marker_size = 4
+    marker_size = 5
     df = adata_result.obs.copy()
     df["cell_label"] = adata_result.obs.index.values
     df["x"] = list(adata_result.obsm["X_umap"][:, 0])
     df["y"] = list(adata_result.obsm["X_umap"][:, 1])
+    df = df.sort_values(by=[module_list[i]])
     fig = px.scatter(
         df,
         x="x",
@@ -82,7 +82,7 @@ for i in range(len(module_list)):
         height=height,
         color_continuous_scale=["#BAB0AC", cols[i]],
         hover_data=["cell_label"],
-        range_color=[0.5, 1.5],
+        range_color=[0.5, 4],
     )
     fig.update_traces(mode="markers", marker_size=marker_size)
     fig.update_layout(showlegend=False)

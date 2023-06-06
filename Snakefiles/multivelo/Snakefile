@@ -32,12 +32,14 @@ output_result_path = (
 output_figure_path = (
     "/storage/singlecell/zz4/fetal_snakemake/figures/ATAC_aggregate_peaks_10x/"
 )
-groups = ["AC", "PRPC_MG", "HC", "NRPC"]
+groups = ["AC", "PRPC_MG", "HC", "NRPC","PRPC_MG_NRPC","PRPC"]
 meta_list = [
     "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_AC.csv",
     "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/PRPC_MG.csv",
     "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_HC.csv",
     "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC.csv",
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/PRPC_MG_NRPC.csv",
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/PRPC.csv"
 ]
 sample2meta = dict(zip(groups, meta_list))
 

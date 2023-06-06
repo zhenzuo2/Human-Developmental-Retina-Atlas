@@ -1,6 +1,8 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.rcParams.update({'font.size': 20})
 
 df = pd.read_csv(
     "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_latent_time.csv"
@@ -35,6 +37,7 @@ sns.boxplot(
 )
 plt.ylabel("Gene-shared latent time")
 plt.xlabel("Post Conception Week")
+plt.xticks(rotation = 45)
 plt.legend(
     bbox_to_anchor=(1.01, 1),
     loc="upper left",
@@ -50,6 +53,7 @@ plt.savefig(
 sns.boxplot(x="Days", y="latent_time", hue="Region", data=df, showfliers=False)
 plt.ylabel("Gene-shared latent time")
 plt.xlabel("Post Conception Days")
+plt.xticks(rotation = 45)
 plt.legend(
     bbox_to_anchor=(1.01, 1),
     loc="upper left",
@@ -57,21 +61,6 @@ plt.legend(
 )
 plt.savefig(
     output_file_path + "latent_time_Days.svg",
-    bbox_inches="tight",
-    transparent=True,
-    backend="cairo",
-)
-
-sns.boxplot(x="majorclass", y="latent_time", data=df, showfliers=False)
-plt.ylabel("Differentiation Potency")
-plt.xlabel("Cell Type")
-plt.legend(
-    bbox_to_anchor=(1.01, 1),
-    loc="upper left",
-    borderaxespad=0,
-)
-plt.savefig(
-    output_file_path + "latent_time_Region.svg",
     bbox_inches="tight",
     transparent=True,
     backend="cairo",
