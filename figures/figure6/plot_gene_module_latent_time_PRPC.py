@@ -20,13 +20,13 @@ adata = joblib.load(
     "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/PPRC_hs.adata.pkl"
 )
 
-modules = hs.create_modules(min_gene_threshold=250, core_only=True, fdr_threshold=0.05)
+modules = hs.create_modules(min_gene_threshold=150, core_only=True, fdr_threshold=0.05)
 modules.to_csv(
     "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/modules.csv"
 )
 
-hs.modules = hs.modules.replace({4: 1, 1: 4, 2: 3, 3: 2})
-
+hs.modules = hs.modules.replace({4: 1, 1: 4})
+hs.modules.to_csv(output_file_path + "PRPC_gene_modules.csv")
 hs.plot_local_correlations()
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
@@ -41,15 +41,16 @@ module_scores = hs.calculate_module_scores()
 adata_result = joblib.load(
     "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/PPRC_hs.adata.pkl"
 )
-PRPC_MG = scv.read(
-    "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_PRPC_MG/adata_umap.h5ad"
+PRPC = scv.read(
+    "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_PRPC/adata_umap.h5ad"
 )
-adata_result.obsm["X_umap"] = PRPC_MG[adata_result.obs.index].obsm["X_umap"]
+adata_result.obsm["X_umap"] = PRPC[adata_result.obs.index].obsm["X_umap"]
 
 adata_result.obs["Module1"] = module_scores.loc[adata_result.obs.index, 1].values
 adata_result.obs["Module2"] = module_scores.loc[adata_result.obs.index, 2].values
 adata_result.obs["Module3"] = module_scores.loc[adata_result.obs.index, 3].values
 adata_result.obs["Module4"] = module_scores.loc[adata_result.obs.index, 4].values
+adata_result.obs["Module"] = adata_result.obs[["Module1","Module2","Module3","Module4"]].idxmax(axis=1)
 
 module_list = [
     "Module1",
@@ -58,16 +59,16 @@ module_list = [
     "Module4",
 ]
 cols = [
-    "#636EFA",
-    "#FFA15A",
-    "#00CC96",
-    "#EF553B",
+    "#636EFA", "#FFA15A", "#00CC96", "#EF553B"
 ]
 for i in range(len(module_list)):
     width = 1000
     height = 1000
     legend_size = 3
-    marker_size = 5
+    marker_size = 7
+    adata_result.obs['temp'] = (adata_result.obs.Module == module_list[i])
+    adata_result.obs['temp'] = adata_result.obs['temp'].replace({True:"True",False:"False"})
+    adata_result.obs['temp'].astype('category').cat.reorder_categories(['True', 'False'], inplace=True)
     df = adata_result.obs.copy()
     df["cell_label"] = adata_result.obs.index.values
     df["x"] = list(adata_result.obsm["X_umap"][:, 0])
@@ -77,10 +78,13 @@ for i in range(len(module_list)):
         df,
         x="x",
         y="y",
-        color=module_list[i],
+        color="temp",
         width=width,
         height=height,
-        color_continuous_scale=["#BAB0AC", cols[i]],
+        color_discrete_map={
+            "True":cols[i],
+            "False":"lightgray"
+        },
         hover_data=["cell_label"],
         range_color=[0.5, 4],
     )

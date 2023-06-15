@@ -6,13 +6,13 @@ library(dplyr)
 input_file = "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds"
 meta_file = "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv"
 output_dir = "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/"
-name = "PRPC_MG"
+name = "PRPC"
 
 set.seed(0)
 seurat_object <- readRDS(input_file)
 meta <- read.csv(meta_file)
 meta <- meta[meta$Region %in% c("Macula", "Peripheral"), ]
-meta <- meta[meta$majorclass %in% c("MG", "PRPC"), ]
+meta <- meta[meta$majorclass %in% c("PRPC"), ]
 rownames(meta) <- meta$X
 cells <- meta$X
 common_cells <- intersect(cells, colnames(seurat_object))

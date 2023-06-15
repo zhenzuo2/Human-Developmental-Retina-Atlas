@@ -3,31 +3,32 @@ names = ["AC", "BC", "Rod", "Cone", "RGC", "HC"]
 
 rule all:
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_monocle3_pseudotime.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_SCENT.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/AC_NRPC_SCENT.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/AC_monocle3_pseudotime.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/count_matrx_with_adult/AC.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_monocle3_pseudotime.csv",
+        #"/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_SCENT.csv",
+        #"/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/AC_NRPC_SCENT.csv",
+        #"/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/AC_monocle3_pseudotime.csv",
+        #"/storage/singlecell/zz4/fetal_snakemake/results/count_matrx_with_adult/AC.csv",
         expand(
             [
                 "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/{sam}_wadult_monocle3.rds",
             ],
             sam=names,
         ),
-        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_latent_time.csv",
+        #"/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_latent_time.csv",
+        #"/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_latent_time.csv",
 
 
-rule PRPC_MG_monocle3:
+rule PRPC_monocle3:
     ## Run monocle3 to infer pseudotime on PRPC_MG
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_monocle3_pseudotime.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_monocle3_pseudotime.csv",
     shell:
         """
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/pseudotime/monocle3/PRPC_MG_monocle3.R'
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/pseudotime/monocle3/PRPC_monocle3.R'
         """
 
 
@@ -111,4 +112,16 @@ rule PRPC_MG_latent_time:
         bash -c '
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/pseudotime/latent_time/PRPC_MG.py'
+        """
+
+rule PRPC_latent_time:
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC.h5ad",
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_latent_time.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
+        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/pseudotime/latent_time/PRPC.py'
         """

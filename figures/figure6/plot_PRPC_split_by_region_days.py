@@ -7,15 +7,8 @@ import sys
 import matplotlib.pyplot as plt
 
 adata = sc.read(
-    "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC_MG.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC.h5ad"
 )
-cells = []
-for sp in [
-    "PRPC",
-    "MG",
-]:
-    cells = cells + [adata[adata.obs.majorclass == sp].obs.index[0]]
-
 adata.obs["Weeks"] = adata.obs.Days.map(
     {
         70: "PCW10",
@@ -39,7 +32,6 @@ for region in set(adata.obs.Region):
     for weeks in set(adata.obs.Weeks):
         adata.obs["temp"] = np.nan
         subset = (adata.obs.Region == region) & (adata.obs.Weeks == weeks)
-        adata.obs.loc[cells, "temp"] = adata.obs.loc[cells, "majorclass"]
         adata.obs.loc[subset, "temp"] = adata.obs.loc[subset, "majorclass"]
         adata.obs.loc[subset, "temp"] = adata.obs.loc[subset, "temp"].astype(str)
         print(adata.obs.loc[subset, "temp"])

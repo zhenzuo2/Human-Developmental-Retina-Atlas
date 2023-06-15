@@ -24,3 +24,23 @@ write.table(df1, "/storage/singlecell/zz4/fetal_bash/results/meta/snRNA-seq_meta
 
 write.table(df2, "/storage/singlecell/zz4/fetal_bash/results/meta/multiomics_meta.csv",
             quote = T, sep = ",", row.names = FALSE)
+
+
+adata.obs["Weeks"] = adata.obs.Days.map(
+    {
+        70: "PCW10",
+        79: "PCW10",
+        87: "PCW13",
+        91: "PCW13",
+        100: "PCW16",
+        103: "PCW16",
+        116: "PCW16",
+        120: "PCW16",
+        136: "PCW20",
+        137: "PCW20",
+        141: "PCW20",
+        142: "PCW20",
+        162: "PCW23",
+        165: "PCW23",
+    }
+)

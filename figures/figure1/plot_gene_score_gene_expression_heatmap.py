@@ -29,119 +29,83 @@ adata.obs["majorclass"] = adata.obs.majorclass.replace(
     }
 )
 gs.obs = adata.obs
+sc.pp.scale(adata)
+sc.pp.scale(gs)
+
+sc.tl.rank_genes_groups(adata, 'majorclass')
+
+BC = (
+    sc.get.rank_genes_groups_df(adata, group="BC")
+    .loc[sc.get.rank_genes_groups_df(adata, group="BC").pvals_adj < 0.05, "names"]
+    .values
+)
+BC = [x for x in BC if x in gs.var.index]
+
+Cone = (
+    sc.get.rank_genes_groups_df(adata, group="Cone")
+    .loc[sc.get.rank_genes_groups_df(adata, group="Cone").pvals_adj < 0.05, "names"]
+    .values
+)
+Cone = [x for x in Cone if x in gs.var.index]
+
+Rod = (
+    sc.get.rank_genes_groups_df(adata, group="Rod")
+    .loc[sc.get.rank_genes_groups_df(adata, group="Rod").pvals_adj < 0.05, "names"]
+    .values
+)
+Rod = [x for x in Rod if x in gs.var.index]
+
+MG = (
+    sc.get.rank_genes_groups_df(adata, group="MG")
+    .loc[sc.get.rank_genes_groups_df(adata, group="MG").pvals_adj < 0.05, "names"]
+    .values
+)
+MG = [x for x in MG if x in gs.var.index]
+
+RPC = (
+    sc.get.rank_genes_groups_df(adata, group="RPC")
+    .loc[sc.get.rank_genes_groups_df(adata, group="RPC").pvals_adj < 0.05, "names"]
+    .values
+)
+RPC = [x for x in RPC if x in gs.var.index]
+
+RGC = (
+    sc.get.rank_genes_groups_df(adata, group="RGC")
+    .loc[sc.get.rank_genes_groups_df(adata, group="RGC").pvals_adj < 0.05, "names"]
+    .values
+)
+RGC = [x for x in RGC if x in gs.var.index]
+
+AC = (
+    sc.get.rank_genes_groups_df(adata, group="AC")
+    .loc[sc.get.rank_genes_groups_df(adata, group="AC").pvals_adj < 0.05, "names"]
+    .values
+)
+AC = [x for x in AC if x in gs.var.index]
+
+HC = (
+    sc.get.rank_genes_groups_df(adata, group="HC")
+    .loc[sc.get.rank_genes_groups_df(adata, group="HC").pvals_adj < 0.05, "names"]
+    .values
+)
+HC = [x for x in HC if x in gs.var.index]
+
 Markers = {
-    "BC": [
-        "VSX1",
-        "VSX2",
-        "OTX2",
-        "GRM6",
-        "PRKCA",
-        "LHX4",
-        "PROX1",
-        "PCP4",
-        "PCP2",
-        "TRPM1",
-        "PRDM8",
-    ],
-    "Cone": [
-        "PROM1",
-        "CRX",
-        "ARR3",
-        "GNAT2",
-        "THRB",
-        "OPN1SW",
-        "PDE6H",
-        "GADD45G",
-        "NEUROD1",
-        "RXRG",
-        "DCT",
-        "PRDM1",
-        "RAX2",
-        "CRABP2",
-        "HOTAIRM1",
-    ],
-    "Rod": [
-        "PROM1",
-        "CRX",
-        "RCVRN",
-        "OTX2",
-        "RHO",
-        "NR2E3",
-        "GNAT1",
-        "NRL",
-        "GADD45G",
-        "NEUROD1",
-        "RXRG",
-        "DCT",
-        "PRDM1",
-        "RAX2",
-        "CRABP2",
-        "PRPH2",
-        "SAG",
-    ],
-    "MG": [
-        "SLC1A3",
-        "SLN",
-        "RLBP1",
-        "SOX2",
-        "NFIA",
-        "CRYM",
-        "CLU",
-        "LINC00461",
-    ],
-     "RPC": [
-        "VIM",
-        "SOX2",
-        "SFRP2",
-        "MKI67",
-        "UBE2C",
-        "FGF19",
-        "CCND1",
-        "ID3",
-    ],
-    "RGC": [
-        "POU4F2",
-        "RBPMS",
-        "NEFM",
-        "GAP43",
-        "POU4F1",
-        "ELAVL4",
-        "POU6F2",
-        "ISL1",
-        "NHLH2",
-        "RXRG",
-        "EBF1",
-        "EBF3",
-        "MYC",
-    ],
-    "AC": [
-        "SLC6A9",
-        "GAD1",
-        "SLC32A1",
-        "TFAP2B",
-        "GAD2",
-        "SLC18A3",
-        "LHX9",
-        "MEIS2",
-        "TFAP2C",
-        "TFAP2A",
-    ],
-    "HC": [
-        "ONECUT1",
-        "ONECUT2",
-        "ONECUT3",
-        "TFAP2B",
-        "LHX1",
-        "TFAP2A",
-        "ESRRB",
-    ],
+    "BC": BC,
+    "Cone": Cone,
+    "Rod": Rod,
+    "MG": MG,
+    "RPC": RPC,
+    "RGC": RGC,
+    "AC": AC,
+    "HC": HC,
 }
 
 df = pd.DataFrame(gs.obs)
 df.loc[:, "cell_id"] = list(df.index.values)
 grouped_data = df.groupby("majorclass")
 # Define the number of rows to downsample
-num_rows = 10000
+num_rows = 100
 # Sample the same number of rows from each group
 downsampled_data = grouped_data.apply(
     lambda x: x.sample(n=num_rows, random_state=42, replace=True)
@@ -153,7 +117,7 @@ sc.set_figure_params(scanpy=True, dpi_save=600, fontsize=25)
 gs_subset = gs[downsampled_data.cell_id]
 gs_subset.obs["majorclass"] = pd.Categorical(
     list(gs_subset.obs["majorclass"]),
-    categories=["BC","Cone","Rod","MG","RPC","RGC","AC","HC"],
+    categories=["BC", "Cone", "Rod", "MG", "RPC", "RGC", "AC", "HC"],
 )
 sc.pl.heatmap(
     gs_subset,
@@ -161,13 +125,15 @@ sc.pl.heatmap(
     groupby="majorclass",
     cmap="viridis",
     dendrogram=False,
-    show_gene_labels=True,
-    vmax=np.quantile(gs_subset.X, 0.95),)
+    show_gene_labels=False,
+    vmax=np.quantile(gs_subset.X, 0.95),
+)
 plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/gene_score_heatmap.svg",
+    dpi=600,
     bbox_inches="tight",
     transparent=True,
-    backend = "cairo"
+    backend="cairo",
 )
 ##########################################################################################################################
 adata_subset = adata[downsampled_data.cell_id]
@@ -175,14 +141,15 @@ ax = sc.pl.heatmap(
     adata_subset,
     Markers,
     groupby="majorclass",
-    dendrogram=True,
-    show_gene_labels=True,
+    dendrogram=False,
+    show_gene_labels=False,
     vmax=np.quantile(adata_subset.X.toarray(), 0.99),
-    cmap = "plasma"
+    cmap="plasma",
 )
 plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/gene_expression_heatmap.svg",
     bbox_inches="tight",
     transparent=True,
-    backend = "cairo"
+    dpi=600,
+    backend="cairo",
 )

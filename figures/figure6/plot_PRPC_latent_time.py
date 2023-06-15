@@ -5,7 +5,7 @@ import matplotlib
 matplotlib.rcParams.update({'font.size': 20})
 
 df = pd.read_csv(
-    "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_latent_time.csv"
+    "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_latent_time.csv"
 )
 output_file_path = "/storage/singlecell/zz4/fetal_snakemake/figures/figure6/"
 df["Weeks"] = df.Days.map(

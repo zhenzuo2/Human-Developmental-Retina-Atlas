@@ -56,6 +56,7 @@ proj2$Weeks = plyr::mapvalues(proj2$Days, from = c(70, 79, 87, 91, 100,
     "PCW20", "PCW20", "PCW23", "PCW23"))
 
 trajectory <- c("PCW10", "PCW13", "PCW16", "PCW20", "PCW23")
+trajectory <- c("PCW10", "PCW23")
 proj2 <- addTrajectory(
     ArchRProj = proj2, 
     name = "NRPC", 
@@ -70,11 +71,42 @@ svg("/storage/singlecell/zz4/fetal_snakemake/temp/temp.svg",
 p[[1]]
 dev.off()
 
-p1 <- plotEmbedding(ArchRProj = proj2, colorBy = "cellColData", name = "Weeks", embedding = "UMAP")
+p1 <- plotEmbedding(ArchRProj = proj2, colorBy = "cellColData", name = "Weeks", embedding = "UMAP",size = 2)
 svg("/storage/singlecell/zz4/fetal_snakemake/temp/temp.svg",
-    width = 15, height = 8)
+    width = 4, height = 4)
 p1
 dev.off()
+
+proj2 <- addMotifAnnotations(ArchRProj = proj2, motifSet = "cisbp", name = "Motif")
+proj2 <- addBgdPeaks(proj2)
+proj2 <- addDeviationsMatrix(
+  ArchRProj = proj2, 
+  peakAnnotation = "Motif",
+  force = TRUE
+)
+####
+trajMM  <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "MotifMatrix", log2Norm = FALSE)
+p1 <- plotTrajectoryHeatmap(trajMM, pal = paletteContinuous(set = "solarExtra"))
+plotPDF(p1, name = "Plot-MotifMatrix-Heatmaps.pdf", ArchRProj = proj2,
+    addDOC = FALSE, width = 6, height = 8)
+####
+trajGSM <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "GeneExpressionMatrix", log2Norm = TRUE)
+p1 <- plotTrajectoryHeatmap(trajGSM, pal = paletteContinuous(set = "blueYellow"))
+plotPDF(p1, name = "Plot-GeneExpressionMatrix-Heatmaps.pdf", ArchRProj = proj2,
+    addDOC = FALSE, width = 6, height = 8)
+####
+GeneScoreMatrix
+trajGSM <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "GeneScoreMatrix", log2Norm = TRUE)
+p1 <- plotTrajectoryHeatmap(trajGSM, pal = paletteContinuous(set = "horizonExtra"))
+plotPDF(p1, name = "Plot-GeneScoreMatrix-Heatmaps.pdf", ArchRProj = proj2,
+    addDOC = FALSE, width = 6, height = 8)
+####
+trajGSM <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "PeakMatrix", log2Norm = TRUE)
+p1 <- plotTrajectoryHeatmap(trajGSM, pal = paletteContinuous(set = "greenBlue"))
+plotPDF(p1, name = "Plot-PeakMatrix-Heatmaps.pdf", ArchRProj = proj2,
+    addDOC = FALSE, width = 6, height = 8)
+
+
 
 
 

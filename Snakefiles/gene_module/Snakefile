@@ -1,8 +1,9 @@
 rule all:
     input:
-       "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/SCENT/PRPC_hs_local_correlations.csv",
-       "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/monocle3/PRPC_hs_local_correlations.csv",
-       "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/PRPC_hs_local_correlations.csv"
+       #"/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/SCENT/PRPC_hs_local_correlations.csv",
+       #"/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/monocle3/PRPC_hs_local_correlations.csv",
+       #"/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/PRPC_hs_local_correlations.csv",
+       "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna_PRPC_cell_cycle/merged_rna_PRPC.CC.Difference.rds"
 
 rule gene_module_analysis_PRPC_SCENT:
     ## gene_module_analysis_PRPC
@@ -38,11 +39,11 @@ rule gene_module_analysis_PRPC_monocle3:
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/gene_module/gene_module_analysis_PRPC_monocle3.py'
         """
 
-rule gene_module_analysis_PRPC_MG_latent_time:
+rule gene_module_analysis_PRPC_latent_time:
     ## gene_module_analysis_PRPC
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_latent_time.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_latent_time.csv",
     output:
         "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/PRPC_hs_local_correlations.csv"
     threads: 6
@@ -53,4 +54,19 @@ rule gene_module_analysis_PRPC_MG_latent_time:
         mkdir /storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/
         source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
         python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/gene_module/gene_module_analysis_PRPC_latent_time.py'
+        """
+
+rule regress_out_cell_cycle:
+    ## regress_out_cell_cycle
+    input:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds"
+    output:
+        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna_PRPC_cell_cycle/merged_rna_PRPC.CC.Difference.rds"
+    threads: 6
+    shell:
+        """
+        bash -c '
+        mkdir /storage/singlecell/zz4/fetal_snakemake/results/merged_rna_PRPC_cell_cycle/
+        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
+        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/gene_module/regress_out_cell_cycle.R'
         """
