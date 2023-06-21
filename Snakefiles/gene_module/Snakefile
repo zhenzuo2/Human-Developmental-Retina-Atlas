@@ -1,8 +1,8 @@
 rule all:
     input:
        #"/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/SCENT/PRPC_hs_local_correlations.csv",
-       #"/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/monocle3/PRPC_hs_local_correlations.csv",
-       #"/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/PRPC_hs_local_correlations.csv",
+       "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/monocle3/PRPC_hs_local_correlations.csv",
+       "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/PRPC_hs_local_correlations.csv",
        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna_PRPC_cell_cycle/merged_rna_PRPC.CC.Difference.rds"
 
 rule gene_module_analysis_PRPC_SCENT:
@@ -26,10 +26,9 @@ rule gene_module_analysis_PRPC_monocle3:
     ## gene_module_analysis_PRPC
     input:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_monocle3_pseudotime.csv",
+        "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_monocle3_pseudotime.csv",
     output:
         "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/monocle3/PRPC_hs_local_correlations.csv"
-    threads: 6
     shell:
         """
         bash -c '
@@ -46,7 +45,6 @@ rule gene_module_analysis_PRPC_latent_time:
         "/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_latent_time.csv",
     output:
         "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/PRPC_hs_local_correlations.csv"
-    threads: 6
     shell:
         """
         bash -c '
@@ -62,7 +60,6 @@ rule regress_out_cell_cycle:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds"
     output:
         "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna_PRPC_cell_cycle/merged_rna_PRPC.CC.Difference.rds"
-    threads: 6
     shell:
         """
         bash -c '

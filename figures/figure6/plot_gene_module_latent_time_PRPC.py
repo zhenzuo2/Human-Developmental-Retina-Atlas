@@ -10,7 +10,8 @@ import pandas as pd
 import os
 import seaborn as sns
 import matplotlib
-matplotlib.rcParams.update({'font.size': 30})
+
+matplotlib.rcParams.update({"font.size": 30})
 
 output_file_path = "/storage/singlecell/zz4/fetal_snakemake/figures/figure6/"
 hs = joblib.load(
@@ -20,12 +21,9 @@ adata = joblib.load(
     "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/PPRC_hs.adata.pkl"
 )
 
-modules = hs.create_modules(min_gene_threshold=150, core_only=True, fdr_threshold=0.05)
-modules.to_csv(
-    "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/modules.csv"
-)
+modules = hs.create_modules(min_gene_threshold=100, core_only=True, fdr_threshold=0.05)
 
-hs.modules = hs.modules.replace({4: 1, 1: 4})
+hs.modules = hs.modules.replace({4: 1, 5: 2, 1: 4, 2: 5})
 hs.modules.to_csv(output_file_path + "PRPC_gene_modules.csv")
 hs.plot_local_correlations()
 fig = plt.gcf()
@@ -34,7 +32,7 @@ plt.savefig(
     output_file_path + "PRPC_gene_module_heatmap.svg",
     bbox_inches="tight",
     transparent=True,
-    dpi = 600
+    dpi=600,
 )
 
 module_scores = hs.calculate_module_scores()
@@ -50,25 +48,37 @@ adata_result.obs["Module1"] = module_scores.loc[adata_result.obs.index, 1].value
 adata_result.obs["Module2"] = module_scores.loc[adata_result.obs.index, 2].values
 adata_result.obs["Module3"] = module_scores.loc[adata_result.obs.index, 3].values
 adata_result.obs["Module4"] = module_scores.loc[adata_result.obs.index, 4].values
-adata_result.obs["Module"] = adata_result.obs[["Module1","Module2","Module3","Module4"]].idxmax(axis=1)
+adata_result.obs["Module5"] = module_scores.loc[adata_result.obs.index, 5].values
+adata_result.obs["Module"] = adata_result.obs[
+    ["Module1", "Module2", "Module3", "Module4", "Module5"]
+].idxmax(axis=1)
 
 module_list = [
     "Module1",
     "Module2",
     "Module3",
     "Module4",
+    "Module5",
 ]
 cols = [
-    "#636EFA", "#FFA15A", "#00CC96", "#EF553B"
+    "#1f77b4",
+    "#ff7f0e",
+    "#2ca02c",
+    "#d62728",
+    "#9467bd",
 ]
 for i in range(len(module_list)):
-    width = 1000
-    height = 1000
+    width = 1200
+    height = 1200
     legend_size = 3
     marker_size = 7
-    adata_result.obs['temp'] = (adata_result.obs.Module == module_list[i])
-    adata_result.obs['temp'] = adata_result.obs['temp'].replace({True:"True",False:"False"})
-    adata_result.obs['temp'].astype('category').cat.reorder_categories(['True', 'False'], inplace=True)
+    adata_result.obs["temp"] = adata_result.obs.Module == module_list[i]
+    adata_result.obs["temp"] = adata_result.obs["temp"].replace(
+        {True: "True", False: "False"}
+    )
+    adata_result.obs["temp"].astype("category").cat.reorder_categories(
+        ["True", "False"], inplace=True
+    )
     df = adata_result.obs.copy()
     df["cell_label"] = adata_result.obs.index.values
     df["x"] = list(adata_result.obsm["X_umap"][:, 0])
@@ -81,10 +91,7 @@ for i in range(len(module_list)):
         color="temp",
         width=width,
         height=height,
-        color_discrete_map={
-            "True":cols[i],
-            "False":"lightgray"
-        },
+        color_discrete_map={"True": cols[i], "False": "lightgray"},
         hover_data=["cell_label"],
         range_color=[0.5, 4],
     )

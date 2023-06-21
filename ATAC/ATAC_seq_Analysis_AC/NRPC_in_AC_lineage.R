@@ -95,7 +95,7 @@ p1 <- plotTrajectoryHeatmap(trajGSM, pal = paletteContinuous(set = "blueYellow")
 plotPDF(p1, name = "Plot-GeneExpressionMatrix-Heatmaps.pdf", ArchRProj = proj2,
     addDOC = FALSE, width = 6, height = 8)
 ####
-GeneScoreMatrix
+
 trajGSM <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "GeneScoreMatrix", log2Norm = TRUE)
 p1 <- plotTrajectoryHeatmap(trajGSM, pal = paletteContinuous(set = "horizonExtra"))
 plotPDF(p1, name = "Plot-GeneScoreMatrix-Heatmaps.pdf", ArchRProj = proj2,
@@ -105,9 +105,5 @@ trajGSM <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "PeakMatr
 p1 <- plotTrajectoryHeatmap(trajGSM, pal = paletteContinuous(set = "greenBlue"))
 plotPDF(p1, name = "Plot-PeakMatrix-Heatmaps.pdf", ArchRProj = proj2,
     addDOC = FALSE, width = 6, height = 8)
-
-
-
-
 
 saveArchRProject(ArchRProj = proj2, outputDirectory = "Save-AC_NRPC", load = FALSE)

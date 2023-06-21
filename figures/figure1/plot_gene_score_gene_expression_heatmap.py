@@ -4,7 +4,7 @@ import scvelo as scv
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-
+import random
 scv.set_figure_params(dpi=600, dpi_save=600)
 
 gs = scv.read(
@@ -13,6 +13,9 @@ gs = scv.read(
 adata = scv.read(
     "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad"
 )
+sc.pp.filter_genes(adata, min_counts=10000)
+sc.pp.highly_variable_genes(adata, flavor="seurat_v3", n_top_genes=2000, subset=True)
+
 scv.pp.normalize_per_cell(adata)
 scv.pp.log1p(adata)
 
@@ -29,66 +32,51 @@ adata.obs["majorclass"] = adata.obs.majorclass.replace(
     }
 )
 gs.obs = adata.obs
+
+sc.tl.rank_genes_groups(adata, "majorclass",method = "wilcoxon")
+
 sc.pp.scale(adata)
 sc.pp.scale(gs)
 
-sc.tl.rank_genes_groups(adata, 'majorclass')
-
-BC = (
-    sc.get.rank_genes_groups_df(adata, group="BC")
-    .loc[sc.get.rank_genes_groups_df(adata, group="BC").pvals_adj < 0.05, "names"]
-    .values
-)
+df = sc.get.rank_genes_groups_df(adata, group="BC")
+BC = df.loc[(df.pvals_adj < 0.01) & (df.logfoldchanges >= 2), "names"].values
 BC = [x for x in BC if x in gs.var.index]
+random.shuffle(BC)
 
-Cone = (
-    sc.get.rank_genes_groups_df(adata, group="Cone")
-    .loc[sc.get.rank_genes_groups_df(adata, group="Cone").pvals_adj < 0.05, "names"]
-    .values
-)
+df = sc.get.rank_genes_groups_df(adata, group="Cone")
+Cone = df.loc[(df.pvals_adj < 0.01) & (df.logfoldchanges >= 2), "names"].values
 Cone = [x for x in Cone if x in gs.var.index]
+random.shuffle(Cone)
 
-Rod = (
-    sc.get.rank_genes_groups_df(adata, group="Rod")
-    .loc[sc.get.rank_genes_groups_df(adata, group="Rod").pvals_adj < 0.05, "names"]
-    .values
-)
+df = sc.get.rank_genes_groups_df(adata, group="Rod")
+Rod = df.loc[(df.pvals_adj < 0.01) & (df.logfoldchanges >= 2), "names"].values
 Rod = [x for x in Rod if x in gs.var.index]
+random.shuffle(Rod)
 
-MG = (
-    sc.get.rank_genes_groups_df(adata, group="MG")
-    .loc[sc.get.rank_genes_groups_df(adata, group="MG").pvals_adj < 0.05, "names"]
-    .values
-)
+df = sc.get.rank_genes_groups_df(adata, group="MG")
+MG = df.loc[(df.pvals_adj < 0.01) & (df.logfoldchanges >= 2), "names"].values
 MG = [x for x in MG if x in gs.var.index]
+random.shuffle(MG)
 
-RPC = (
-    sc.get.rank_genes_groups_df(adata, group="RPC")
-    .loc[sc.get.rank_genes_groups_df(adata, group="RPC").pvals_adj < 0.05, "names"]
-    .values
-)
+df = sc.get.rank_genes_groups_df(adata, group="RPC")
+RPC = df.loc[(df.pvals_adj < 0.01) & (df.logfoldchanges >= 2), "names"].values
 RPC = [x for x in RPC if x in gs.var.index]
+random.shuffle(RPC)
 
-RGC = (
-    sc.get.rank_genes_groups_df(adata, group="RGC")
-    .loc[sc.get.rank_genes_groups_df(adata, group="RGC").pvals_adj < 0.05, "names"]
-    .values
-)
+df = sc.get.rank_genes_groups_df(adata, group="RGC")
+RGC = df.loc[(df.pvals_adj < 0.01) & (df.logfoldchanges >= 2), "names"].values
 RGC = [x for x in RGC if x in gs.var.index]
+random.shuffle(RGC)
 
-AC = (
-    sc.get.rank_genes_groups_df(adata, group="AC")
-    .loc[sc.get.rank_genes_groups_df(adata, group="AC").pvals_adj < 0.05, "names"]
-    .values
-)
+df = sc.get.rank_genes_groups_df(adata, group="AC")
+AC = df.loc[(df.pvals_adj < 0.01) & (df.logfoldchanges >= 2), "names"].values
 AC = [x for x in AC if x in gs.var.index]
+random.shuffle(AC)
 
-HC = (
-    sc.get.rank_genes_groups_df(adata, group="HC")
-    .loc[sc.get.rank_genes_groups_df(adata, group="HC").pvals_adj < 0.05, "names"]
-    .values
-)
+df = sc.get.rank_genes_groups_df(adata, group="HC")
+HC = df.loc[(df.pvals_adj < 0.01) & (df.logfoldchanges >= 2), "names"].values
 HC = [x for x in HC if x in gs.var.index]
+random.shuffle(HC)
 
 Markers = {
     "BC": BC,
@@ -105,7 +93,7 @@ df = pd.DataFrame(gs.obs)
 df.loc[:, "cell_id"] = list(df.index.values)
 grouped_data = df.groupby("majorclass")
 # Define the number of rows to downsample
-num_rows = 100
+num_rows = 10000
 # Sample the same number of rows from each group
 downsampled_data = grouped_data.apply(
     lambda x: x.sample(n=num_rows, random_state=42, replace=True)
@@ -126,8 +114,11 @@ sc.pl.heatmap(
     cmap="viridis",
     dendrogram=False,
     show_gene_labels=False,
-    vmax=np.quantile(gs_subset.X, 0.95),
+    vmax=np.quantile(gs_subset.X, 0.9),
+    vmin=np.quantile(gs_subset.X, 0.1),
 )
+fig = plt.gcf()
+fig.set_size_inches(12, 10)
 plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/gene_score_heatmap.svg",
     dpi=600,
@@ -137,15 +128,22 @@ plt.savefig(
 )
 ##########################################################################################################################
 adata_subset = adata[downsampled_data.cell_id]
+adata_subset.obs["majorclass"] = pd.Categorical(
+    list(adata_subset.obs["majorclass"]),
+    categories=["BC", "Cone", "Rod", "MG", "RPC", "RGC", "AC", "HC"],
+)
 ax = sc.pl.heatmap(
     adata_subset,
     Markers,
     groupby="majorclass",
     dendrogram=False,
     show_gene_labels=False,
-    vmax=np.quantile(adata_subset.X.toarray(), 0.99),
+    vmax=np.quantile(adata_subset.X, 0.95),
+    vmin=np.quantile(adata_subset.X, 0.05),
     cmap="plasma",
 )
+fig = plt.gcf()
+fig.set_size_inches(12, 10)
 plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/gene_expression_heatmap.svg",
     bbox_inches="tight",

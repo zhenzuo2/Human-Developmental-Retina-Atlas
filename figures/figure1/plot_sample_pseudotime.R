@@ -14,6 +14,26 @@ for (celltype in c("Rod", "Cone", "BC", "AC", "RGC", "HC")) {
     print(table(meta$Time))
     meta <- meta[meta$Time %in% names(table(meta$Time)[table(meta$Time) >
         100]), ]
+    if (celltype == "RGC") {
+        meta <- meta[((meta$Region == "Macula") & (meta$Days >= 70)) |
+            ((meta$Region == "Peripheral") & (meta$Days >= 70))]
+    }
+    if (celltype == "HC") {
+        meta <- meta[((meta$Region == "Macula") & (meta$Days >= 70)) |
+            ((meta$Region == "Peripheral") & (meta$Days >= 79))]
+    }
+    if (celltype == "AC") {
+        meta <- meta[((meta$Region == "Macula") & (meta$Days >= 91)) |
+            ((meta$Region == "Peripheral") & (meta$Days >= 100))]
+    }
+    if (celltype == "Rod") {
+        meta <- meta[((meta$Region == "Macula") & (meta$Days >= 103)) |
+            ((meta$Region == "Peripheral") & (meta$Days >= 116))]
+    }
+    if (celltype == "BC") {
+        meta <- meta[((meta$Region == "Macula") & (meta$Days >= 103)) |
+            ((meta$Region == "Peripheral") & (meta$Days >= 142))]
+    }
     ggplot(meta, aes(x = Time, y = x, fill = Region)) + geom_boxplot() +
         xlab("Group") + ylab("Value") + ggtitle("Grouped Boxplot")
 

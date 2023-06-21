@@ -55,7 +55,7 @@ for region in set(adata.obs.Region):
             + region
             + "_"
             + weeks
-            + ".svg",
+            + ".png",
             dpi=600,
             bbox_inches="tight",
             transparent=True,

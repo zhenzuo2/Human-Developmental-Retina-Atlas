@@ -1,10 +1,10 @@
 library(ggplot2)
 library(RColorBrewer)
-library(VennDiagram)
-
-output_dir = c("/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/MG_monocle3_DE_analysis/NRPC_",
-  "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/MG_monocle3_DE_analysis/PRPC_",
-  "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/MG_monocle3_DE_analysis/RPC_")
+library(ggVennDiagram)
+output_dir = "/Users/zhenzuo/Desktop/"
+output_dir = c("/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/NRPC_",
+               "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/PRPC_",
+               "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/RPC_")
 
 cm_files = c("All_compare_mod_region.csv", "Early_compare_mod_region.csv",
              "Late_compare_mod_region.csv")
@@ -30,15 +30,15 @@ for (out in output_dir) {
   }
 }
 
-files <- c("/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/MG_monocle3_DE_analysis/PRPC_All_Region_DE_filtered_gene_list.csv",
-           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/MG_monocle3_DE_analysis/PRPC_Early_Region_DE_filtered_gene_list.csv",
-           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/MG_monocle3_DE_analysis/PRPC_Late_Region_DE_filtered_gene_list.csv",
-           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/MG_monocle3_DE_analysis/NRPC_All_Region_DE_filtered_gene_list.csv",
-           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/MG_monocle3_DE_analysis/NRPC_Early_Region_DE_filtered_gene_list.csv",
-           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/MG_monocle3_DE_analysis/NRPC_Late_Region_DE_filtered_gene_list.csv",
-           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/MG_monocle3_DE_analysis/RPC_All_Region_DE_filtered_gene_list.csv",
-           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/MG_monocle3_DE_analysis/RPC_Early_Region_DE_filtered_gene_list.csv",
-           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/MG_monocle3_DE_analysis/RPC_Late_Region_DE_filtered_gene_list.csv")
+files <- c("/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/PRPC_All_Region_DE_filtered_gene_list.csv",
+           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/PRPC_Early_Region_DE_filtered_gene_list.csv",
+           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/PRPC_Late_Region_DE_filtered_gene_list.csv",
+           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/NRPC_All_Region_DE_filtered_gene_list.csv",
+           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/NRPC_Early_Region_DE_filtered_gene_list.csv",
+           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/NRPC_Late_Region_DE_filtered_gene_list.csv",
+           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/RPC_All_Region_DE_filtered_gene_list.csv",
+           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/RPC_Early_Region_DE_filtered_gene_list.csv",
+           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/RPC_Late_Region_DE_filtered_gene_list.csv")
 
 names <- c("PRPC_All", "PRPC_Early",
            "PRPC_Late", "NRPC_All", "NRPC_Early", "NRPC_Late", "RPC_All", "RPC_Early", "RPC_Late")
@@ -60,18 +60,15 @@ set2 <- gene_list[gene_list$Set%in%c("PRPC_Late"),"Name"]
 set3 <- gene_list[gene_list$Set%in%c("NRPC_Early"),"Name"]
 set4 <- gene_list[gene_list$Set%in%c("NRPC_Late"),"Name"]
 
-
-# Prepare a palette of 3 colors with R colorbrewer:
-library(RColorBrewer)
-# Load library
-library(VennDiagram)
-
 # Chart
-venn.diagram(
+png(filename = paste("/Users/zhenzuo/Desktop/log2_fc_barplot.png", sep = ""), width = 20,
+    height = 10,units = "in",res = 600)
+ggVennDiagram(
   x = list(set1, set2,set3,set4),
   category.names = c("Early PRPC" , "Late PRPC","Early NRPC" , "Late NRPC"),
-  filename = '/storage/singlecell/zz4/fetal_snakemake/figures/figure5/venn_diagramm.png',
-  fill = c("#0073C2FF", "#EFC000FF", "#868686FF", "#CD534CFF"),
-  output=TRUE,cex = 1.5,cat.cex = 1.5,margin=0.1
-)
-
+  filename = '',
+  label_size = 10,
+  set_size = 7,
+  #set_color = c("#0073C2FF", "#EFC000FF", "#868686FF", "#CD534CFF"),
+  output=TRUE,cex = 1.5,cat.cex = 1.5,margin=0.5)+theme(text = element_text(size = 20))
+dev.off()

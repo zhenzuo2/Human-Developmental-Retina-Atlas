@@ -45,10 +45,9 @@ sc.pl.umap(
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass.png",
     dpi=600,
     bbox_inches="tight",
-    backend = "cairo"
 )
 plt.clf()
 
@@ -62,7 +61,7 @@ sc.pl.umap(NRPC, size=40, color="Days", title="", frameon=False, cmap="cividis")
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_Days.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_Days.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -116,7 +115,7 @@ for sp in [
     fig = plt.gcf()
     fig.set_size_inches(10, 10)
     plt.savefig(
-        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_" + sp + ".svg",
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_" + sp + ".png",
         dpi=600,
         bbox_inches="tight",
     )
@@ -167,7 +166,7 @@ for region in set(NRPC.obs.Region):
             + region
             + "_"
             + weeks
-            + ".svg",
+            + ".png",
             dpi=600,
             bbox_inches="tight",
             transparent=True,
@@ -196,7 +195,7 @@ plt.legend(title="Region", loc="best", bbox_to_anchor=(1, 0.5))
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_Days.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_Days.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -213,7 +212,7 @@ plt.rcParams.update(
     }
 )
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_DEGs_dot_plot.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_DEGs_dot_plot.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -231,7 +230,7 @@ sc.pl.umap(
 fig = plt.gcf()
 fig.set_size_inches(40, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_AC.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_AC.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -249,7 +248,7 @@ sc.pl.umap(
 fig = plt.gcf()
 fig.set_size_inches(40, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_RGC.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_RGC.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -267,7 +266,7 @@ sc.pl.umap(
 fig = plt.gcf()
 fig.set_size_inches(40, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_HC.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_HC.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -285,7 +284,7 @@ sc.pl.umap(
 fig = plt.gcf()
 fig.set_size_inches(40, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_BC.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_BC.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -303,7 +302,7 @@ sc.pl.umap(
 fig = plt.gcf()
 fig.set_size_inches(40, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_Rod.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_Rod.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -321,7 +320,7 @@ sc.pl.umap(
 fig = plt.gcf()
 fig.set_size_inches(40, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_Cone.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_Cone.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -340,7 +339,7 @@ sc.pl.umap(
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/AC_fate_p.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/AC_fate_p.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -359,7 +358,7 @@ sc.pl.umap(
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/BC_fate_p.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/BC_fate_p.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -378,7 +377,7 @@ sc.pl.umap(
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/Rod_fate_p.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/Rod_fate_p.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -397,7 +396,7 @@ sc.pl.umap(
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/Cone_fate_p.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/Cone_fate_p.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -416,7 +415,7 @@ sc.pl.umap(
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/RGC_fate_p.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/RGC_fate_p.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -435,7 +434,7 @@ sc.pl.umap(
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/HC_fate_p.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/HC_fate_p.png",
     dpi=600,
     bbox_inches="tight",
 )

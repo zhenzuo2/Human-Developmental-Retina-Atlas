@@ -10,11 +10,11 @@ adata = scv.read(
     "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad"
 )
 
-adata = adata[adata.obs.majorclass.isin(["PRPC","MG"])]
+adata = adata[adata.obs.majorclass.isin(["PRPC"])]
 adata.obs.Days = adata.obs.Days.astype(float)
 adata = adata[adata.obs.Days > 0]
 
-meta = pd.read_csv("/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_MG_monocle3_pseudotime.csv",sep = " ")
+meta = pd.read_csv("/storage/singlecell/zz4/fetal_snakemake/results/pseudotime/PRPC_monocle3_pseudotime.csv",sep = " ")
 adata.obs["monocle3"]=meta.loc[adata.obs.index,"x"]
 
 sc.pp.calculate_qc_metrics(adata, inplace=True)

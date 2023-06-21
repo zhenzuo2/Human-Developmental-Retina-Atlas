@@ -21,8 +21,8 @@ adata = joblib.load(
     "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/PPRC_hs.adata.pkl"
 )
 
-modules = hs.create_modules(min_gene_threshold=150, core_only=True, fdr_threshold=0.05)
-hs.modules = hs.modules.replace({4: 1, 1: 4})
+modules = hs.create_modules(min_gene_threshold=100, core_only=True, fdr_threshold=0.05)
+hs.modules = hs.modules.replace({4: 1, 5: 2, 1: 4, 2: 5})
 
 ii = leaves_list(hs.linkage)
 
@@ -37,6 +37,7 @@ for x in mod_reordered.unique():
 
 mod_map[x] = y[mod_reordered == x].mean()
 
+mod_reordered.to_csv("/storage/singlecell/zz4/fetal_snakemake/figures/figure6/mod_reordered.csv")
 adata_result = scv.read(
     "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG.h5ad"
 )
@@ -55,10 +56,21 @@ adata_result.obs["latent_time"]=df.loc[adata_result.obs.index,"latent_time"].val
 sc.pp.normalize_total(adata_result)
 sc.pp.scale(adata_result)
 
-top_genes = mod_reordered[mod_reordered==4][:10].index
-scv.pl.heatmap(adata_result, var_names=top_genes, sortby='latent_time',yticklabels=True)
+top_genes = mod_reordered[mod_reordered==5][:10].index
+scv.pl.heatmap(adata_result, var_names=top_genes, sortby='latent_time',yticklabels=True,vmax= 0.5)
 fig = plt.gcf()
-fig.set_size_inches(10,4)
+fig.set_size_inches(10,2)
+plt.savefig(
+    output_file_path + "PRPC_gene_module_5_heatmap.png",
+    bbox_inches="tight",
+    transparent=True,
+    dpi = 600
+)
+
+top_genes = mod_reordered[mod_reordered==4][:10].index
+scv.pl.heatmap(adata_result, var_names=top_genes, sortby='latent_time',yticklabels=True,vmax= 0.3)
+fig = plt.gcf()
+fig.set_size_inches(10,2)
 plt.savefig(
     output_file_path + "PRPC_gene_module_4_heatmap.png",
     bbox_inches="tight",
@@ -67,9 +79,9 @@ plt.savefig(
 )
 
 top_genes = mod_reordered[mod_reordered==3][:10].index
-scv.pl.heatmap(adata_result, var_names=top_genes, sortby='latent_time',yticklabels=True,vmax= 0.3)
+scv.pl.heatmap(adata_result, var_names=top_genes, sortby='latent_time',yticklabels=True,vmax= 0.5)
 fig = plt.gcf()
-fig.set_size_inches(10,4)
+fig.set_size_inches(10,2)
 plt.savefig(
     output_file_path + "PRPC_gene_module_3_heatmap.png",
     bbox_inches="tight",
@@ -78,9 +90,9 @@ plt.savefig(
 )
 
 top_genes = mod_reordered[mod_reordered==2][:10].index
-scv.pl.heatmap(adata_result, var_names=top_genes, sortby='latent_time',yticklabels=True,vmax= 0.8)
+scv.pl.heatmap(adata_result, var_names=top_genes, sortby='latent_time',yticklabels=True,vmax= 0.2)
 fig = plt.gcf()
-fig.set_size_inches(10,4)
+fig.set_size_inches(10,2)
 plt.savefig(
     output_file_path + "PRPC_gene_module_2_heatmap.png",
     bbox_inches="tight",
@@ -89,9 +101,9 @@ plt.savefig(
 )
 
 top_genes = mod_reordered[mod_reordered==1][:10].index
-scv.pl.heatmap(adata_result, var_names=top_genes, sortby='latent_time',yticklabels=True,vmax= 0.1)
+scv.pl.heatmap(adata_result, var_names=top_genes, sortby='latent_time',yticklabels=True,vmax= 0.05)
 fig = plt.gcf()
-fig.set_size_inches(10,4)
+fig.set_size_inches(10,2)
 plt.savefig(
     output_file_path + "PRPC_gene_module_1_heatmap.png",
     bbox_inches="tight",
