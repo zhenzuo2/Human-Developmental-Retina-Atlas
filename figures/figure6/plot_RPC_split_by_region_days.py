@@ -7,7 +7,7 @@ import sys
 import matplotlib.pyplot as plt
 
 adata = sc.read(
-    "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_PRPC_MG_NRPC/adata_umap.h5ad"
 )
 adata.obs["Weeks"] = adata.obs.Days.map(
     {
@@ -46,6 +46,7 @@ for region in set(adata.obs.Region):
             palette={
                 "PRPC": "#1f77b4",
                 "MG": "#ff7f0e",
+                "NRPC":"#2ca02c",
             },
         )
         fig = plt.gcf()

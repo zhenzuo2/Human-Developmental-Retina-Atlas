@@ -1,85 +1,87 @@
 library(ggplot2)
 
 categories <- 1:30
-categories[c(6, 12, 18, 24,30)] = ""
+categories[c(6,12,18,24,30)] = ""
 
-categories[1:5] = c("system development ",
-"nervous system development ",
-"multicellular organism development  ",
+categories[1:5] = c("system development  ",
 "multicellular organismal process",
-"generation of neurons")
-
-categories[7:11] = c("cell cycle process",
-"cell cycle",
-"mitotic cell cycle",
-"mitotic cell cycle process",
-"chromosome segregation")
-
-categories[13:17] = c("system development",
-"plasma membrane bounded cell projection organization",
-"cell projection organization",
+"multicellular organism development  ",
 "nervous system development",
-"multicellular organism development ")
+"anatomical structure development ")
 
-categories[19:23] = c("cytoplasmic translation",
+categories[7:11] = c("cytoplasmic translation",
 "translation",
 "peptide biosynthetic process",
 "peptide metabolic process",
 "amide biosynthetic process")
 
-categories[25:29] = c("system development  ",
+categories[13:17] = c("cell projection organization",
+"multicellular organism development ",
+"system development ",
+"plasma membrane bounded cell projection organization",
+"anatomical structure morphogenesis")
+
+categories[19:23] = c("cell cycle process",
+"cell cycle",
+"mitotic cell cycle",
+"mitotic cell cycle process",
+"chromosome segregation")
+
+categories[25:30] = c("system development",
 "anatomical structure development",
 "multicellular organism development",
-"developmental process",
-"anatomical structure morphogenesis")
+"anatomical structure morphogenesis ",
+"developmental process")
 
 categories <- stringr::str_to_title(categories)
 
 values <- 1:30
-values[1:5] = c(5.08E-12,
-1.16E-11,
-1.90E-09,
-2.42E-09,
-1.06E-08)
-values[7:11] = c(5.66E-80,
-2.38E-74,
-4.29E-74,
-3.82E-71,
-8.47E-69)
-values[13:17] = c(4.82E-17,
-4.04E-15,
-5.72E-15,
-3.31E-14,
-4.99E-14)
-values[19:23] = c(2.16E-141,
-9.09E-93,
-3.15E-91,
-2.79E-85,
-1.27E-84)
-values[25:29] = c(3.63E-15,
-1.35E-12,
-4.16E-12,
-9.99E-12,
-7.76E-11)
+values[1:5] = c(2.11E-23,
+2.38E-23,
+1.09E-21,
+4.38E-20,
+7.07E-20)
+values[7:11] = c(6.24E-132,
+1.20E-81,
+3.69E-80,
+2.05E-74,
+8.87E-74)
+values[13:17] = c(5.68E-13,
+8.49E-13,
+1.20E-12,
+1.73E-12,
+1.22E-11)
+values[19:23] = c(1.32E-69,
+2.42E-65,
+2.12E-62,
+2.37E-57,
+1.66E-52)
+values[25:30] = c(
+1.97E-11,
+6.61E-09,
+1.12E-08,
+3.31E-08,
+4.58E-08)
+
 values = -log10(values)
-values[c(6, 12, 18, 24,30)] <- 0
-group = rep(c("Module5", "Module4", "Module3", "Module2", "Module1"), each = 6)
+values[c(6,12,18,24,30)] <- 0
+group = rep(c("Module5","Module4", "Module3", "Module2", "Module1"), each = 6)
 # Create a data frame
 data <- data.frame(Category = categories, Value = values, group = group)
-data = data[30:1, ]
+
 # Create the bar plot
 ggplot(data, aes(x = Category, y = Value, fill = group)) + geom_bar(stat = "identity") +
-    labs(x = "", y = "-log10(Pvalues)") + ggtitle("Biological Process") +
-    scale_x_discrete(limits = data$Category) + coord_flip() + theme(text = element_text(size = 30)) +
-    scale_fill_manual(values = c("#1f77b4",
-    "#ff7f0e",
-    "#2ca02c",
-    "#d62728",
-    "#9467bd")[5:1],
-        limits = c("Module5", "Module4", "Module3", "Module2", "Module1")) + theme(panel.background = element_rect(fill = "transparent"),
-    plot.background = element_rect(fill = "transparent", color = NA), panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(), legend.background = element_rect(fill = "transparent"),
-    legend.box.background = element_rect(fill = "transparent"))+ theme(legend.position = c(0.8, 0.2))
+  labs(x = "", y = "-log10(Pvalues)") + ggtitle("Biological Process") +
+  scale_x_discrete(limits = data$Category) + coord_flip() + theme(text = element_text(size = 30)) +
+  scale_fill_manual(values = c("#1f77b4",
+                               "#ff7f0e",
+                               "#2ca02c",
+                               "#d62728",
+                               "#9467bd")[5:1],
+                    limits = c("Module5","Module4", "Module3", "Module2", "Module1")) + theme(panel.background = element_rect(fill = "transparent"),
+                                                                                    plot.background = element_rect(fill = "transparent", color = NA), panel.grid.major = element_blank(),
+                                                                                    panel.grid.minor = element_blank(), legend.background = element_rect(fill = "transparent"),
+                                                                                    legend.box.background = element_rect(fill = "transparent"))+ theme(legend.position = c(0.8, 0.2))
 
 ggsave("/storage/singlecell/zz4/fetal_snakemake/figures/figure6/PRPC_MG_Modules_GO.svg",
-    bg = "transparent", width = 20, height = 10, units = "in")
+       bg = "transparent", width = 20, height = 13, units = "in")

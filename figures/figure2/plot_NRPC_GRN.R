@@ -84,7 +84,7 @@ grn_plot_final <- grn_plot_ + ggrepel::geom_label_repel(data = dat, size = 10,
                                                                                                                                                                                                                   panel.grid.minor = element_blank(), legend.background = element_rect(fill = "transparent"),
                                                                                                                                                                                                                   legend.box.background = element_rect(fill = "transparent"))
 ggsave(filename = paste(output_dir, label, "_grn_plot.svg", sep = ""),
-       plot = grn_plot_final, scale = 1, width = 20, height = 15, bg = "transparent")
+       plot = grn_plot_final, scale = 1, width = 30, height = 15, bg = "transparent")
 
 grn_plot_final2 <- ggplot(dat, aes(x = x, y = y)) + geom_point(aes(color = as.factor(cluster))) +
   geom_mark_circle(aes(color = as.factor(cluster)), expand = unit(0.5,

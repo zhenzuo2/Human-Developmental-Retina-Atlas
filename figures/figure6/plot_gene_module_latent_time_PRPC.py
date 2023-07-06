@@ -11,7 +11,7 @@ import os
 import seaborn as sns
 import matplotlib
 
-matplotlib.rcParams.update({"font.size": 30})
+matplotlib.rcParams.update({"font.size": 28})
 
 output_file_path = "/storage/singlecell/zz4/fetal_snakemake/figures/figure6/"
 hs = joblib.load(
@@ -21,13 +21,13 @@ adata = joblib.load(
     "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/PPRC_hs.adata.pkl"
 )
 
-modules = hs.create_modules(min_gene_threshold=100, core_only=True, fdr_threshold=0.05)
+modules = hs.create_modules(min_gene_threshold=120, core_only=True, fdr_threshold=0.05)
 
-hs.modules = hs.modules.replace({4: 1, 5: 2, 1: 4, 2: 5})
+hs.modules = hs.modules.replace({4: 1, 3: 2, 2: 3, 5: 4, 1: 5})
 hs.modules.to_csv(output_file_path + "PRPC_gene_modules.csv")
 hs.plot_local_correlations()
 fig = plt.gcf()
-fig.set_size_inches(10, 10)
+fig.set_size_inches(12, 12)
 plt.savefig(
     output_file_path + "PRPC_gene_module_heatmap.svg",
     bbox_inches="tight",
@@ -40,7 +40,7 @@ adata_result = joblib.load(
     "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/PPRC_hs.adata.pkl"
 )
 PRPC = scv.read(
-    "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_PRPC/adata_umap.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_PRPC_MG_NRPC/adata_umap.h5ad"
 )
 adata_result.obsm["X_umap"] = PRPC[adata_result.obs.index].obsm["X_umap"]
 
@@ -71,7 +71,7 @@ for i in range(len(module_list)):
     width = 1200
     height = 1200
     legend_size = 3
-    marker_size = 7
+    marker_size = 10
     adata_result.obs["temp"] = adata_result.obs.Module == module_list[i]
     adata_result.obs["temp"] = adata_result.obs["temp"].replace(
         {True: "True", False: "False"}

@@ -6,6 +6,10 @@ import scvelo as scv
 import multivelo as mv
 import sys
 import matplotlib.pyplot as plt
+import matplotlib
+import seaborn as sns
+from scipy.spatial import ConvexHull
+matplotlib.rcParams.update({'font.size': 22})
 
 adata = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC.h5ad")
 mv.velocity_graph(adata)
@@ -64,10 +68,7 @@ plt.savefig(
     dpi=600,
 )
 ########################################################################################################
-import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
-from scipy.spatial import ConvexHull
+
 
 # Create a joint kernel density plot using Seaborn
 sns.kdeplot(x = [x[0] for x in adata.obsm["X_umap"]], y= [x[1] for x in adata.obsm["X_umap"]], weights = [x[0] for x in adata[:,"NFIA"].layers["ATAC"].toarray()],cmap="Blues", shade=True)
@@ -172,8 +173,6 @@ plt.savefig(
 )
 
 ###
-import matplotlib
-matplotlib.rcParams.update({'font.size': 22})
 mv.pie_summary(adata)
 # Display the plot
 fig = plt.gcf()
@@ -184,58 +183,16 @@ plt.savefig(
     bbox_inches='tight'
 )
 
-mv.switch_time_summary(adata)
-import numpy as np
-import matplotlib.pyplot as plt
+################################################################################
 
-# Generate random data for three time points
-time_points = ['PRPC', 'NRPC', 'AC',"BC","Rod","Cone","RGC","HC"]
-observations = [get_summary(PRPC),
-                get_summary(NRPC),
-                get_summary(AC),
-                get_summary(BC),
-                get_summary(Rod),
-                get_summary(Cone),
-                get_summary(RGC),
-                get_summary(HC),
-               ]
-observations = observations / np.sum(observations, axis=1)[:, np.newaxis]
-
-# Set up colors for the stacked bars
-colors = ['r', 'g', 'b', 'y']
-
-# Plot the stacked bars
-
-bottom = np.zeros(len(time_points))
-
-for i, obs in enumerate(observations.T):
-    plt.bar(time_points, obs, bottom=bottom, color=colors[i])
-    bottom += obs
-
-# Add labels and title
-plt.xlabel('Time Points')
-plt.ylabel('Observations')
-plt.title('Stacked Bar Plot with Sum of 1 at each Time Point')
-
-# Show the legend
-plt.legend(['Primed', 'Coupled-on', 'Decoupled', 'Coupled-off'],loc='upper left', borderaxespad=0)
-
-# Display the plot
-# Display the plot
-fig = plt.gcf()
-fig.set_size_inches(5, 5)
-plt.xticks(
-    ticks=[0, 1, 2, 3,4,5,6,7],
-    labels=['PRPC', 'NRPC', 'AC',"BC","Rod","Cone","RGC","HC"],
-    rotation=45,
-)
-plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure4/switch_time_summary.svg",
-    dpi=600,
-    bbox_inches='tight'
-)
-
-####
+PRPC = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC.h5ad")
+NRPC = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/NRPC.h5ad")
+AC = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/AC.h5ad")
+BC = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/BC.h5ad")
+Rod = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/Rod.h5ad")
+Cone = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/Cone.h5ad")
+RGC = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/RGC.h5ad")
+HC = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/HC.h5ad")
 
 def get_summary(adata):
     t_sw = adata[:, adata.var['velo_s_genes']].var[['fit_t_sw1', 'fit_t_sw2', 'fit_t_sw3']].copy()
@@ -261,20 +218,9 @@ def get_summary(adata):
     d = np.median(d)
     return([a,b,c,d])
 
-PRPC = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC.h5ad")
-NRPC = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/NRPC.h5ad")
-AC = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/AC.h5ad")
-BC = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/BC.h5ad")
-Rod = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/Rod.h5ad")
-Cone = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/Cone.h5ad")
-RGC = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/RGC.h5ad")
-HC = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/HC.h5ad")
-
-import numpy as np
-import matplotlib.pyplot as plt
 
 # Generate random data for three time points
-time_points = ['PRPC', 'NRPC', ,"RGC","Cone","HC",'AC',"Rod", "BC",]
+time_points = ['PRPC', 'NRPC',"RGC","Cone","HC",'AC',"Rod", "BC",]
 observations = [get_summary(PRPC),
                 get_summary(NRPC),
                 get_summary(RGC),
@@ -292,21 +238,18 @@ colors = ['r', 'g', 'b', 'y']
 # Plot the stacked bars
 
 bottom = np.zeros(len(time_points))
+plt.clf()
 
 for i, obs in enumerate(observations.T):
     plt.bar(time_points, obs, bottom=bottom, color=colors[i])
     bottom += obs
 
 # Add labels and title
-plt.xlabel('Switch intervals')
+plt.xlabel('')
 plt.ylabel('')
 plt.title('')
-
 # Show the legend
 plt.legend(['Primed', 'Coupled-on', 'Decoupled', 'Coupled-off'],bbox_to_anchor=(1.04, 1), loc="upper left")
-
-# Display the plot
-# Display the plot
 fig = plt.gcf()
 fig.set_size_inches(5, 5)
 plt.xticks(
@@ -320,3 +263,67 @@ plt.savefig(
     bbox_inches='tight'
 )
 
+def get_summary(adata):
+    genes = adata.var_names
+    fit_model = adata[:, (adata.var['fit_direction'] == 'complete') &
+                      np.isin(adata.var_names, genes)].var['fit_model'].values
+    fit_direction = adata[:, genes].var['fit_direction'].values
+    data = [np.sum(fit_direction == 'on'), np.sum(fit_direction == 'off'),
+            np.sum(fit_model == 1), np.sum(fit_model == 2)]
+    index = ['induction', 'repression', 'Model 1', 'Model 2']
+    index = [x for i, x in enumerate(index) if data[i] > 0]
+    data = [x for x in data if x > 0]
+    df = pd.DataFrame({'data': data}, index=index)
+    return df
+
+observations = [get_summary(PRPC),
+                get_summary(NRPC),
+                get_summary(RGC),
+                get_summary(Cone),
+                get_summary(HC),
+                get_summary(AC),
+                get_summary(Rod),
+                get_summary(BC),
+               ]
+res = np.zeros((8, 4))
+for i in range(8):
+    j=0
+    for x in ['induction', 'repression', 'Model 1', 'Model 2']:
+        if x in observations[i].index:
+            res[i,j] =  observations[i].loc[x,"data"]
+        j = j+1
+
+
+res = res / np.sum(res, axis=1)[:, np.newaxis]
+
+# Set up colors for the stacked bars
+colors = ['#0066CC', '#99CC00', '#FF6699', '#FFCC00']
+
+# Plot the stacked bars
+
+bottom = np.zeros(len(time_points))
+plt.clf()
+for i, obs in enumerate(res.T):
+    plt.bar(time_points, obs, bottom=bottom, color=colors[i])
+    bottom += obs
+
+# Add labels and title
+plt.xlabel('')
+plt.ylabel('')
+plt.title('')
+
+# Show the legend
+plt.legend(['Induction', 'Repression', 'Model 1', 'Model 2'],labelcolor = colors,bbox_to_anchor=(1.04, 1), loc="upper left")
+
+fig = plt.gcf()
+fig.set_size_inches(5, 5)
+plt.xticks(
+    ticks=[0, 1, 2, 3,4,5,6,7],
+    labels=['PRPC', 'NRPC',"RGC","Cone","HC",'AC',"Rod", "BC",],
+    rotation=45,
+)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure4/model_summary.svg",
+    dpi=600,
+    bbox_inches='tight'
+)

@@ -1,0 +1,38 @@
+---
+title: "Single-nucleus ATAC-seq: Quality control"
+output: pdf_document
+papersize: a4
+---
+
+```{r echo=FALSE, fig.height=10, fig.width=10, message=FALSE, warning=FALSE, include=T, results="asis",out.width='.33\\linewidth'}
+library(rsvg)
+library(ggplot2)
+merge_svg_to_pdf <- function(folder_path, output_path) {
+  # List all SVG files in the folder
+  samples <- list.files(path = folder_path)
+
+  for (sample in samples) {
+    tss_file <- paste("/Users/zhenzuo/Desktop/QualityControl/",sample,"/",sample,"-TSS_by_Unique_Frags.pdf",sep="")
+    fsd_file <- paste("/Users/zhenzuo/Desktop/QualityControl/",sample,"/",sample,"-Fragment_Size_Distribution.pdf",sep="")
+    ds_file <- paste("/Users/zhenzuo/Desktop/QualityControl/",sample,"/",sample,"-Doublet-Summary.pdf",sep="")
+      cat("\n")
+      cat(paste("# ",sample,"\n",sep = ""))
+      cat("\n")
+      cat("\n")
+    # Render the SVG file to the current PDF page
+    plot(magick::image_read_pdf(tss_file))
+    plot(magick::image_read_pdf(fsd_file))
+    plot(magick::image_read_pdf(ds_file))
+    cat("\n")
+    cat("\n")
+  }
+  
+  # Print the output path
+}
+
+# Provide the path to the folder containing SVG files
+folder_path <- "/Users/zhenzuo/Desktop/QualityControl/"
+
+# Call the function to merge SVG files into a PDF
+merge_svg_to_pdf(folder_path, output_path)
+```

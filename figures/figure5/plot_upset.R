@@ -112,5 +112,5 @@ for (region in c("Macula", "Peripheral")) {
         text.scale = 3, keep.order = T, sets = names(sort(table(gene_list$Name),
             decreasing = T)[15:1]), mb.ratio = c(0.4, 0.6), point.size = 5)
     print(p)
-    dev.off
+    dev.off()
 }
