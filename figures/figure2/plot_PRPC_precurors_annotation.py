@@ -15,7 +15,7 @@ adata_result.obs.loc[
 
 adata_result.obs.loc[adata[adata.obs.leiden.isin(["0"])].obs.index, "temp"] = "MG precursor"
 
-sc.pl.umap(adata_result,color = "temp",size = 50,frameon = False,legend_loc = None)
+sc.pl.umap(adata_result,color = "temp",size = 50,frameon = False,legend_loc = None,title = "")
 fig = plt.gcf()
 fig.set_size_inches(10,10)
 plt.savefig(

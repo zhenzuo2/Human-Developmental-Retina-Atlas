@@ -9,9 +9,27 @@ import matplotlib.pyplot as plt
 import matplotlib
 import seaborn as sns
 from scipy.spatial import ConvexHull
+from sklearn.neighbors import NearestNeighbors
 matplotlib.rcParams.update({'font.size': 22})
 
-adata = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC.h5ad")
+adata = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC_MG_NRPC.h5ad")
+adata = adata[adata.obs.majorclass=="PRPC"]
+
+def remove_outlier_dots_umap(coordinates, threshold=2):
+    # Compute the distances to the k nearest neighbors
+    k = min(5, len(coordinates) - 1)  # Ensure k is smaller than the number of samples
+    nbrs = NearestNeighbors(n_neighbors=k + 1).fit(coordinates)
+    distances, _ = nbrs.kneighbors(coordinates)
+    # Compute the median distance for each dot
+    median_distances = np.median(distances[:, 1:], axis=1)
+    # Identify outliers based on the median distance
+    outlier_mask = median_distances > threshold
+    # Return boolean array indicating if each dot was kept or removed
+    return ~outlier_mask
+
+outlier_mask=remove_outlier_dots_umap(adata.obsm["X_umap"],0.1)
+adata = adata[outlier_mask]
+
 mv.velocity_graph(adata)
 mv.latent_time(adata)
 
@@ -99,6 +117,7 @@ plt.title("NFIA ATAC")
 # Display the plot
 fig = plt.gcf()
 fig.set_size_inches(5, 5)
+sns.despine(bottom = True, left = True)
 plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure4/NFIA_ATAC_ConvexHull.svg",
     dpi=600,
@@ -133,6 +152,7 @@ plt.title("NFIA spliced")
 # Display the plot
 fig = plt.gcf()
 fig.set_size_inches(5, 5)
+sns.despine(bottom = True, left = True)
 plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure4/NFIA_spliced_ConvexHull.svg",
     dpi=600,
@@ -166,6 +186,7 @@ plt.title("NFIA unspliced")
 
 # Display the plot
 fig = plt.gcf()
+sns.despine(bottom = True, left = True)
 fig.set_size_inches(5, 5)
 plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure4/NFIA_unspliced_ConvexHull.svg",
@@ -233,7 +254,7 @@ observations = [get_summary(PRPC),
 observations = observations / np.sum(observations, axis=1)[:, np.newaxis]
 
 # Set up colors for the stacked bars
-colors = ['r', 'g', 'b', 'y']
+colors = ['#DC3912', '##FF9900', '#109618', '##3366CC']
 
 # Plot the stacked bars
 

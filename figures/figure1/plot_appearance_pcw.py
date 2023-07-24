@@ -19,6 +19,8 @@ sample_df = pd.DataFrame(columns=df.columns)
 for group, data in groups:
     sample_data = data.sample(n=sample_size, replace=True)
     sample_df = pd.concat([sample_df, sample_data])
+
+
 sample_df.majorclass = sample_df.majorclass.astype(str)
 
 cell_types = ["RGC","HC","AC","Cone","Rod","BC","MG"]
@@ -64,7 +66,7 @@ y = [x/7 for x in [70,79,100,100,116,142,165]]
 plt.plot(["RGC","HC","Cone","AC","Rod","BC","MG"], x, label = "Macula", marker=".", markersize=20,color = "#F8766D")
 plt.plot(["RGC","HC","Cone","AC","Rod","BC","MG"], y, label = "Peripheral", marker=".", markersize=20,color = "#00BFC4")
 plt.xlabel("Cell Type")
-plt.ylabel("Appearance PWC")
+plt.ylabel("Appearance PCW")
 plt.plot(["RGC","RGC"], [x/7 for x in RGC], linestyle='dashed',color = "black")
 plt.plot(["AC","AC"], [x/7 for x in AC], linestyle='dashed',color = "black")
 plt.plot(["HC","HC"], [x/7 for x in HC], linestyle='dashed',color = "black")

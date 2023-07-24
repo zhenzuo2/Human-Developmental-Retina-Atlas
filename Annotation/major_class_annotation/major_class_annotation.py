@@ -40,7 +40,7 @@ arches_params = dict(
 
 # We train the reference using the standard SCVI workflow, except we add a few non-default parameters that were identified to work well with scArches
 vae_ref = scvi.model.SCVI(adata_ref, **arches_params)
-vae_ref.train()
+vae_ref.train(accelerator = "gpu")
 
 adata_ref.obsm["X_scVI"] = vae_ref.get_latent_representation()
 sc.pp.neighbors(adata_ref, use_rep="X_scVI")

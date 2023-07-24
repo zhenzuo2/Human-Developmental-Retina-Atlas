@@ -28,6 +28,28 @@ adata.obs["scpred_prediction"] = pd.Categorical(
         "MG",
     ],
 )
+#############################################################################################################################
+## Plot subtype
+adata.obs["subclass"] = ""
+adata.obs["majorclass"] = adata.obs["majorclass"].astype(str)
+adata.obs.loc[adata.obs.majorclass == "PRPC", "subclass"] = "PRPC"
+adata.obs.loc[adata.obs.majorclass == "NRPC", "subclass"] = "NRPC"
+adata.obs.loc[adata.obs.majorclass == "MG", "subclass"] = "MG"
+for file in [
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/AC_subtype.csv",
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/BC_subtype.csv",
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/Cone_subtype.csv",
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/HC_subtype.csv",
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/RGC_subtype.csv",
+    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/Rod_subtype.csv",
+]:
+    df = pd.read_csv(file)
+    df.index = df["Unnamed: 0"].values
+    adata.obs.loc[df.index, "subclass"] = df.subclass
+    adata.obs.loc[df.index, "majorclass"] = df.majorclass
+
+adata = adata[adata.obs.subclass != "", :]
+
 scv.pl.umap(
     adata,
     color="scpred_prediction",
@@ -42,7 +64,7 @@ plt.savefig(
     dpi=600,
     bbox_inches="tight",
     transparent=True,
-    backend = "cairo"
+    backend="cairo",
 )
 
 scv.pl.umap(
@@ -59,7 +81,7 @@ plt.savefig(
     dpi=600,
     bbox_inches="tight",
     transparent=True,
-    backend = "cairo"
+    backend="cairo",
 )
 
 adata.obs["Days"] = adata.obs["Days"].astype(float)
@@ -77,25 +99,9 @@ plt.savefig(
     dpi=600,
     bbox_inches="tight",
     transparent=True,
-    backend = "cairo"
+    backend="cairo",
 )
-#############################################################################################################################
-## Plot subtype
-adata.obs["subclass"] = ""
-adata.obs.loc[adata.obs.majorclass == "PRPC", "subclass"] = "PRPC"
-adata.obs.loc[adata.obs.majorclass == "NRPC", "subclass"] = "NRPC"
-adata.obs.loc[adata.obs.majorclass == "MG", "subclass"] = "MG"
-for file in [
-    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/AC_subtype.csv",
-    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/BC_subtype.csv",
-    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/Cone_subtype.csv",
-    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/HC_subtype.csv",
-    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/RGC_subtype.csv",
-    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/Rod_subtype.csv",
-]:
-    df = pd.read_csv(file)
-    df.index = df["Unnamed: 0"].values
-    adata.obs.loc[df.index, "subclass"] = df.subclass
+
 sc.pl.umap(
     adata,
     color="subclass",
@@ -106,6 +112,8 @@ sc.pl.umap(
     frameon=False,
     legend_fontweight="bold",
     legend_fontoutline=True,
+    palette = ['#88ccee', '#cc6677', '#ddcc77', '#117733', '#332288', '#aa4499',
+             '#44aa99', '#999933', '#882255', '#661100', '#888888']
 )
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
@@ -114,7 +122,31 @@ plt.savefig(
     dpi=600,
     bbox_inches="tight",
     transparent=True,
-    backend = "cairo"
+    backend="cairo",
+)
+
+plt.rcParams.update({'font.size': 20})
+plt.rcParams["font.family"] = "Arial"
+sc.pl.umap(
+    adata,
+    color="majorclass",
+    size=5,
+    legend_loc="on data",
+    title="",
+    return_fig=True,
+    frameon=False,
+    legend_fontweight="bold",
+    legend_fontoutline=True,
+    palette = 'tab20'
+)
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_majortype.svg",
+    dpi=600,
+    bbox_inches="tight",
+    transparent=True,
+    backend="cairo",
 )
 
 adata.obs["Weeks"] = adata.obs.Days.map(
@@ -145,7 +177,6 @@ for region in set(adata.obs.Region):
         subset = (adata.obs.Region == region) & (adata.obs.Weeks == weeks)
         adata.obs.loc[cells, "temp"] = adata.obs.loc[cells, "scpred_prediction"]
         adata.obs.loc[subset, "temp"] = adata.obs.loc[subset, "scpred_prediction"]
-
         adata.obs["temp"] = pd.Categorical(
             list(adata.obs["temp"]),
             categories=[
@@ -184,9 +215,9 @@ for region in set(adata.obs.Region):
             + region
             + "_"
             + weeks
-            + ".svg",
+            + ".png",
             dpi=600,
             bbox_inches="tight",
             transparent=True,
-            backend = "cairo"
+            #backend="cairo",
         )

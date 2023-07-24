@@ -17,6 +17,7 @@ for sublcass in set(meta_file.subclass):
     adata.obs.loc[
         meta_file.loc[meta_file.subclass == sublcass, :].index, "subclass"
     ] = sublcass
+    
 for majorclass in set(meta_file.majorclass):
     adata.obs.loc[
         meta_file.loc[meta_file.majorclass == majorclass, :].index, "majorclass"
