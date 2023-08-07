@@ -146,7 +146,7 @@ plotPDF(p1, name = "Plot-PeakMatrix-Heatmaps.pdf", ArchRProj = proj2,
 trajMM  <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "MotifMatrix", log2Norm = FALSE,groupEvery = 5)
 trajGEM <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "GeneExpressionMatrix", log2Norm = TRUE,groupEvery = 5)
 
-corGSM_MM <- correlateTrajectories(trajGEM, trajMM,varCutOff1 = 0.6,varCutOff2 = 0.6,corCutOff = 0.3)
+corGSM_MM <- correlateTrajectories(trajGEM, trajMM,varCutOff1 = 0.6,varCutOff2 = 0.6,corCutOff = 0.3,log2Norm2 = FALSE)
 
 trajGEM2 <- trajGEM[corGSM_MM[[1]]$name1, ]
 trajMM2 <- trajMM[corGSM_MM[[1]]$name2, ]
@@ -156,16 +156,16 @@ assay(trajCombined, withDimnames=F) <- t(apply(assay(trajGEM2), 1, scale)) + t(a
 combinedMat <- plotTrajectoryHeatmap(trajCombined, returnMat = TRUE, varCutOff = 0)
 rowOrder <- match(rownames(combinedMat), rownames(trajGEM2))
 rownames(trajMM2) <- gsub(".*:(.*?)_.*", "\\1", rownames(trajMM2))
-rownames(trajGEM2) <- rownames(trajMM2)
-ht1 <- plotTrajectoryHeatmap(trajGEM2,  pal = paletteContinuous(set = "horizonExtra"),  varCutOff = 0, rowOrder = rowOrder,labelTop = 100)
-ht2 <- plotTrajectoryHeatmap(trajMM2, pal = paletteContinuous(set = "solarExtra"), varCutOff = 0, rowOrder = rowOrder,labelTop = 100)
-svg("/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-AC_NRPC/Plots/h1_h2.svg",width=20,height=10)
+rownames(trajGEM2) <- gsub(".*:", "", rownames(trajGEM2))
+ht1 <- plotTrajectoryHeatmap(trajGEM2,  pal = paletteContinuous(set = "horizonExtra"),  varCutOff = -1, rowOrder = rowOrder,labelTop = 100,labelMarkers = rownames(trajMM2))
+ht2 <- plotTrajectoryHeatmap(trajMM2, pal = paletteContinuous(set = "solarExtra"), varCutOff = -1, rowOrder = rowOrder,labelTop = 100,labelMarkers = rownames(trajMM2))
+svg("/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-AC_NRPC/Plots/h1_h2.svg",width=18,height=15)
 ht1+ht2
 dev.off()
 
 ###
 motifPositions <- getPositions(proj2)
-motifs <- c("ONECUT1", "PTF1A")
+motifs <- c("ONECUT1","ONECUT2", "PTF1A")
 markerMotifs <- unlist(lapply(motifs, function(x) grep(x, names(motifPositions), value = TRUE)))
 markerMotifs <- markerMotifs[markerMotifs %ni% "SREBF1_22"]
 markerMotifs
@@ -175,7 +175,18 @@ proj2 <- addGroupCoverages(ArchRProj = proj2, groupBy = "Weeks")
 seFoot <- getFootprints(
   ArchRProj = proj2, 
   positions = motifPositions[markerMotifs], 
-  groupBy = "Weeks"
+  groupBy = "Weeks",
+  flank = 200
+)
+plotFootprints(
+  seFoot = seFoot,
+  ArchRProj = proj2, 
+  normMethod = "Divide",
+  plotName = "Footprints-Divide-Bias",
+  addDOC = FALSE,
+  smoothWindow = 10,
+  flank = 200,
+  pal = c("#4858A7", "#788FC8", "#F49B7C", "#B51F29")
 )
 
 plotFootprints(
@@ -184,6 +195,29 @@ plotFootprints(
   normMethod = "Subtract",
   plotName = "Footprints-Subtract-Bias",
   addDOC = FALSE,
-  smoothWindow = 5
+  smoothWindow = 10,
+  flank = 200,
+  pal = c("#4858A7", "#788FC8", "#F49B7C", "#B51F29")
 )
+###
+
+markerGenes  <- c(
+    "ONECUT2" 
+  )
+p <- plotBrowserTrack(
+    ArchRProj = proj2, 
+    groupBy = "Weeks", 
+    geneSymbol = markerGenes, 
+    upstream = 20000,
+    downstream = 60000,
+    loops = getCoAccessibility(proj2),
+    sizes = c(12, 1.5, 3, 4),
+    ylim = c(0, 1),
+    pal = c("#4858A7", "#788FC8", "#F49B7C", "#B51F29")
+)
+plotPDF(plotList = p, 
+    name = "Plot-Tracks-Marker-Genes-with-CoAccessibility.pdf", 
+    ArchRProj = proj2, 
+    addDOC = FALSE, width = 5, height = 5)
+
 saveArchRProject(ArchRProj = proj2, outputDirectory = "Save-AC_NRPC", load = FALSE)

@@ -10,20 +10,23 @@ sc.set_figure_params(transparent=True, fontsize=80)
 NRPC = scv.read(
     "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.h5ad"
 )
-NRPC = NRPC[NRPC.obs.leiden!="12"]
+NRPC = NRPC[NRPC.obs.leiden != "12"]
 NRPC.obs["subclass"] = np.nan
 
-clusters = ["2", "13"]
+sc.pp.neighbors(NRPC, use_rep="X_scVI")
+sc.tl.leiden(NRPC, resolution=3)
+
+clusters = ["28", "3", "13", "15"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "AC"
-clusters = ["0", "1", "18"]
+clusters = ["6", "30", "35", "25"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "HC"
-clusters = ["9", "10"]
+clusters = ["21", "14", "27"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "BC"
-clusters = ["4"]
+clusters = ["33", "0"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "Rod"
-clusters = ["17"]
+clusters = ["12", "22"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "Cone"
-clusters = ["7", "14"]
+clusters = ["4", "19", "23"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "RGC"
 
 sc.pl.umap(
@@ -435,6 +438,165 @@ fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/HC_fate_p.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+#####
+#####
+#####
+#####
+#####
+sc.pl.umap(
+    NRPC,
+    size=40,
+    legend_loc=None,
+    colorbar_loc=None,
+    color=["PRKCA"],
+    frameon=False,
+)
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/PRKCA.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+sc.pl.umap(
+    NRPC,
+    size=40,
+    legend_loc=None,
+    colorbar_loc=None,
+    color=["ERBB4"],
+    frameon=False,
+)
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/ERBB4.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+sc.pl.umap(
+    NRPC,
+    size=40,
+    legend_loc=None,
+    colorbar_loc=None,
+    color=["TACR3"],
+    frameon=False,
+)
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/TACR3.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+sc.pl.umap(
+    NRPC,
+    size=40,
+    legend_loc=None,
+    colorbar_loc=None,
+    color=["ISL1"],
+    frameon=False,
+)
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/ISL1.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+sc.pl.umap(
+    NRPC,
+    size=40,
+    legend_loc=None,
+    colorbar_loc=None,
+    color=["GNAO1"],
+    frameon=False,
+)
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/GNAO1.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+sc.pl.umap(
+    NRPC,
+    size=40,
+    legend_loc=None,
+    colorbar_loc=None,
+    color=["OTX2"],
+    frameon=False,
+)
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/OTX2.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+sc.pl.umap(
+    NRPC,
+    size=40,
+    legend_loc=None,
+    colorbar_loc=None,
+    color=["VSX2"],
+    frameon=False,
+)
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/VSX2.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+
+sc.pl.umap(
+    NRPC,
+    size=40,
+    legend_loc=None,
+    colorbar_loc=None,
+    color=["GRIK1"],
+    frameon=False,
+)
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/GRIK1.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+sc.pl.umap(
+    NRPC,
+    size=40,
+    legend_loc=None,
+    colorbar_loc=None,
+    color=["VSX1"],
+    frameon=False,
+)
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/VSX1.png",
     dpi=600,
     bbox_inches="tight",
 )

@@ -2,23 +2,28 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import scanpy as sc
-
+import matplotlib
+matplotlib.rcParams.update({'font.size': 18})
 NRPC = sc.read(
     "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.h5ad"
 )
+NRPC = NRPC[NRPC.obs.leiden!="12"]
 NRPC.obs["subclass"] = np.nan
 
-clusters = ["2", "13"]
+sc.pp.neighbors(NRPC, use_rep="X_scVI")
+sc.tl.leiden(NRPC, resolution=3)
+
+clusters = ["28", "3", "13", "15"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "AC"
-clusters = ["0", "1", "18"]
+clusters = ["6", "30","35","25"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "HC"
-clusters = ["9", "10"]
+clusters = ["21","14","27"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "BC"
-clusters = ["4"]
+clusters = ["33","0"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "Rod"
-clusters = ["17"]
+clusters = ["12","22"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "Cone"
-clusters = ["7", "14"]
+clusters = ["4", "19","23"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "RGC"
 
 df = NRPC.obs
@@ -61,8 +66,9 @@ def plot_normal_distributions(means, stds, labels, size):
     ax.set_ylabel("Normalized Birth Rate")
     for line in leg.get_lines():
         line.set_linewidth(5.0)
+    plt.legend(bbox_to_anchor=(1.04, 1), borderaxespad=0)
     plt.savefig(
-        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Cell Birth Rate in the Macula.svg",transparent=True
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Cell Birth Rate in the Macula.svg",transparent=True,bbox_inches='tight'
     )
 
 
@@ -98,8 +104,9 @@ def plot_normal_distributions(means, stds, labels, size):
     ax.set_ylabel("Normalized Birth Rate")
     for line in leg.get_lines():
         line.set_linewidth(5.0)
+    plt.legend(bbox_to_anchor=(1.04, 1), borderaxespad=0)
     plt.savefig(
-        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Cell Birth Rate in the Peripheral.svg",transparent=True
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/Cell Birth Rate in the Peripheral.svg",transparent=True,bbox_inches='tight'
     )
 
 

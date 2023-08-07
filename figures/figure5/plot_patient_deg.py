@@ -2,9 +2,46 @@ import scanpy as sc
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import numpy as np
 adata =sc.read("/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG.h5ad")
 sc.pp.normalize_per_cell(adata)
 sc.pp.log1p(adata)
+
+markers = ["DHRS3","RBP4","RDH10","FGF8","STRA6","CYP26A1","CYP26B1","CYP26C1","RXRG","RXRA","RXRB","RARA","RARB","RARG","ALDH1A1","ALDH1A2","ALDH1A3"]
+for gene in markers:
+    vmax = np.quantile(adata[:,gene].X.toarray(),q = 0.999)
+    sc.pl.umap(adata[adata.obs.Region == "Macula"],color = gene,vmax = vmax,size = 20)
+    fig = plt.gcf()
+    fig.set_size_inches(5, 5)
+    plt.savefig(
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure5/"+gene+"_Macula.png",
+        dpi=600,
+        bbox_inches="tight",
+    )
+    plt.clf()
+    sc.pl.umap(adata[adata.obs.Region == "Peripheral"],color = gene,vmax = vmax,size = 20)
+    fig = plt.gcf()
+    fig.set_size_inches(5, 5)
+    plt.savefig(
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure5/"+gene+"_Peripheral.png",
+        dpi=600,
+        bbox_inches="tight",
+    )
+    plt.clf()
+
+
+
+adata.obs["cell_type_Region"] = [m+"_"+n for m,n in zip(adata.obs["majorclass"],adata.obs["Region"])]
+sc.pl.dotplot(adata, markers, groupby='cell_type_Region', dendrogram=False)
+fig = plt.gcf()
+fig.set_size_inches(8, 8)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure5/dotplot_Macula_Peripheral.svg",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
 adata.obs["Weeks"] = adata.obs.Days.map(
     {
         70: "PCW10",

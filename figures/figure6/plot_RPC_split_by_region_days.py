@@ -9,6 +9,29 @@ import matplotlib.pyplot as plt
 adata = sc.read(
     "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_PRPC_MG_NRPC/adata_umap.h5ad"
 )
+sc.pl.umap(
+adata,
+color="majorclass",
+size=80,
+title="",
+frameon=False,
+legend_loc="None",
+na_color="lightgray",
+palette={
+    "PRPC": "#1f77b4",
+    "MG": "#ff7f0e",
+    "NRPC":"#2ca02c",
+},
+)
+fig = plt.gcf()
+fig.set_size_inches(5, 5)
+plt.savefig(
+"/storage/singlecell/zz4/fetal_snakemake/figures/figure6/overall_umap_by_majorclass.png",
+dpi=600,
+bbox_inches="tight",
+transparent=True,
+)
+
 adata.obs["Weeks"] = adata.obs.Days.map(
     {
         70: "PCW10",
