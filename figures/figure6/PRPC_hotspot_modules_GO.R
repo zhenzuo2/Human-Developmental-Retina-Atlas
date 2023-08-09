@@ -1,74 +1,83 @@
 library(ggplot2)
 
-categories <- 1:30
-categories[c(6,12,18,24,30)] = ""
+categories <- 1:33
+categories[c(11,22,33)] = ""
 
-categories[1:5] = c("system development  ",
-"multicellular organismal process",
-"multicellular organism development  ",
-"nervous system development",
-"anatomical structure development ")
-
-categories[7:11] = c("cytoplasmic translation",
+categories[1:10] = c("cytoplasmic translation",
+"peptide metabolic process",
 "translation",
 "peptide biosynthetic process",
-"peptide metabolic process",
-"amide biosynthetic process")
-
-categories[13:17] = c("cell projection organization",
-"multicellular organism development ",
+"amide biosynthetic process",
+"amide metabolic process",
+"organonitrogen compound biosynthetic process",
 "system development ",
-"plasma membrane bounded cell projection organization",
-"anatomical structure morphogenesis")
+"nervous system development",
+"multicellular organism development")
 
-categories[19:23] = c("cell cycle process",
-"cell cycle",
+categories[12:21] = c("cell cycle process",
 "mitotic cell cycle",
 "mitotic cell cycle process",
-"chromosome segregation")
+"cell cycle",
+"nuclear division",
+"chromosome segregation",
+"cell division",
+"organelle fission",
+"regulation of cell cycle process",
+"microtubule cytoskeleton organization")
 
-categories[25:30] = c("system development",
-"anatomical structure development",
-"multicellular organism development",
-"anatomical structure morphogenesis ",
-"developmental process")
+categories[23:32] = c("system development",
+"animal organ morphogenesis",
+"anatomical structure morphogenesis",
+"locomotion",
+"oxidative phosphorylation",
+"animal organ development",
+"extracellular matrix organization",
+"extracellular structure organization",
+"external encapsulating structure organization",
+"aerobic electron transport chain")
+
 
 categories <- stringr::str_to_title(categories)
 
 values <- 1:30
-values[1:5] = c(2.11E-23,
-2.38E-23,
-1.09E-21,
-4.38E-20,
-7.07E-20)
-values[7:11] = c(6.24E-132,
-1.20E-81,
-3.69E-80,
-2.05E-74,
-8.87E-74)
-values[13:17] = c(5.68E-13,
-8.49E-13,
-1.20E-12,
-1.73E-12,
-1.22E-11)
-values[19:23] = c(1.32E-69,
-2.42E-65,
-2.12E-62,
-2.37E-57,
-1.66E-52)
-values[25:30] = c(
-1.97E-11,
-6.61E-09,
-1.12E-08,
-3.31E-08,
-4.58E-08)
+values[1:10] = c(1.48E-73,
+1.19E-24,
+2.65E-24,
+2.74E-24,
+7.35E-23,
+7.87E-20,
+5.50E-18,
+1.48E-15,
+1.11E-14,
+4.42E-13)
+values[12:21] = c(9.87E-44,
+2.23E-39,
+4.06E-38,
+5.64E-37,
+4.90E-33,
+2.76E-32,
+6.49E-31,
+1.80E-29,
+5.61E-29,
+2.17E-27)
+values[23:32] = c(1.45477E-06,
+1.70173E-06,
+4.7257E-05,
+6.49195E-05,
+9.96825E-05,
+0.000111268,
+0.000128759,
+0.000134901,
+0.000148,
+0.000164633)
+
 
 values = -log10(values)
-values[c(6,12,18,24,30)] <- 0
-group = rep(c("Module5","Module4", "Module3", "Module2", "Module1"), each = 6)
+values[c(11,22,33)] <- 0
+group = rep(c("Module3","Module2", "Module1"), each = 11)
 # Create a data frame
 data <- data.frame(Category = categories, Value = values, group = group)
-
+data <- data[33:1,]
 # Create the bar plot
 ggplot(data, aes(x = Category, y = Value, fill = group)) + geom_bar(stat = "identity") +
   labs(x = "", y = "-log10(Pvalues)") + ggtitle("Biological Process") +
@@ -77,8 +86,9 @@ ggplot(data, aes(x = Category, y = Value, fill = group)) + geom_bar(stat = "iden
                                "#ff7f0e",
                                "#2ca02c",
                                "#d62728",
-                               "#9467bd")[5:1],
-                    limits = c("Module5","Module4", "Module3", "Module2", "Module1")) + theme(panel.background = element_rect(fill = "transparent"),
+                               "#9467bd")[3:1],
+                    limits = c(#"Module5","Module4", 
+                    "Module3", "Module2", "Module1")) + theme(panel.background = element_rect(fill = "transparent"),
                                                                                     plot.background = element_rect(fill = "transparent", color = NA), panel.grid.major = element_blank(),
                                                                                     panel.grid.minor = element_blank(), legend.background = element_rect(fill = "transparent"),
                                                                                     legend.box.background = element_rect(fill = "transparent"))+ theme(legend.position = c(0.8, 0.2))

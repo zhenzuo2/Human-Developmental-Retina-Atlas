@@ -10,9 +10,8 @@ import matplotlib.pyplot as plt
 output_file_path = "/storage/singlecell/zz4/fetal_snakemake/figures/figure6/"
 
 adata_result = scv.read(
-    "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC.h5ad"
+    "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/PRPC_MG_NRPC.h5ad"
 )
-adata = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_PRPC_MG_NRPC/adata_umap.h5ad")
 
 mv.velocity_embedding_stream(adata_result)
 mv.velocity_graph(adata_result)
@@ -24,7 +23,7 @@ adata_result.obs.loc[(adata_result.obs.Time=="10w")&(adata_result.obs.Region=="P
 mv.latent_time(adata_result)
 
 adata_result.obs["Days"] = adata_result.obs.Days.astype(float)
-adata_result.obsm["X_umap"] = adata[adata_result.obs.index,:].obsm["X_umap"].toarray()
+#adata_result.obsm["X_umap"] = adata[adata_result.obs.index,:].obsm["X_umap"].toarray()
 mv.velocity_embedding_stream(
     adata_result,
     basis="umap",
@@ -98,21 +97,6 @@ fig = plt.gcf()
 fig.set_size_inches(5, 5)
 plt.savefig(
     output_file_path + "PRPC_mv.velocity_embedding_stream_majorclass.png",
-    bbox_inches="tight",
-    transparent=True,
-    dpi = 600
-)
-
-sc.pl.umap(
-    adata_result,
-    basis="umap",
-    color="latent_time",
-    title = "",
-)
-fig = plt.gcf()
-fig.set_size_inches(5, 5)
-plt.savefig(
-    output_file_path + "PRPC_latent_time_UMAP.png",
     bbox_inches="tight",
     transparent=True,
     dpi = 600

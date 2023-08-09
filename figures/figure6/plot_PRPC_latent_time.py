@@ -39,9 +39,9 @@ plt.ylabel("Gene-shared latent time")
 plt.xlabel("Post Conception Week")
 plt.xticks(rotation = 45)
 plt.legend(
-    bbox_to_anchor=(1.01, 1),
-    loc="upper left",
-    borderaxespad=0,
+    #bbox_to_anchor=(1.01, 1),
+    #loc="upper left",
+    #borderaxespad=0,
 )
 plt.savefig(
     output_file_path + "latent_time_WEEK.svg",

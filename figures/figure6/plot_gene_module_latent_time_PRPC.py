@@ -21,9 +21,9 @@ adata = joblib.load(
     "/storage/singlecell/zz4/fetal_snakemake/results/hotspot/PRPC/latent_time/PPRC_hs.adata.pkl"
 )
 
-modules = hs.create_modules(min_gene_threshold=120, core_only=True, fdr_threshold=0.05)
+modules = hs.create_modules(min_gene_threshold=200, core_only=True, fdr_threshold=0.05)
 
-hs.modules = hs.modules.replace({4: 1, 3: 2, 2: 3, 5: 4, 1: 5})
+hs.modules = hs.modules.replace({3: 1, 1: 3})
 hs.modules.to_csv(output_file_path + "PRPC_gene_modules.csv")
 hs.plot_local_correlations()
 fig = plt.gcf()
@@ -47,25 +47,27 @@ adata_result.obsm["X_umap"] = PRPC[adata_result.obs.index].obsm["X_umap"]
 adata_result.obs["Module1"] = module_scores.loc[adata_result.obs.index, 1].values
 adata_result.obs["Module2"] = module_scores.loc[adata_result.obs.index, 2].values
 adata_result.obs["Module3"] = module_scores.loc[adata_result.obs.index, 3].values
-adata_result.obs["Module4"] = module_scores.loc[adata_result.obs.index, 4].values
-adata_result.obs["Module5"] = module_scores.loc[adata_result.obs.index, 5].values
+#adata_result.obs["Module4"] = module_scores.loc[adata_result.obs.index, 4].values
+#adata_result.obs["Module5"] = module_scores.loc[adata_result.obs.index, 5].values
 adata_result.obs["Module"] = adata_result.obs[
-    ["Module1", "Module2", "Module3", "Module4", "Module5"]
+    ["Module1", "Module2", "Module3", 
+     #"Module4", "Module5"
+]
 ].idxmax(axis=1)
 
 module_list = [
     "Module1",
     "Module2",
     "Module3",
-    "Module4",
-    "Module5",
+    #"Module4",
+    #"Module5",
 ]
 cols = [
     "#1f77b4",
     "#ff7f0e",
     "#2ca02c",
-    "#d62728",
-    "#9467bd",
+    #"#d62728",
+    #"#9467bd",
 ]
 for i in range(len(module_list)):
     width = 1200
