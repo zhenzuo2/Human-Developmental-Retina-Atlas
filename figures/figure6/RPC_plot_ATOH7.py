@@ -191,3 +191,10 @@ fig.set_size_inches(5, 5)
 plt.savefig(
     output_file_path + "LINC00461.png", bbox_inches="tight", transparent=True, dpi=600
 )
+
+sc.pl.umap(adata_result, color="C1orf61", size=80, vmax = 2,frameon=False)
+fig = plt.gcf()
+fig.set_size_inches(5, 5)
+plt.savefig(
+    output_file_path + "C1orf61.png", bbox_inches="tight", transparent=True, dpi=600
+)

@@ -67,6 +67,18 @@ scv.pl.velocity_embedding_stream(
     linewidth=5,
     alpha=1,
     legend_loc="right margin",
+    arrow_color = "white",
+    palette={
+            "PRPC": "#1f77b4",
+            "RGC": "#ff7f0e",
+            "Cone": "#2ca02c",
+            "HC": "#d62728",
+            "AC": "#9467bd",
+            "Rod": "#8c564b",
+            "BC": "#e377c2",
+            "MG": "#7f7f7f",
+            "NRPC":"#1f77b4"
+        }
 )
 fig = plt.gcf()
 fig.set_size_inches(10, 10)

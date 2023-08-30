@@ -34,11 +34,11 @@ NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "RGC"
 adata = sc.read("/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_BC/adata_umap.h5ad")
 adata.obs["subclass"] = adata.obs["majorclass"].astype(str)
 cells = [x for x in NRPC[NRPC.obs.leiden == "14"].obs.index if x in adata.obs.index]
-adata.obs.loc[cells,'subclass'] = "RBC/On Cone BC"
+adata.obs.loc[cells,'subclass'] = "Cluster 2"
 cells = [x for x in NRPC[NRPC.obs.leiden == "27"].obs.index if x in adata.obs.index]
-adata.obs.loc[cells,'subclass'] = "OFF Cone BC"
+adata.obs.loc[cells,'subclass'] = "Cluster 2"
 cells = [x for x in NRPC[NRPC.obs.leiden == "21"].obs.index if x in adata.obs.index]
-adata.obs.loc[cells,'subclass'] = "TBD"
+adata.obs.loc[cells,'subclass'] = "Cluster 1"
 
 
 df = pd.read_csv("/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/BC_subtype.csv")
@@ -65,20 +65,21 @@ adata.obs["Weeks"] = adata.obs.Days.map(
         165: "PCW23",
     }
 )
-cells = []
-for sp in set(adata.obs.subclass):
-    cells = cells + [adata[adata.obs.subclass == sp].obs.index[0]]
+#cells = []
+#for sp in set(adata.obs.subclass):
+#    cells = cells + [adata[adata.obs.subclass == sp].obs.index[0]]
 
+adata.obs["subclass"] = adata.obs["subclass"].replace({'ON-BC':'ON Cone BC', 'OFF-BC':'OFF Cone BC'})
 for region in set(adata.obs.Region):
     for weeks in set(adata.obs.Weeks):
         adata.obs["temp"] = np.nan
         subset = (adata.obs.Region == region) & (adata.obs.Weeks == weeks)
-        adata.obs.loc[cells, "temp"] = adata.obs.loc[cells, "subclass"]
+        #adata.obs.loc[cells, "temp"] = adata.obs.loc[cells, "subclass"]
         adata.obs.loc[subset, "temp"] = adata.obs.loc[subset, "subclass"]
         adata.obs["temp"] = pd.Categorical(
             list(adata.obs["temp"]),
             categories=[
-                'BC Precursor', 'OFF Cone BC', 'OFF-BC', 'ON-BC', 'RBC', 'RBC/On Cone BC', 'TBD'
+                'BC Precursor', 'OFF Cone BC', 'ON Cone BC', 'RBC',"Cluster 1","Cluster 2"
             ],
         )
         sc.pl.umap(
@@ -90,12 +91,11 @@ for region in set(adata.obs.Region):
             legend_loc="None",
             palette={
                 "BC Precursor": "#1f77b4",
-                "OFF Cone BC": "#ff7f0e",
-                "OFF-BC": "#2ca02c",
-                "ON-BC": "#d62728",
+                "OFF Cone BC": "#2ca02c",
+                "ON Cone BC": "#d62728",
                 "RBC": "#9467bd",
-                "RBC/On Cone BC": "#8c564b",
-                "TBD": "#e377c2",
+                "Cluster 2": "#8c564b",
+                "Cluster 1": "#e377c2",
             },
         )
         fig = plt.gcf()

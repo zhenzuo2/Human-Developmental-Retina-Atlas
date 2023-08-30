@@ -29,6 +29,64 @@ for gene in markers:
     )
     plt.clf()
 
+sc.pl.violin(adata[adata.obs.majorclass == "PRPC"],keys ="ALDH1A1",groupby="Region")
+fig = plt.gcf()
+fig.set_size_inches(5, 5)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure5/ALDH1A1_violin.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+adata.obs["majorclass"] = adata.obs.majorclass.replace(
+    {
+        "NRPC": "RPC/MG",
+        "PRPC": "RPC/MG",
+        "MG": "RPC/MG",
+    }
+)
+adata.obs["majorclass_Region"] = adata.obs["majorclass"].astype(str)+" "+adata.obs["Region"].astype(str)
+
+sc.pl.violin(adata,keys ="HMX1",groupby="majorclass_Region",rotation = 90)
+fig = plt.gcf()
+fig.set_size_inches(5, 5)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure5/HMX1_violin.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+sc.pl.violin(adata[adata.obs.majorclass == "PRPC"],keys ="CYP26A1",groupby="Region")
+fig = plt.gcf()
+fig.set_size_inches(5, 5)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure5/CYP26A1_violin.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+sc.pl.violin(adata[adata.obs.majorclass == "PRPC"],keys ="FGF8",groupby="Region")
+fig = plt.gcf()
+fig.set_size_inches(5, 5)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure5/FGF8_violin.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+sc.pl.violin(adata[adata.obs.majorclass == "Rod"],keys ="RXRA",groupby="Region")
+fig = plt.gcf()
+fig.set_size_inches(5, 5)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure5/RXRA_violin.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
 
 
 adata.obs["cell_type_Region"] = [m+"_"+n for m,n in zip(adata.obs["majorclass"],adata.obs["Region"])]

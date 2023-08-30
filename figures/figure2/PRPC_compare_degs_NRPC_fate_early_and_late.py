@@ -37,15 +37,20 @@ adata_result.obs.loc[
 #TF = df.loc[df["Is TF?"]=="Yes","HGNC symbol"]
 #TF = [string for string in TF if not string.startswith("ZNF")]
 #adata_result = adata_result[:,adata_result.var.index.isin(TF)]
-sc.tl.rank_genes_groups(adata_result, "temp")
-markers2 = list(sc.get.rank_genes_groups_df(adata_result, group="Early Neurogenesis fate").names[:10])
-markers3 = list(sc.get.rank_genes_groups_df(adata_result, group="Late Neurogenesis fate").names[:10])
+temp = adata_result.copy()
+temp.obs.loc[temp.obs.temp=="MG precursor","temp"] = "Rest of PRPC"
+temp.obs["temp"] = temp.obs["temp"].astype(str)
+temp2 = adata_result.copy()
+temp2 = adata_result[adata_result.obs.temp.isin(["Early Neurogenesis fate","Late Neurogenesis fate"])]
+sc.tl.rank_genes_groups(temp2, "temp")
+markers2 = list(sc.get.rank_genes_groups_df(temp2, group="Early Neurogenesis fate").names[:10])
+markers3 = list(sc.get.rank_genes_groups_df(temp2, group="Late Neurogenesis fate").names[:10])
 
 plt.clf()
 sc.pl.dotplot(
-    adata_result,
+    temp,
     var_names={
-        "MG Precursor Enriched Genes": markers0,
+        #"MG Precursor Enriched Genes": markers0,
         "Neurogenesis Fate Enriched Genes": markers1,
         "Early Neurogenesis Fate Enriched Genes": markers2,
         "Late Neurogenesis Fate Enriched Genes": markers3,

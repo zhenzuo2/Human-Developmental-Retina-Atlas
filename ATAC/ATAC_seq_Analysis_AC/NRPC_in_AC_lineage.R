@@ -12,6 +12,7 @@ addArchRGenome("hg38")
 addArchRThreads(threads = 10)
 
 proj2 <- loadArchRProject("Save-proj2")
+#proj2 <- loadArchRProject("Save-AC_NRPC")
 
 meta <- read.csv("/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_AC.csv")
 
@@ -98,49 +99,38 @@ proj2 <- addDeviationsMatrix(
 )
 ####
 trajMM  <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "MotifMatrix", log2Norm = FALSE,groupEvery = 5)
-p1 <- plotTrajectoryHeatmap(trajMM, pal = paletteContinuous(set = "solarExtra"),returnMatrix=TRUE,varCutOff=0.6)
+p1 <- plotTrajectoryHeatmap(trajMM, pal = paletteContinuous(set = "solarExtra"),returnMatrix=TRUE)
 rownames(p1) <- str_extract(rownames(p1), "(?<=:)[A-Za-z0-9]+")
-df <- read.csv("/storage/singlecell/zz4/fetal_snakemake/temp/highly_varible_gene_AC.csv")
-p1 <- p1[rownames(p1) %in% df$X0,]
-colnames(p1) <- NULL
+write.csv(p1,"/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-AC_NRPC/Plots/Plot-MotifMatrix-Heatmaps.csv")
+p1 <- plotTrajectoryHeatmap(trajMM, pal = paletteContinuous(set = "solarExtra"),labelTop=1000)
 svg(file="/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-AC_NRPC/Plots/Plot-MotifMatrix-Heatmaps.svg",height = 16,width = 12)
-ht <- Heatmap(p1, name = "p1", row_order = 1:nrow(p1), column_order = 1:ncol(p1))
-draw(ht)
+p1
 dev.off()
 
 trajGSM <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "GeneExpressionMatrix", log2Norm = TRUE,groupEvery = 5)
-p2 <- plotTrajectoryHeatmap(trajGSM, pal = paletteContinuous(set = "blueYellow"),returnMatrix=TRUE,varCutOff = 0.9)
+p2 <- plotTrajectoryHeatmap(trajGSM, pal = paletteContinuous(set = "blueYellow"),returnMatrix=TRUE)
 rownames(p2) <- sub("chr\\d+:([^:]+)", "\\1", rownames(p2))
-p2<- p2[rownames(p2) %in% rownames(p1),]
-p2 <- p2[rownames(p1)[rownames(p1) %in% rownames(p2)],]
-colnames(p2) <- NULL
+write.csv(p2,"/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-AC_NRPC/Plots/Plot-GeneExpressionMatrix-Heatmaps.csv")
+p2 <- plotTrajectoryHeatmap(trajGSM, pal = paletteContinuous(set = "blueYellow"),labelTop=50)
 svg(file="/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-AC_NRPC/Plots/Plot-GeneExpressionMatrix-Heatmaps.svg",height = 16,width = 12)
-col_fun = colorRamp2(c(-2, 2), c("blue","yellow"))
-ht <- Heatmap(p2, name = "p1", row_order = 1:nrow(p2), column_order = 1:ncol(p2),col = col_fun)
-draw(ht)
+p2
 dev.off()
 
-assay(trajMM)
-p1 <- plotTrajectoryHeatmap(trajMM, pal = paletteContinuous(set = "solarExtra"),varCutOff=0.6,labelTop = 20,grepExclude = removed)
-#c("z:ONECUT1_295","z:ONECUT2_293","z:ONECUT3_296","z:NEUROD4_820","z:NEUROG3_43","z:NEUROD6_821","z:NEUROD2_73","z:NEUROD1_63","z:ISL1_398","z:PAX6_604","z:EBF1_67","z:BHLHE22_86","z:MEIS2_471","z:LHX5_406","z:LHX1_469","z:PTF1A_70","z:BARHL1_456")
-plotPDF(p1, name = "Plot-MotifMatrix-Heatmaps.pdf", ArchRProj = proj2,
-    addDOC = FALSE, width = 6, height = 8)
+trajGSM <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "GeneScoreMatrix", log2Norm = TRUE,groupEvery = 5)
+p1 <- plotTrajectoryHeatmap(trajGSM, returnMatrix=TRUE)
+write.csv(p1,"/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-AC_NRPC/Plots/Plot-GeneScoreMatrix-Heatmaps.csv")
+p1 <- plotTrajectoryHeatmap(trajGSM,pal = paletteContinuous(set = "horizonExtra"),)
+svg(file="/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-AC_NRPC/Plots/Plot-GeneScoreMatrix-Heatmaps.svg",height = 16,width = 12)
+p1
+dev.off()
 ####
-trajGEM <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "GeneExpressionMatrix", log2Norm = TRUE)
-p1 <- plotTrajectoryHeatmap(trajGEM, pal = paletteContinuous(set = "blueYellow"))
-plotPDF(p1, name = "Plot-GeneExpressionMatrix-Heatmaps.pdf", ArchRProj = proj2,
-    addDOC = FALSE, width = 6, height = 8)
-####
-
-trajGSM <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "GeneScoreMatrix", log2Norm = TRUE)
-p1 <- plotTrajectoryHeatmap(trajGSM, pal = paletteContinuous(set = "horizonExtra"))
-plotPDF(p1, name = "Plot-GeneScoreMatrix-Heatmaps.pdf", ArchRProj = proj2,
-    addDOC = FALSE, width = 6, height = 8)
-####
-trajGSM <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "PeakMatrix", log2Norm = TRUE)
+trajGSM <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "PeakMatrix", log2Norm = TRUE,groupEvery = 5)
+p1 <- plotTrajectoryHeatmap(trajGSM, returnMatrix=TRUE)
+write.csv(p1,"/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-AC_NRPC/Plots/Plot-PeakMatrix-Heatmaps.csv")
 p1 <- plotTrajectoryHeatmap(trajGSM, pal = paletteContinuous(set = "greenBlue"))
-plotPDF(p1, name = "Plot-PeakMatrix-Heatmaps.pdf", ArchRProj = proj2,
-    addDOC = FALSE, width = 6, height = 8)
+svg(file="/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-AC_NRPC/Plots/Plot-PeakMatrix-Heatmaps.svg",height = 16,width = 12)
+p1
+dev.off()
 
 #############################################
 trajMM  <- getTrajectory(ArchRProj = proj2, name = "NRPC", useMatrix = "MotifMatrix", log2Norm = FALSE,groupEvery = 5)

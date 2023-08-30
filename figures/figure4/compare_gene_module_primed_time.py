@@ -1,10 +1,7 @@
 import scanpy as sc
-import pandas as pd
-import numpy as np
 import multivelo as mv
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
-import seaborn as sns
 from matplotlib.legend_handler import HandlerTuple
 import os
 import numpy as np

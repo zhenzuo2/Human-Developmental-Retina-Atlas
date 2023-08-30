@@ -12,7 +12,7 @@ NRPC = scv.read(
     "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.h5ad"
 )
 NRPC = NRPC[NRPC.obs.leiden!="12"]
-NRPC.obs["subclass"] = "Unknown"
+NRPC.obs["subclass"] = "Undetermined"
 
 sc.pp.neighbors(NRPC, use_rep="X_scVI")
 sc.tl.leiden(NRPC, resolution=3)
@@ -29,14 +29,14 @@ clusters = ["12","22"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "Cone"
 clusters = ["4", "19","23"]
 NRPC.obs.loc[NRPC.obs.leiden.isin(clusters), "subclass"] = "RGC"
-
+NRPC.obs.to_csv("/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC/Annotated_NRPC.csv")
 sc.pp.highly_variable_genes(NRPC,flavor='seurat_v3',n_top_genes=5000,subset=True)
 sc.pp.normalize_total(NRPC)
 sc.pp.log1p(NRPC)
 
-df = pd.read_csv("/storage/singlecell/zz4/fetal_snakemake/data/Human_TF_Full_List/TFsDatabaseExtract_v_1.01.csv")
-TF = df.loc[df["Is TF?"]=="Yes","HGNC symbol"]
-NRPC= NRPC[:,NRPC.var.index.isin(TF)]
+#df = pd.read_csv("/storage/singlecell/zz4/fetal_snakemake/data/Human_TF_Full_List/TFsDatabaseExtract_v_1.01.csv")
+#TF = df.loc[df["Is TF?"]=="Yes","HGNC symbol"]
+#NRPC= NRPC[:,NRPC.var.index.isin(TF)]
 sc.tl.rank_genes_groups(NRPC, "subclass")
 sc.pl.rank_genes_groups_dotplot(NRPC, n_genes=10)
 fig = plt.gcf()
@@ -48,9 +48,11 @@ plt.savefig(
 )
 plt.clf()
 
-
+df = pd.read_csv("/storage/singlecell/zz4/fetal_snakemake/data/Human_TF_Full_List/TFsDatabaseExtract_v_1.01.csv")
+TF = df.loc[df["Is TF?"]=="Yes","HGNC symbol"]
+NRPC= NRPC[:,NRPC.var.index.isin(TF)]
 adata = NRPC[NRPC.obs.leiden.isin(['27','14',"21"])]
-adata.obs['leiden'] = adata.obs.leiden.map({'21': 'TBD', '27': 'OFF Cone BC','14':"ON Cone BC/RBC"})
+adata.obs['leiden'] = adata.obs.leiden.map({'21': 'Cone-Like BC fate', '27': 'OFF Cone BC fate','14':"ON Cone BC/RBC fate"})
 sc.tl.rank_genes_groups(adata, "leiden")
 sc.pl.rank_genes_groups_dotplot(adata, n_genes=10)
 fig = plt.gcf()

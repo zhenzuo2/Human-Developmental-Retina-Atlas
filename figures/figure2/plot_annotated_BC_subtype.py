@@ -13,7 +13,9 @@ NRPC.obs["subclass"] = np.nan
 sc.pp.neighbors(NRPC, use_rep="X_scVI")
 sc.tl.leiden(NRPC, resolution=3)
 
-NRPC.obs['temp'] = NRPC.obs.leiden.map({'21': 'TBD', '27': 'OFF Cone BC','14':"RBC/On Cone BC"})
+
+NRPC.obs['temp'] = NRPC.obs.leiden.map({'21': 'Cone-Like BC fate', '27': 'OFF Cone BC fate','14':"RBC/On Cone BC fate"})
+NRPC.obs.loc[NRPC.obs.leiden.isin(["12","22"]), "temp"] = "Cone fate"
 
 sc.pl.umap(
     NRPC,
@@ -23,11 +25,17 @@ sc.pl.umap(
     color=["temp"],
     frameon=False,
     title="",
+    palette = {
+    "OFF Cone BC fate": "#636EFA",
+    "RBC/On Cone BC fate": "#EF553B",
+    "Cone-Like BC fate": "#00CC96",
+    "Cone fate": '#AB63FA',
+}
 )
 fig = plt.gcf()
 fig.set_size_inches(5, 5)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/NRPC_BC_annotation.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/NRPC_BC_annotation.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -46,7 +54,7 @@ legend_dict = {
     "ON Cone BC": "#d62728",
     "RBC": "#9467bd",
     "RBC/On Cone BC (NRPC)": "#8c564b",
-    "TBD (NRPC)": "#e377c2"
+    "Cone-Like BC (NRPC)": "#e377c2"
 }
 
 lines = [mlines.Line2D([], [], color=color, marker='o', markersize=25, 

@@ -11,11 +11,19 @@ sc.pp.normalize_total(adata_result)
 sc.pp.log1p(adata_result)
 sc.pp.neighbors(adata_result)
 sc.tl.umap(adata_result)
-sc.pl.umap(adata_result,color = "Days")
+sc.pl.umap(adata_result[adata_result.obs.Region=="Macula"],color = "Days",frameon = False)
 fig = plt.gcf()
-fig.set_size_inches(10, 10)
+fig.set_size_inches(5, 5)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/AC_NRPC_Days.svg",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/AC_NRPC_Days_Macula.svg",
+    dpi=600,
+    bbox_inches="tight",
+)
+sc.pl.umap(adata_result[adata_result.obs.Region=="Peripheral"],color = "Days",frameon = False)
+fig = plt.gcf()
+fig.set_size_inches(5, 5)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure2/AC_NRPC_Days_Peripheral.svg",
     dpi=600,
     bbox_inches="tight",
 )

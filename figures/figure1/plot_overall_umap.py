@@ -221,3 +221,101 @@ for region in set(adata.obs.Region):
             transparent=True,
             #backend="cairo",
         )
+
+
+################################################################################################################################################################
+################################################################################################################################################################
+week_set = []
+for weeks in ['PCW10', 'PCW13','PCW16', 'PCW20', 'PCW23']:
+    week_set =  [weeks]
+    adata.obs["temp"] = ""
+    subset = adata.obs.Weeks.isin(week_set)
+    adata.obs.loc[subset, "temp"] = adata.obs.loc[subset, "scpred_prediction"]
+    adata.obs["temp"] = pd.Categorical(
+        list(adata.obs["temp"]),
+        categories=[
+            "RPC",
+            "RGC",
+            "Cone",
+            "HC",
+            "AC",
+            "Rod",
+            "BC",
+            "MG",
+        ],
+    )
+    sc.pl.umap(
+        adata[(adata.obs.Weeks.isin(week_set))&(adata.obs.Region =="Macula"),],
+        color="temp",
+        size=20,
+        title="",
+        frameon=True,
+        legend_loc="None",
+        palette={
+            "RPC": "#1f77b4",
+            "RGC": "#ff7f0e",
+            "Cone": "#2ca02c",
+            "HC": "#d62728",
+            "AC": "#9467bd",
+            "Rod": "#8c564b",
+            "BC": "#e377c2",
+            "MG": "#7f7f7f",
+        },
+        outline_color = "white",
+    )
+    fig = plt.gcf()
+    fig.set_size_inches(10, 10)
+    plt.savefig(
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_cell_type_"
+        + "_"
+        + weeks
+        + ".png",
+        dpi=600,
+        bbox_inches="tight",
+        transparent=True,
+        #backend="cairo",
+    )
+
+sc.pp.normalize_total(adata)
+sc.pp.log1p(adata)
+
+plt.rcParams.update({'font.size': 20})
+plt.rcParams["font.family"] = "Arial"
+sc.pl.violin(
+    adata,
+    groupby='majorclass',
+    keys="OTX2",
+    title="",
+    rotation=90,
+    order = ["Rod", "Cone","BC", "NRPC", "PRPC", "AC","MG", "HC", "RGC"]
+)
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
+plt.xlabel('')
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/overall_umap_by_OTX2.png",
+    dpi=600,
+    bbox_inches="tight",
+    transparent=True,
+)
+
+sc.pl.umap(
+    adata,
+    color="GRB10",
+    size=5,
+    legend_loc="on data",
+    title="",
+    return_fig=True,
+    frameon=False,
+    legend_fontweight="bold",
+    legend_fontoutline=True,
+)
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure1/GRB10.png",
+    dpi=600,
+    bbox_inches="tight",
+    transparent=True,
+    backend="cairo",
+)

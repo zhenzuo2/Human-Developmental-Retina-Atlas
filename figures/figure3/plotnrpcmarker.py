@@ -11,7 +11,7 @@ NRPC = scv.read(
     "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.h5ad"
 )
 NRPC = NRPC[NRPC.obs.leiden != "12"]
-NRPC.obs["subclass"] = np.nan
+NRPC.obs["subclass"] = "Undetermined"
 
 sc.pp.neighbors(NRPC, use_rep="X_scVI")
 sc.tl.leiden(NRPC, resolution=3)
@@ -175,18 +175,13 @@ for region in set(NRPC.obs.Region):
             transparent=True,
         )
 
-
-sc.pp.normalize_total(NRPC)
-sc.pp.log1p(NRPC)
-
-
 # Create a boxplot using Seaborn
 sns.boxplot(
     data=NRPC.obs,
     x="subclass",
     y="PCW",
     hue="Region",
-    order=["RGC", "Cone", "HC", "AC", "Rod", "BC"],
+    order=["Undetermined", "RGC", "Cone", "HC", "AC", "Rod", "BC"],
     showfliers=False,
 )
 plt.title("")
@@ -196,7 +191,7 @@ plt.ylabel("PCW")
 # Move the legend outside the figure
 plt.legend(title="Region", loc="best", bbox_to_anchor=(1, 0.5))
 fig = plt.gcf()
-fig.set_size_inches(10, 10)
+fig.set_size_inches(15, 15)
 plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/NRPC_subclass_Days.png",
     dpi=600,
@@ -597,6 +592,24 @@ fig = plt.gcf()
 fig.set_size_inches(10, 10)
 plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/VSX1.png",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+sc.pl.umap(
+    NRPC,
+    size=40,
+    legend_loc=None,
+    colorbar_loc=None,
+    color=["IRX5"],
+    vmax = 1,
+    frameon=False,
+)
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure3/IRX5.png",
     dpi=600,
     bbox_inches="tight",
 )
