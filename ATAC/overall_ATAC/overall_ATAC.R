@@ -159,7 +159,50 @@ p
 dev.off()
 
 
+# Load the GenomicRanges package
+library(GenomicRanges)
+# Function to read genomic ranges
+read_genomic_ranges <- function(range_strings) {
+  # Initialize an empty GRanges object
+  ranges <- GRanges(seqnames = character(0),
+                    ranges = IRanges(start = integer(0), end = integer(0)))
+  
+  # Loop through each range string and add to the GRanges object
+  for (range_str in range_strings) {
+    range_parts <- unlist(strsplit(range_str, "[:-]"))
+    seqname <- range_parts[1]
+    start <- as.integer(range_parts[2])
+    end <- as.integer(range_parts[3])
+    
+    new_range <- GRanges(seqnames = seqname,
+                         ranges = IRanges(start = start, end = end))
+    
+    ranges <- c(ranges, new_range)
+  }
+  
+  return(ranges)
+}
 
+# Example range strings
+range_strings <- c("chr14:56888304-56888662",
+                   "chr14:56964627-56965216",
+                   "chr14:56902629-56903105",
+                   "chr14:56899344-56901557",
+                   "chr14:56820328-56822794",
+                   "chr14:56807853-56808469",
+                   "chr14:56805457-56806309",
+                   "chr14:56805457-56807186",
+                   "chr14:56730099-56731208",
+                   "chr14:56742261-56743173",
+                   "chr14:56754441-56756016",
+                   "chr14:56735566-56735995",
+                   "chr14:56753241-56754311")
+
+# Read the genomic ranges
+genomic_ranges <- read_genomic_ranges(range_strings)
+
+# Print the resulting GRanges object
+print(genomic_ranges)
 markerGenes  <- c("OTX2")
 p <- plotBrowserTrack(
     ArchRProj = proj2, 
@@ -167,8 +210,9 @@ p <- plotBrowserTrack(
     useGroups = c("BC", "Rod", "Cone","NRPC","AC","MG", "HC", "PRPC", "RGC"),
     geneSymbol = markerGenes, 
     loops = getPeak2GeneLinks(proj2),
-    upstream = 10000,
-  downstream = 9849,
+    upstream = 150000,
+  downstream = 200000,
+  features = genomic_ranges
 )
 plotPDF(plotList = p, 
     name = "Plot-Tracks-Marker-Genes-with-CoAccessibility.pdf", 
@@ -212,3 +256,27 @@ svg("/storage/singlecell/zz4/fetal_snakemake/temp/temp6.svg",
     width = 15, height = 10)
 p
 dev.off()
+
+
+
+### Save DARpeak to bed
+markerList <- getMarkers(markersPeaks, cutOff = "FDR <= 0.01 & Log2FC >= 1")
+res <- data.frame(matrix(nrow = 0, ncol = 5))
+colnames(res) <- c("dars","celltypes","seqnames","start","end")
+for (celltypes in c("AC", "BC", "Cone", "HC", "MG", "NRPC", "PRPC", "RGC", "Rod")){
+    dars <- paste(markerList[[celltypes]]$seqnames,"_",markerList[[celltypes]]$start,"_",markerList[[celltypes]]$end,sep="")
+
+    res <- rbind(res,data.frame(dars,celltypes,markerList[[celltypes]]$seqnames,markerList[[celltypes]]$start,markerList[[celltypes]]$end))
+}
+res <- res[!duplicated(res$dars),]
+colnames(res) <- c("dars","celltypes","seqnames","start","end")
+rownames(res) <- res$dars
+
+res <- res[res$seqnames != "chrX",]
+res$seqnames <- gsub("chr", "", res$seqnames)
+# Save DataFrame to BED file using write.table()
+write.table(res[,c("seqnames","start","end")], file = "/storage/singlecell/zz4/fetal_snakemake/data/Histone/DAR.bed", sep = "\t", col.names = FALSE, row.names = FALSE,quote = FALSE)
+
+for (x in unique(res$celltypes)){
+  write.table(res[res$celltypes==x,c("seqnames","start","end")], file = paste("/storage/singlecell/zz4/fetal_snakemake/data/Histone/",x,"_DAR.bed",sep=""), sep = "\t", col.names = FALSE, row.names = FALSE,quote = FALSE)
+}

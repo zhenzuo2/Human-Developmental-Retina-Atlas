@@ -7,10 +7,10 @@ adata =sc.read("/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merg
 sc.pp.normalize_per_cell(adata)
 sc.pp.log1p(adata)
 
-markers = ["DHRS3","RBP4","RDH10","FGF8","STRA6","CYP26A1","CYP26B1","CYP26C1","RXRG","RXRA","RXRB","RARA","RARB","RARG","ALDH1A1","ALDH1A2","ALDH1A3"]
+markers = ["DHRS3","RBP4","RDH10","FGF8","STRA6","CYP26A1","CYP26B1","CYP26C1","RXRG","RXRA","RXRB","RARA","RARB","RARG","ALDH1A1","ALDH1A2","ALDH1A3","VAX2","TBX5","EFNB1","EFNB2","EPHB2","EPHB3"]
 for gene in markers:
     vmax = np.quantile(adata[:,gene].X.toarray(),q = 0.999)
-    sc.pl.umap(adata[adata.obs.Region == "Macula"],color = gene,vmax = vmax,size = 20)
+    sc.pl.umap(adata[adata.obs.Region == "Macula"],color = gene,vmax = vmax,size = 20, title = gene+"(Macula)")
     fig = plt.gcf()
     fig.set_size_inches(5, 5)
     plt.savefig(
@@ -19,7 +19,7 @@ for gene in markers:
         bbox_inches="tight",
     )
     plt.clf()
-    sc.pl.umap(adata[adata.obs.Region == "Peripheral"],color = gene,vmax = vmax,size = 20)
+    sc.pl.umap(adata[adata.obs.Region == "Peripheral"],color = gene,vmax = vmax,size = 20, title = gene+"(Peripheral)")
     fig = plt.gcf()
     fig.set_size_inches(5, 5)
     plt.savefig(
@@ -29,15 +29,19 @@ for gene in markers:
     )
     plt.clf()
 
-sc.pl.violin(adata[adata.obs.majorclass == "PRPC"],keys ="ALDH1A1",groupby="Region")
-fig = plt.gcf()
-fig.set_size_inches(5, 5)
-plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure5/ALDH1A1_violin.png",
-    dpi=600,
-    bbox_inches="tight",
-)
-plt.clf()
+
+markers = ["DHRS3","RBP4","RDH10","FGF8","STRA6","CYP26A1","CYP26B1","CYP26C1","RXRG","RXRA","RXRB","RARA","RARB","RARG","ALDH1A1","ALDH1A2","ALDH1A3","VAX2","TBX5","EFNB1","EFNB2","EPHB2","EPHB3"]
+for gene in markers:
+    sc.pl.violin(adata,keys =gene,groupby="Region",title = gene)
+    fig = plt.gcf()
+    fig.set_size_inches(5, 5)
+    plt.title(gene)
+    plt.savefig(
+        "/storage/singlecell/zz4/fetal_snakemake/figures/figure5/"+ gene + "_violin.png",
+        dpi=600,
+        bbox_inches="tight",
+    )
+    plt.clf()
 
 adata.obs["majorclass"] = adata.obs.majorclass.replace(
     {
@@ -48,11 +52,11 @@ adata.obs["majorclass"] = adata.obs.majorclass.replace(
 )
 adata.obs["majorclass_Region"] = adata.obs["majorclass"].astype(str)+" "+adata.obs["Region"].astype(str)
 
-sc.pl.violin(adata,keys ="HMX1",groupby="majorclass_Region",rotation = 90)
+sc.pl.violin(adata,keys ="PDE1C",groupby="majorclass_Region",rotation = 90,stripplot = False)
 fig = plt.gcf()
 fig.set_size_inches(5, 5)
 plt.savefig(
-    "/storage/singlecell/zz4/fetal_snakemake/figures/figure5/HMX1_violin.png",
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure5/PDE1C_violin.png",
     dpi=600,
     bbox_inches="tight",
 )
@@ -137,6 +141,54 @@ plt.clf()
 sns.lineplot(data=adata[adata.obs.majorclass.isin(["BC"])].obs, x="Weeks", y="TYR", hue="Region",)
 fig = plt.gcf()
 fig.set_size_inches(5, 5)
+plt.savefig(
+    "/storage/singlecell/zz4/fetal_snakemake/figures/figure5/TYR.svg",
+    dpi=600,
+    bbox_inches="tight",
+)
+plt.clf()
+
+
+marker_list = {
+    "OCA": ["TYR", "OCA2", "TYRP1", "SLC45A2", "SLC24A5", "LRMDA"],
+    "OA": ["GPR143"],
+    "HPS": [
+        "HPS1",
+        "AP3B1",
+        "HPS3",
+        "HPS4",
+        "HPS5",
+        "HPS6",
+        "DTNBP1",
+        "BLOC1S3",
+        "BLOC1S6",
+        "AP3D1",
+        "BLOC1S5",
+    ],
+    "CHS": ["LYST"],
+    "FHONDA": ["SLC38A8"],
+    "Aniridia": ["PAX6"],
+    "FRMD7-related infantile nystagmus": ["FRMD7"],
+    "AHR-related FH and infantile nystagmus": ["AHR"],
+    "Achromatopsia": ["CNGB3", "CNGA3", "GNAT2", "PDE6C", "PDE6H", "ATF6"],
+}
+
+###################
+df = pd.DataFrame(adata.obs)
+df.loc[:, "cell_id"] = list(df.index.values)
+grouped_data = df.groupby("majorclass")
+# Define the number of rows to downsample
+num_rows = 10000
+# Sample the same number of rows from each group
+downsampled_data = grouped_data.apply(
+    lambda x: x.sample(n=num_rows, random_state=42, replace=True)
+)
+# Reset the index
+downsampled_data = downsampled_data.reset_index(drop=True)
+gs_subset = adata[downsampled_data.cell_id]
+sc.pl.heatmap(gs_subset, marker_list, groupby="majorclass", swap_axes=True, dendrogram=True,vmax = 1)
+fig = plt.gcf()
+fig.set_size_inches(10, 10)
 plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure5/TYR.svg",
     dpi=600,

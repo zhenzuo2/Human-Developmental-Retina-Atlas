@@ -16,15 +16,16 @@ adult_cells = meta.loc[meta.sampleid == "10x3_Lobe_19_D019_NeuN-v7", "Unnamed: 0
 adult_cells = set(meta["Unnamed: 0"]).intersection(adult_cells)
 
 # Read filtered cells after ATAC-seq filtering
-atac_cells = pd.read_csv("/storage/singlecell/zz4/fetal_snakemake/results/ATAC_filtered_cells/ATAC_Filtered_cell.csv", sep=" ")
-atac_filtered_cells = [string.replace("#", "_") for string in atac_cells.x]
+#atac_cells = pd.read_csv("/storage/singlecell/zz4/fetal_snakemake/results/ATAC_filtered_cells/ATAC_Filtered_cell.csv", sep=" ")
+#atac_filtered_cells = [string.replace("#", "_") for string in atac_cells.x]
 
 # Find common cells after ATAC-seq and RNA-seq filtering
-common_cells = set(meta["Unnamed: 0"]).intersection(atac_filtered_cells)
+#common_cells = set(meta["Unnamed: 0"]).intersection(atac_filtered_cells)
 
 # Extract common cells and adult cells
-adata = adata[list(common_cells) + list(adult_cells)]
+#adata = adata[list(common_cells) + list(adult_cells)]
 meta.index = meta["Unnamed: 0"].values
+adata = adata[meta.index]
 adata.obs["majorclass"] = meta.loc[adata.obs.index.values, "majorclass"]
 adata = adata[
     adata.obs.majorclass.isin(["AC", "BC", "Cone", "HC", "MG", "RGC", "Rod"]),

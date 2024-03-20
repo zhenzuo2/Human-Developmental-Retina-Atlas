@@ -99,7 +99,8 @@ scv.pl.umap(
     legend_loc="on data",
     title="",
     sort_order=False,
-    palette="tab20"
+    palette="tab20",
+    legend_fontsize = 20,
 )
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
@@ -118,6 +119,7 @@ scv.pl.umap(
     title="",
     sort_order=False,
     palette="tab20",
+    legend_fontsize = 30,
 )
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
@@ -135,7 +137,7 @@ sc.pl.umap(
     legend_loc="right margin",
     title="",
     sort_order=False,
-    legend_fontsize = 30,
+    legend_fontsize = 60,
     frameon = False,
     palette = {"fetal": "#7F7F7F", "adult": "#EF553B"}
 )
@@ -158,7 +160,7 @@ sc.pl.umap(
     legend_loc="right margin",
     title="",
     sort_order=False,
-    legend_fontsize = 30,
+    legend_fontsize = 60,
     frameon = False,
 )
 fig = plt.gcf()
@@ -216,7 +218,8 @@ scv.pl.umap(
     legend_loc="on data",
     title="",
     sort_order=False,
-    palette="tab20"
+    palette="tab20",
+    legend_fontsize = 20,
 )
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
@@ -235,6 +238,7 @@ scv.pl.umap(
     title="",
     sort_order=False,
     palette="tab20",
+    legend_fontsize = 20,
 )
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
@@ -252,7 +256,7 @@ sc.pl.umap(
     legend_loc="right margin",
     title="",
     sort_order=False,
-    legend_fontsize = 30,
+    legend_fontsize = 60,
     frameon = False,
     palette = {"fetal": "#7F7F7F", "adult": "#EF553B"}
 )
@@ -276,7 +280,7 @@ sc.pl.umap(
     legend_loc="right margin",
     title="",
     sort_order=False,
-    legend_fontsize = 30,
+    legend_fontsize = 60,
     frameon = False,
 )
 fig = plt.gcf()
@@ -351,6 +355,7 @@ scv.pl.umap(
     color="majorclass",
     size=50,
     legend_loc="on data",
+    legend_fontsize = 30,
     title="",
     sort_order=False,
     palette="tab20",
@@ -371,7 +376,7 @@ sc.pl.umap(
     legend_loc="right margin",
     title="",
     sort_order=False,
-    legend_fontsize = 30,
+    legend_fontsize = 60,
     frameon = False,
     palette = {"fetal": "#7F7F7F", "adult": "#EF553B"}
 )
@@ -396,7 +401,7 @@ sc.pl.umap(
     legend_loc="right margin",
     title="",
     sort_order=False,
-    legend_fontsize = 30,
+    legend_fontsize = 60,
     frameon = False,
 )
 fig = plt.gcf()
@@ -454,7 +459,8 @@ scv.pl.umap(
     legend_loc="on data",
     title="",
     sort_order=False,
-    palette="tab20"
+    palette="tab20",
+    legend_fontsize = 30,
 )
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
@@ -490,7 +496,7 @@ sc.pl.umap(
     legend_loc="right margin",
     title="",
     sort_order=False,
-    legend_fontsize = 30,
+    legend_fontsize = 60,
     frameon = False,
     palette = {"fetal": "#7F7F7F", "adult": "#EF553B"}
 )
@@ -515,7 +521,7 @@ sc.pl.umap(
     legend_loc="right margin",
     title="",
     sort_order=False,
-    legend_fontsize = 30,
+    legend_fontsize = 60,
     frameon = False,
 )
 fig = plt.gcf()
@@ -592,6 +598,7 @@ scv.pl.umap(
     size=50,
     legend_loc="on data",
     title="",
+    legend_fontsize = 30,
     sort_order=False,
     palette="tab20",
 )
@@ -611,7 +618,7 @@ sc.pl.umap(
     legend_loc="right margin",
     title="",
     sort_order=False,
-    legend_fontsize = 30,
+    legend_fontsize = 60,
     frameon = False,
     palette = {"fetal": "#7F7F7F", "adult": "#EF553B"}
 )
@@ -636,7 +643,7 @@ sc.pl.umap(
     legend_loc="right margin",
     title="",
     sort_order=False,
-    legend_fontsize = 30,
+    legend_fontsize = 60,
     frameon = False,
 )
 fig = plt.gcf()
@@ -702,6 +709,7 @@ scv.pl.umap(
     title="",
     sort_order=False,
     palette="tab20"
+    
 )
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
@@ -720,6 +728,7 @@ scv.pl.umap(
     title="",
     sort_order=False,
     palette="tab20",
+    legend_fontsize = 30,
 )
 fig = plt.gcf()
 fig.set_size_inches(10, 10)
@@ -737,7 +746,7 @@ sc.pl.umap(
     legend_loc="right margin",
     title="",
     sort_order=False,
-    legend_fontsize = 30,
+    legend_fontsize = 60,
     frameon = False,
     palette = {"fetal": "#7F7F7F", "adult": "#EF553B"}
 )
@@ -762,7 +771,7 @@ sc.pl.umap(
     legend_loc="right margin",
     title="",
     sort_order=False,
-    legend_fontsize = 30,
+    legend_fontsize = 60,
     frameon = False,
 )
 fig = plt.gcf()

@@ -60,8 +60,11 @@ observations = [get_summary(PRPC),
 observations = observations / np.sum(observations, axis=1)[:, np.newaxis]
 
 # Set up colors for the stacked bars
-colors = ['#DC3912', '##FF9900', '#109618', '##3366CC']
-
+#colors = ['#DC3912', '##FF9900', '#109618', '##3366CC']
+colors =["#CB7459",
+"#A38F2D",
+"#46A473",
+"#00A0BE",]
 # Plot the stacked bars
 
 bottom = np.zeros(len(time_points))
@@ -81,7 +84,7 @@ fig = plt.gcf()
 fig.set_size_inches(5, 5)
 plt.xticks(
     ticks=[0, 1, 2, 3,4,5,6,7],
-    labels=['PRPC', 'NRPC',"RGC","Cone","HC",'AC',"Rod", "BC",],
+    labels=['PRPC','NRPC',"RGC","Cone","HC",'AC',"Rod", "BC",],
     rotation=45,
 )
 plt.savefig(

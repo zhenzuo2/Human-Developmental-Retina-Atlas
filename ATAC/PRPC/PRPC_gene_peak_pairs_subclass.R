@@ -257,3 +257,26 @@ ht1 <- plotTrajectoryHeatmap(trajGEM2,  pal = paletteContinuous(set = "horizonEx
 svg("/storage/singlecell/zz4/fetal_bash/results/ArchR/ht1.svg")
 ComplexHeatmap::draw(ht1, heatmap_legend_side = "bot", annotation_legend_side = "bot")
 dev.off()
+
+########################################################################
+motifPositions <- getPositions(proj2)
+motifs <- c("TBX5","FGF8","VAX2","RARA","RARB","RARG")
+markerMotifs <- unlist(lapply(motifs, function(x) grep(x, names(motifPositions), value = TRUE)))
+markerMotifs <- markerMotifs[markerMotifs %ni% "SREBF1_22"]
+markerMotifs
+proj2 <- addGroupCoverages(ArchRProj = proj2, groupBy = "Region")
+
+seFoot <- getFootprints(
+  ArchRProj = proj2, 
+  positions = motifPositions[markerMotifs], 
+  groupBy = "Region"
+)
+
+plotFootprints(
+  seFoot = seFoot,
+  ArchRProj = proj2, 
+  normMethod = "Subtract",
+  plotName = "Footprints-Subtract-Bias",
+  addDOC = FALSE,
+  smoothWindow = 5
+)

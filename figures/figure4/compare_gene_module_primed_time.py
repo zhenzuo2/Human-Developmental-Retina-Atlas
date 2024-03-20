@@ -37,55 +37,6 @@ def my_dynamic_plot(adata,
                  linewidth=1.5,
                  cmap='coolwarm'
                  ):
-    """Gene dynamics plot.
-
-    This function plots accessibility, expression, or velocity by time.
-
-    Parameters
-    ----------
-    adata: :class:`~anndata.AnnData`
-        Anndata result from dynamics recovery.
-    genes: `str`,  list of `str`
-        List of genes to plot.
-    by: `str` (default: `expression`)
-        Plot accessibilities and expressions if `expression`. Plot velocities
-        if `velocity`.
-    color_by: `str` (default: `state`)
-        Color by the four potential states if `state`. Other common values are
-        leiden, louvain, celltype, etc.
-        If not `state`, the color field must be present in `.uns`, which can
-        be pre-computed with `scanpy.pl.scatter`.
-        For `state`, red, orange, green, and blue represent state 1, 2, 3, and
-        4, respectively.
-    gene_time: `bool` (default: `True`)
-        Whether to use individual gene fitted time, or shared global latent
-        time.
-        Mean values of 20 equal sized windows will be connected and shown if
-        `gene_time==False`.
-    axis_on: `bool` (default: `True`)
-        Whether to show axis labels.
-    frame_on: `bool` (default: `True`)
-        Whether to show plot frames.
-    show_anchors: `bool` (default: `True`)
-        Whether to display anchors.
-    show_switches: `bool` (default: `True`)
-        Whether to show switch times. The switch times are indicated by
-        vertical dotted line.
-    downsample: `int` (default: 1)
-        How much to downsample the cells. The remaining number will be
-        `1/downsample` of original.
-    full_range: `bool` (default: `False`)
-        Whether to show the full time range of velocities before smoothing or
-        subset to only smoothed range.
-    figsize: `tuple` (default: `None`)
-        Total figure size.
-    pointsize: `float` (default: 2)
-        Point size for scatter plots.
-    linewidth: `float` (default: 1.5)
-        Line width for anchor line or mean line.
-    cmap: `str` (default: `coolwarm`)
-        Color map for continuous color key.
-    """
     from pandas.api.types import is_numeric_dtype, is_categorical_dtype
     if by not in ['expression', 'velocity']:
         raise ValueError('"by" must be either "expression" or "velocity".')
@@ -318,6 +269,7 @@ def get_summary(adata):
     )
     t_sw = t_sw[["primed", "coupled-on", "decoupled", "coupled-off"]]
     t_sw = t_sw / 20
+    t_sw = t_sw.fillna(0)
     a = t_sw["primed"][~np.isnan(t_sw["primed"])]
     return a
 
@@ -339,17 +291,19 @@ for gene in df.index:
 
 
 
-df = df.loc[df.Module.isin([2, 3, 5])]
+df = df.loc[df.Module.isin([2, 3])]
 df["Module"] = df["Module"].map(
     {
-        2: "Module 2: Cell cycle",
-        3: "Module 3: Early differentiation",
-        5: "Module 5: Late differentiation",
+        2: "Module 2",
+        3: "Module 3",
     }
 )
 df["Module"] = df["Module"].astype("category")
 df["primed"] = df["primed"] * 100
 
+grn = pd.read_csv("/storage/singlecell/zz4/fetal_snakemake/figures/figure6/PRPC_GRN_meta.csv")
+grn = list(set(list(grn.tf) + list(grn.target)))
+#df = df.loc[df.index.isin(grn),]
 plt.rcParams.update({'font.size': 20})
 plt.clf()
 ax = sns.boxplot(
@@ -358,14 +312,14 @@ ax = sns.boxplot(
     y="primed",
     boxprops={"alpha": 0.5},
     showfliers=False,
-    palette=["#d62728", "#ff7f0e", "#1f77b4"],
+    palette=["#ff7f0e", "#1f77b4"],
 )
 sns.stripplot(
     data=df,
     x="Module",
     y="primed",
     hue="Module",
-    palette=["#d62728", "#ff7f0e", "#1f77b4"],
+    palette=[ "#ff7f0e", "#1f77b4"],
 )
 handles, labels = ax.get_legend_handles_labels()
 plt.legend(bbox_to_anchor=(1.02, 0.21), loc="upper left", borderaxespad=0)
@@ -381,9 +335,19 @@ plt.savefig(
 )
 
 plt.clf()
-my_dynamic_plot(adata,["SGO2","BUB1B","PDLIM5",'NFIA'])
+my_dynamic_plot(adata,["RPL24",'RPL7',
+'RPL10',
+'RPL13A',
+'RPLP0',
+'RPL11',
+'RPL27A',
+'RPS13',
+'RPL28',
+'RPS9',
+'RPL18',
+'RPL24'])
 fig = plt.gcf()
-fig.set_size_inches(12, 8)
+fig.set_size_inches(12, 30)
 plt.savefig(
     "/storage/singlecell/zz4/fetal_snakemake/figures/figure4/NFIA_SGO2.png",
     dpi=600,

@@ -24,6 +24,7 @@ except FileExistsError:
 adata_ref = sc.read(
     "/storage/singlecell/zz4/fetal_snakemake/data/adult_reference/all/major_clean_major_scvi_Cluster_clean.h5ad"
 )
+adata_ref = adata_ref[adata_ref.obs.majorclass.isin(['AC', 'BC', 'Cone', 'HC', 'MG', 'RGC', 'Rod'])]
 print(adata_ref)
 sc.pp.highly_variable_genes(adata_ref, flavor="seurat_v3", n_top_genes=10000,subset = True)
 print(adata_ref)
@@ -40,7 +41,7 @@ arches_params = dict(
 
 # We train the reference using the standard SCVI workflow, except we add a few non-default parameters that were identified to work well with scArches
 vae_ref = scvi.model.SCVI(adata_ref, **arches_params)
-vae_ref.train(accelerator = "gpu")
+vae_ref.train()
 
 adata_ref.obsm["X_scVI"] = vae_ref.get_latent_representation()
 sc.pp.neighbors(adata_ref, use_rep="X_scVI")

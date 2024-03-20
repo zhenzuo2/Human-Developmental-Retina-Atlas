@@ -32,6 +32,10 @@ adata = adata[outlier_mask]
 
 mv.velocity_graph(adata)
 mv.latent_time(adata)
+adata.obs.loc[:,"root_cells"] = 0
+adata.obs.loc[(adata.obs.Time=="10w")&(adata.obs.Region=="Peripheral"),"root_cells"] = 1
+
+mv.latent_time(adata)
 
 scv.pl.scatter(adata, color='NFIA', size=20,layer="ATAC",vmax = 1.7)
 fig = plt.gcf()

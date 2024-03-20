@@ -2,9 +2,9 @@ library(ggplot2)
 library(RColorBrewer)
 library(ggVennDiagram)
 output_dir = "/Users/zhenzuo/Desktop/"
-output_dir = c("/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/NRPC_",
-               "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/PRPC_",
-               "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/RPC_")
+output_dir = c("/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/NRPC_",
+               "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/PRPC_",
+               "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/RPC_")
 
 cm_files = c("All_compare_mod_region.csv", "Early_compare_mod_region.csv",
              "Late_compare_mod_region.csv")
@@ -30,15 +30,15 @@ for (out in output_dir) {
   }
 }
 
-files <- c("/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/PRPC_All_Region_DE_filtered_gene_list.csv",
-           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/PRPC_Early_Region_DE_filtered_gene_list.csv",
-           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/PRPC_Late_Region_DE_filtered_gene_list.csv",
-           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/NRPC_All_Region_DE_filtered_gene_list.csv",
-           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/NRPC_Early_Region_DE_filtered_gene_list.csv",
-           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/NRPC_Late_Region_DE_filtered_gene_list.csv",
-           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/RPC_All_Region_DE_filtered_gene_list.csv",
-           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/RPC_Early_Region_DE_filtered_gene_list.csv",
-           "/Users/zhenzuo/Desktop/MG_monocle3_DE_analysis/RPC_Late_Region_DE_filtered_gene_list.csv")
+files <- c("/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/PRPC_All_Region_DE_filtered_gene_list.csv",
+           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/PRPC_Early_Region_DE_filtered_gene_list.csv",
+           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/PRPC_Late_Region_DE_filtered_gene_list.csv",
+           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/NRPC_All_Region_DE_filtered_gene_list.csv",
+           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/NRPC_Early_Region_DE_filtered_gene_list.csv",
+           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/NRPC_Late_Region_DE_filtered_gene_list.csv",
+           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/RPC_All_Region_DE_filtered_gene_list.csv",
+           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/RPC_Early_Region_DE_filtered_gene_list.csv",
+           "/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/RPC_Late_Region_DE_filtered_gene_list.csv")
 
 names <- c("PRPC_All", "PRPC_Early",
            "PRPC_Late", "NRPC_All", "NRPC_Early", "NRPC_Late", "RPC_All", "RPC_Early", "RPC_Late")

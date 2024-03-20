@@ -15,16 +15,16 @@ MG
 n_features=10000
 n_cells=40000
 meta_file=(
-/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_BC.csv
-/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_AC.csv
-/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_Cone.csv
-/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_Rod.csv
-/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_HC.csv
-/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_RGC.csv
-/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/RPC.csv
-/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/PRPC.csv
-/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC.csv
-/storage/singlecell/zz4/fetal_bash/results//storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/MG.csv
+/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_BC.csv
+/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_AC.csv
+/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_Cone.csv
+/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_Rod.csv
+/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_HC.csv
+/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC_RGC.csv
+/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/RPC.csv
+/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/PRPC.csv
+/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/NRPC.csv
+/storage/singlecell/zz4/fetal_bash/results/cell_annotation_results/MG.csv
 )
 
 output_dir=(

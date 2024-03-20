@@ -1,17 +1,14 @@
 library(ggplot2)
 output_dir = "/storage/singlecell/zz4/fetal_snakemake/figures/figure4/"
-coef <- read.csv("/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/Cone_monocle3_DE_analysis/All_fit_coefs_region_models.csv")
-coef <- coef[(coef$status == "OK") & (coef$term == "RegionPeripheral"),
-    ]
-genes <- c("YBX1", "PCP4", "PCAT4", "RP11-39E3.3", "TOMM7", "NACA", "FAU",
-    "PFDN5", "EEF1A1", "TPT1", "UQCRB")
-log2_fc <- c(2.372385326, 2.152899328, 2.037409037, 1.824192639, 1.735320302,
-    1.712663892, 1.700248998, 1.683810323, 1.648282857, 1.566198246, 1.557601784)
+
+genes <- c('CRABP2', 'CNTN5', 'DAND5', 'SYTL4', 'PDE1C', 'VAX2', 'HIST1H1E',
+       'CDH18', 'EPHA7', 'DTNA')
+log2_fc <- c(-2.3009734, -1.8849595, -1.8271405, -1.7444048, -1.5450985,
+       -1.4793277, -1.4162905, -1.3746785, -1.3459351, -1.0537366)
+log2_fc_adult <-  c(-2.3009734, -1.8849595, -1.8271405, -1.7444048, -1.5450985,
+       -1.4793277, -1.4162905, -1.3746785, -1.3459351, -1.0537366)
 df <- data.frame(genes, log2_fc)
-rownames(df) <- df$genes
-coef <- coef[coef$gene_short_name %in% genes, ]
-coef$log2_fc <- df[coef$gene_short_name, "log2_fc"]
-res <- coef
+
 
 coef <- read.csv("/storage/singlecell/zz4/fetal_snakemake/results/monocle3_DE_analysis/Cone_monocle3_DE_analysis/All_fit_coefs_region_models.csv")
 coef <- coef[(coef$status == "OK") & (coef$term == "RegionPeripheral"),
