@@ -1,0 +1,26 @@
+cell_types = ["AC", "BC", "Cone", "HC", "MG", "RGC", "Rod", "PRPC", "NRPC"]
+
+
+rule all:
+    ## Put input file here to run corresponding rules
+    input:
+        expand(
+            [
+                "/storage/chentemp/zz4/adult_dev_compare/results/monocle3_DE_analysis/{cell_type}_monocle3_DE_analysis/compare_mod_region.csv",
+            ],
+            cell_type=cell_types,
+        ),
+
+
+rule monocle3_deg:
+    ## multivelo_prepare_create_atac
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_rna/merged_rna.rds",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/monocle3_DE_analysis/{cell_type}_monocle3_DE_analysis/compare_mod_region.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Degs/monocle3_deg/monocle3_deg.R /storage/chentemp/zz4/adult_dev_compare/results/monocle3_DE_analysis/{wildcards.cell_type}_monocle3_DE_analysis/ /storage/chentemp/zz4/adult_dev_compare/results/Annotation/ALL.csv {wildcards.cell_type}'
+        """

@@ -24,170 +24,164 @@ samples = [
     "Multiome_20w1d_NR",
     "Multiome_23w4d_FR",
     "Multiome_23w4d_NR",
-]
+    "sn_multiome_d59",
+    "sn_multiome_d76c",
+    "sn_multiome_d76p"]
+
+meta_list = [
+    "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/RPC_MG.csv",
+    "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/NRPC.csv",
+    "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/PRPC.csv",
+    "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/AC_w_NRPC.csv",
+    "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/BC_w_NRPC.csv",
+    "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/Cone_w_NRPC.csv",
+    "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/HC_w_NRPC.csv",
+    "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/RGC_w_NRPC.csv",
+    "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/Rod_w_NRPC.csv"]
+
+groups = ["RPC_MG", "NRPC", "PRPC", "AC", "BC", "Cone", "HC", "RGC", "Rod"]
+
+sample2meta = dict(zip(groups, meta_list))
 
 output_result_path = (
-    "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x/"
+    "/storage/chentemp/zz4/adult_dev_compare/results/ATAC_aggregate_peaks_10x/"
 )
 output_figure_path = (
-    "/storage/singlecell/zz4/fetal_snakemake/figures/ATAC_aggregate_peaks_10x/"
+    "/storage/chentemp/zz4/adult_dev_compare/figures/ATAC_aggregate_peaks_10x/"
 )
-#groups = ["AC", "PRPC_MG", "HC", "NRPC","PRPC_MG_NRPC","PRPC","BC","Rod","Cone","RGC"]
-groups = ["BC"]
-meta_list = [
-    #"/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_AC.csv",
-    #"/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/PRPC_MG.csv",
-    #"/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_HC.csv",
-    #"/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC.csv",
-    #"/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/PRPC_MG_NRPC.csv",
-    #"/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/PRPC.csv",
-    "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_BC.csv",
-    #"/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_Rod.csv",
-    #"/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_Cone.csv",
-    #"/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_RGC.csv",
-]
-sample2meta = dict(zip(groups, meta_list))
 
 
 def get_meta(wildcards):
-    return sample2meta[wildcards.sam]
+    return sample2meta[wildcards.celltype]
 
 
 rule all:
     ## Put input file here to run corresponding rules
     input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/MultiVelo_filtered_cells/adata_rna.h5ad",
         expand(
             [
-                "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/{sam}.h5ad",
+            "/storage/chentemp/zz4/adult_dev_compare/results/multivelo_recover_dynamics_run_umap/{celltype}.h5ad"
             ],
-            sam=groups,
+            celltype=groups,
+        ),
+        expand(
+            [
+                "/storage/chentemp/zz4/adult_dev_compare/results/multivelo_recover_dynamics_results/{celltype}.h5ad"
+            ],
+            celltype=groups,
         ),
 
-
-####################################################################################################
-# Annotation
 rule multivelo_prepare_create_atac:
     ## multivelo_prepare_create_atac
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/{sample}/outs/atac_peak_annotation.tsv",
+        "/storage/chentemp/zz4/adult_dev_compare/data/Retina_fetal/{sample}/outs/atac_peak_annotation.tsv",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x/{sample}.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ATAC_aggregate_peaks_10x/{sample}.h5ad",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_prepare_create_atac/multivelo_prepare_create_atac.py /storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/{wildcards.sample} {wildcards.sample} {output_result_path} {output_figure_path};'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Multivelo/multivelo_prepare_create_atac/multivelo_prepare_create_atac.py /storage/chentemp/zz4/adult_dev_compare/data/Retina_fetal/{wildcards.sample} {wildcards.sample} {output_result_path} {output_figure_path};'
         """
 
-
-output_result_path = "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/"
-
+output_result_path2 = "/storage/chentemp/zz4/adult_dev_compare/results/ATAC_aggregate_peaks_10x_noramlized/"
 
 rule multivelo_normalize_atac_TF:
     ## multivelo_normalize_atac_TF
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x/{sample}.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ATAC_aggregate_peaks_10x/{sample}.h5ad",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/{sample}.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ATAC_aggregate_peaks_10x_noramlized/{sample}.h5ad",
     shell:
         """
         bash -c '
-        mkdir /storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_normalize_atac_TF/multivelo_normalize_atac_TF.py /storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x/{wildcards.sample}.h5ad {wildcards.sample} {output_result_path};'
+        mkdir /storage/chentemp/zz4/adult_dev_compare/results/ATAC_aggregate_peaks_10x_noramlized/
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Multivelo/multivelo_normalize_atac_TF/multivelo_normalize_atac_TF.py /storage/chentemp/zz4/adult_dev_compare/results/ATAC_aggregate_peaks_10x/{wildcards.sample}.h5ad {wildcards.sample} {output_result_path2};'
         """
 
-
 rule multivelo_shared_barcodes_RNA_ATAC:
-    ## multivelo_shared_barcodes_RNA_ATAC
+    ## multivelo_normalize_atac_TF
     input:
         expand(
             [
-                "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/{sample}.h5ad",
+                "/storage/chentemp/zz4/adult_dev_compare/results/ATAC_aggregate_peaks_10x_noramlized/{sample}.h5ad",
             ],
             sample=samples,
         ),
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/adata_atac.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/adata_rna.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/filtered_cells.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/MultiVelo_filtered_cells/adata_rna.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/MultiVelo_filtered_cells/adata_atac.h5ad"
     shell:
         """
         bash -c '
-        mkdir /storage/singlecell/zz4/fetal_snakemake/results/ATAC_aggregate_peaks_10x_noramlized/
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_shared_barcodes_RNA_ATAC/multivelo_shared_barcodes_RNA_ATAC.py'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Multivelo/multivelo_shared_barcodes_RNA_ATAC/multivelo_shared_barcodes_RNA_ATAC.py'
         """
-
-
-rule Pando_merge_rna_atac:
-    ## multivelo_shared_barcodes_RNA_ATAC
-    input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds",
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_atac/atac.rds",
-    output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/Pando_merged/seurat_object.rds",
-    shell:
-        """
-        bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/Pando_merge_rna_atac/Pando_merge_rna_atac.R'
-        """
-
 
 rule multivelo_seurat_wnn:
-    ## multivelo_seurat_wnn
+    ## multivelo_normalize_atac_TF
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/Pando_merged/seurat_object.rds",
-        meta = get_meta,
+        "/storage/chentemp/zz4/adult_dev_compare/results/MultiVelo_filtered_cells/adata_rna.h5ad",
+        meta=get_meta,
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_seurat_wnn/{sam}_nn_idx.txt",
+        "/storage/chentemp/zz4/adult_dev_compare/results/multivelo_seurat_wnn/{celltype}_nn_idx.txt",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_seurat_wnn/multivelo_seurat_wnn.R {input.meta} {wildcards.sam};'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Multivelo/multivelo_seurat_wnn/multivelo_seurat_wnn.R {input.meta} {wildcards.celltype};'
         """
-
 
 rule multivelo_knn_smooth_chrom:
     ## multivelo_knn_smooth_chrom
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/MultiVelo_filtered_cells/adata_atac.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_seurat_wnn/{sam}_nn_idx.txt",
+        "/storage/chentemp/zz4/adult_dev_compare/results/MultiVelo_filtered_cells/adata_atac.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/multivelo_seurat_wnn/{sam}_nn_idx.txt",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/{sam}.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/multivelo_knn_smooth_chrom/{sam}.h5ad",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_knn_smooth_chrom/multivelo_knn_smooth_chrom.py {wildcards.sam};'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Multivelo/multivelo_knn_smooth_chrom/multivelo_knn_smooth_chrom.py {wildcards.sam};'
         """
-
 
 rule multivelo_recover_dynamics_run_umap:
     ## multivelo_recover_dynamics_run_umap
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_knn_smooth_chrom/{sam}.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/multivelo_knn_smooth_chrom/{celltype}.h5ad",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_{sam}/adata_umap.h5ad"
+        "/storage/chentemp/zz4/adult_dev_compare/results/multivelo_recover_dynamics_run_umap/{celltype}.h5ad",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_recover_dynamics_run_umap/multivelo_recover_dynamics_run_umap.py {wildcards.sam};'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Multivelo/multivelo_recover_dynamics_run_umap/multivelo_recover_dynamics_run_umap.py {wildcards.celltype};'
         """
 
-
-rule multivelo_recover_dynamics:
-    ## multivelo_recover_dynamics
+rule multivelo_recover_dynamics_chrom:
+    ## multivelo_recover_dynamics_chrom
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_run_umap_{sam}/adata_umap.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/multivelo_recover_dynamics_run_umap/{celltype}.h5ad",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/multivelo_recover_dynamics_results/{sam}.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/multivelo_recover_dynamics_results/{celltype}.h5ad",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/multivelo/multivelo_recover_dynamics_chrom/multivelo_recover_dynamics_chrom.py {wildcards.sam};'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Multivelo/multivelo_recover_dynamics_chrom/multivelo_recover_dynamics_chrom.py {wildcards.celltype};'
+        """
+
+rule multivelo_infer_latent_time_PRPC:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/multivelo_recover_dynamics_results/RPC_MG.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/multivelo_recover_dynamics_latent_time/PRPC.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Multivelo/multivelo_infer_latent_time/multivelo_infer_latent_time_PRPC.py;'
         """

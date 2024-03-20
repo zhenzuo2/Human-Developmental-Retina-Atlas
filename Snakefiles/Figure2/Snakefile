@@ -1,0 +1,109 @@
+rule all:
+    ## Put input file here to run corresponding rules
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/RPC_MG_RPC_MG_umap_by_majorclass_PCW.png",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/RPC_MG_mv.velocity_embedding_stream.Days.png",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/plot_PRPC_velocity_pseudotime_vs_weeks.svg",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/PRPC_plot_local_correlations.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/PRPC_MG_Modules_GO.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/PRPC_gene_module_1_gene_trend.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/PRPC_gene_module_1_heatmap.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/PRPC_grn_plot.tiff",
+
+rule plot_RPC_MG_by_region_week:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/RPC_MG_RPC_MG_umap_by_majorclass_PCW.png",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure2/plot_RPC_MG_by_region_week.py'
+        """
+
+rule plot_RPC_MG_velocity_embedding_stream:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/multivelo_recover_dynamics_results/RPC_MG.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/RPC_MG_mv.velocity_embedding_stream.Days.png",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure2/plot_RPC_MG_velocity_embedding_stream.py'
+        """
+
+rule plot_PRPC_velocity_pseudotime_vs_weeks:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/infer_velocity_pseudotime/PRPC.csv",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/plot_PRPC_velocity_pseudotime_vs_weeks.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure2/plot_PRPC_velocity_pseudotime_vs_weeks.py'
+        """
+
+rule plot_gene_module_matrix_heatmap:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/hotspot_result/PRPC/PRPC_hs.create_modules_velocity_pseudotime.pkl",
+        "/storage/chentemp/zz4/adult_dev_compare/results/hotspot_result/PRPC/PRPC_hs.adata_velocity_pseudotime.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/PRPC_plot_local_correlations.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure2/plot_gene_module_matrix_heatmap.py'
+        """
+
+rule PRPC_hotspot_GO:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/mod_reordered.csv",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/PRPC_MG_Modules_GO.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Figure2/PRPC_hotspot_GO.R'
+        """
+
+rule PRPC_plot_top_gene_curve:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/mod_reordered.csv",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/PRPC_gene_module_1_gene_trend.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure2/PRPC_plot_top_gene_curve.py'
+        """
+
+
+rule PRPC_plot_top_gene_heatmap:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/mod_reordered.csv",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/PRPC_gene_module_1_heatmap.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure2/PRPC_plot_top_gene_heatmap.py'
+        """
+
+rule plot_PRPC_grn:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/pando_results/pando_PRPC.rds",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure2/PRPC_grn_plot.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Figure2/plot_PRPC_grn.R'
+        """

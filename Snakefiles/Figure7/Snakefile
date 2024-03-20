@@ -1,0 +1,46 @@
+rule all:
+    ## Put input file here to run corresponding rules
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure7/FovealHypoplasiaHetamap.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure7/FovealHypoplasia_violin_CNGB3.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure7/FovealHypoplasiaHetamap_violin_PDE6H.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Plots/Plot-Tracks-With-Features-PDE6H.pdf",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Plots/Plot-Tracks-With-Features-PDE6H-Region.pdf",
+
+rule FovealHypoplasiaHetamap:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad"
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure7/FovealHypoplasiaHetamap.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure7/FovealHypoplasiaHetamap.py'
+        """
+
+rule FovealHypoplasiaViolin:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad"
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure7/FovealHypoplasia_violin_CNGB3.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure7/FovealHypoplasiaHetamap_violin_PDE6H.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure7/FovealHypoplasiaViolin.py'
+        """
+
+rule PDE6H_dif_peak:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Save-ArchR-Project.rds"
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Plots/Plot-Tracks-With-Features-PDE6H.pdf",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Plots/Plot-Tracks-With-Features-PDE6H-Region.pdf",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Figure7/PDE6H_dif_peak.R'
+        """

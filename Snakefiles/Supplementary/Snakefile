@@ -1,0 +1,123 @@
+rule all:
+    ## Put input file here to run corresponding rules
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Table2/Number_of_Cells_Sample_part1.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Table2/Number_of_Cells_Sample_part2.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Table2/Number_of_Cells_Sample_part3.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure1/gene_expression_heatmap_markers.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure1/overall_umap_with_adult_by_batch.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure1/overall_umap_with_adult_by_majorclass.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure1/RPC_annotation.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure1/RPC_annotation_leiden.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure1/overall_umap_with_adult_by_leiden.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure3/AC_dev_dotplot.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure3/AC_adult_dotplot.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Table1/multiomics_meta.csv",
+
+
+rule summary_sample_meta:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/data/Sample_meta/Retina_fetal_sample_meta.csv",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Table1/multiomics_meta.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Supplementary/Table1/summary_sample_meta.R'
+        """
+
+rule count_number_of_filtered_cells:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Table2/Number_of_Cells_Sample_part1.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Supplementary/Table2/count_number_of_filtered_cells.R'
+        """
+
+
+rule count_number_of_filtered_cells2:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Table2/Number_of_Cells_Sample_part1.csv",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Table2/Number_of_Cells_Sample_part2.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Supplementary/Table2/count_number_of_filtered_cells2.py'
+        """
+
+
+rule count_number_of_filtered_cells3:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Table2/Number_of_Cells_Sample_part1.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Table2/Number_of_Cells_Sample_part2.csv",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Table2/Number_of_Cells_Sample_part3.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Supplementary/Table2/count_number_of_filtered_cells3.R'
+        """
+
+
+rule plot_major_class_heatmap:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/gene_score/gene_score.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure1/gene_expression_heatmap_markers.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Supplementary/Figure1/plot_major_class_heatmap.py'
+        """
+
+
+rule plot_adult_dev_umap:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_wadult_umap_10000.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure1/overall_umap_with_adult_by_batch.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure1/overall_umap_with_adult_by_majorclass.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure1/overall_umap_with_adult_by_leiden.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Supplementary/Figure1/plot_adult_dev_umap.py'
+        """
+
+
+rule plot_RPC_annotation_result:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/RPC_MG.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure1/RPC_annotation.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure1/RPC_annotation_leiden.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Supplementary/Figure1/plot_RPC_annotation_result.py'
+        """
+
+rule plot_celltype_annotation_validation:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/AC.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure3/AC_dev_dotplot.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/Supplementary/Figure3/AC_adult_dotplot.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Supplementary/Figure3/plot_celltype_annotation_validation.py'
+        """

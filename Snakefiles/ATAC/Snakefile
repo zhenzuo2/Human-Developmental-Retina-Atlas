@@ -1,7 +1,7 @@
 import pandas as pd
 
 meta = pd.read_csv(
-    "/storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/ArchR_create_object/meta.csv"
+    "/storage/chentemp/zz4/adult_dev_compare/scripts/ATAC/ArchR_create_object/meta.csv"
 )
 samples = meta["Samples"].tolist()
 
@@ -9,97 +9,154 @@ samples = meta["Samples"].tolist()
 rule all:
     ## Put input file here to run corresponding rules
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_atac/atac.rds",
-        "/storage/singlecell/zz4/fetal_snakemake/results/seRNA/seRNA.rds",
-        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/NRPC_gene_peak_pairs_subclass.svg",
-        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/NRPC_gene_peak_pairs_Weeks.svg"
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj2/Save-ArchR-Project.rds",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Save-ArchR-Project.rds",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/gene_score/gene_score.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/cellbygene/gene_score.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/gene_score/gene_score_imputed.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/cellbygene/gene_score_imputed.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ATAC_umap/ATAC_UMAPHarmony_cor.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/GroupBigWigs/majorclass/AC-TileSize-100-normMethod-None-ArchR.bw",
+
 
 rule ArchR_create_object:
     ## Create ArchR project
     input:
-        expand(
-            [
-                "/storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/{sample}/outs/atac_fragments.tsv.gz",
-            ],
-            sample=samples,
-        ),
+        "/storage/chentemp/zz4/adult_dev_compare/data/Retina_fetal/Multi_Fetal_23w1d_NR/outs/atac_fragments.tsv.gz",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-proj1/Save-ArchR-Project.rds",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj1/Save-ArchR-Project.rds",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/ArchR_create_object/ArchR_create_object.R'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/ATAC/ArchR_create_object/ArchR_create_object.R'
         """
+
 
 rule ArchR_filter:
     ## Filter ArchR project
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-proj1/Save-ArchR-Project.rds"
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj1/Save-ArchR-Project.rds",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_filtered_cells/ATAC_Filtered_cell.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ATAC_filtered_cells/ATAC_Filtered_cell.csv",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/ArchR_filter/ArchR_filter.R'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/ATAC/ArchR_filter/ArchR_filter.R'
         """
 
-rule export_gene_score:
-    ## Filter ArchR project
-    input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/Save-proj1/Save-ArchR-Project.rds"
-    output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/gene_score/gene_score.h5ad",
-    shell:
-        """
-        bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/export_gene_score/export_gene_score.R
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/export_gene_score/export_gene_score.py
-        '
-        """
-
-rule merge_atac:
-    ## Merge atac in R to a seurat object
-    input:
-        expand(
-            [
-                "/storage/singlecell/zz4/fetal_snakemake/data/Retina_fetal/{sample}/outs/atac_fragments.tsv.gz",
-            ],
-            sample=samples,
-        ),
-    output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_atac/atac.rds",
-    shell:
-        """
-        bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/merge_atac/merge_atac.R'
-        """
 
 rule create_seRNA:
-    ## Merge atac in R to a seurat object
+    ## Filter ArchR project
     input:
+        "/storage/chentemp/zz4/adult_dev_compare/scripts/ATAC/create_seRNA/create_seRNA.R",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/seRNA/seRNA.rds",
+        "/storage/chentemp/zz4/adult_dev_compare/results/seRNA/seRNA.rds",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/create_seRNA/create_seRNA.R'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/ATAC/create_seRNA/create_seRNA.R'
         """
 
-rule NRPC_gene_peak_pairs_subclass:
-    ## Merge atac in R to a seurat object
+
+rule add_seRNA:
+    ## Filter ArchR project
     input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/seRNA/seRNA.rds",
+        "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/ALL.csv",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/NRPC_gene_peak_pairs_subclass.svg",
-        "/storage/singlecell/zz4/fetal_snakemake/results/ArchR/NRPC_gene_peak_pairs_Weeks.svg"
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj2/Save-ArchR-Project.rds",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/ATAC/NRPC/NRPC_gene_peak_pairs_subclass.R'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/ATAC/add_seRNA/add_seRNA.R'
+        """
+
+
+rule run_umap:
+    ## Filter ArchR project
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj2/Save-ArchR-Project.rds",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Save-ArchR-Project.rds",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/ATAC/run_umap/run_umap.R'
+        """
+
+
+rule save_umap:
+    ## Filter ArchR project
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Save-ArchR-Project.rds",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ATAC_umap/ATAC_UMAPHarmony_cor.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/ATAC/save_umap/save_umap.R'
+        """
+
+
+rule export_gene_score_R:
+    ## Filter ArchR project
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Save-ArchR-Project.rds",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/gene_score/gene_score_colnames.txt",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/ATAC/export_gene_score/export_gene_score.R'
+        """
+
+
+rule export_gene_score_python:
+    ## Filter ArchR project
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/gene_score/gene_score_colnames.txt",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/gene_score/gene_score.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/cellbygene/gene_score.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/ATAC/export_gene_score/export_gene_score.py'
+        """
+
+
+rule export_gene_score_python_imputation:
+    ## Filter ArchR project
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/gene_score/gene_score.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/cellbygene/gene_score.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/gene_score/gene_score_imputed.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/cellbygene/gene_score_imputed.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/ATAC/export_gene_score/export_gene_score_imputation.py'
+        """
+
+
+rule getGroupBW:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Save-ArchR-Project.rds",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/GroupBigWigs/majorclass/AC-TileSize-100-normMethod-None-ArchR.bw",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/ATAC/getGroupBW/getGroupBW.R'
         """

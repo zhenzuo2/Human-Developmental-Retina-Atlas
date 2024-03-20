@@ -1,0 +1,84 @@
+
+rule all:
+    ## Put input file here to run corresponding rules
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure3/NRPC_inferred_fate.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure3/NRPC_Days.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure3/overall_umap_by_subclass_PCW.png",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure3/plot_NRPC_Dotplot.png",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated_ldata_dynamics_vk.pkl",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure3/NRPC_grn_plot.tiff",
+
+rule plot_NRPC_Days:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/multivelo_recover_dynamics_results/NRPC.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/NRPC_res2.h5ad"
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure3/NRPC_Days.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure3/plot_NRPC_Days.py'
+        """
+
+rule plot_NRPC_inferred_fate:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/NRPC_annotated_terminal_states.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure3/NRPC_inferred_fate.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure3/plot_NRPC_inferred_fate.py'
+        """
+
+rule plot_NRPC_by_region_week:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/multivelo_recover_dynamics_results/NRPC.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/NRPC_res2.h5ad"
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure3/overall_umap_by_subclass_PCW.png"
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure3/plot_NRPC_by_region_week.py'
+        """
+
+rule plot_NRPC_Dotplot:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/NRPC_annotated_terminal_states.csv",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure3/plot_NRPC_Dotplot.png"
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure3/plot_NRPC_Dotplot.py'
+        """
+
+rule plot_all_cells_vk_1:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated_ldata.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated_ldata_dynamics_vk.pkl",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure3/plot_all_cells_vk_1.py'
+        """
+
+rule plot_NRPC_grn:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/pando_results/pando_NRPC.rds",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure3/NRPC_grn_plot.tiff"
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Figure3/plot_NRPC_grn.R'
+        """

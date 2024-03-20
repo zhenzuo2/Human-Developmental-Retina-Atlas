@@ -1,0 +1,36 @@
+import loompy
+
+loom_files = [
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multi_Fetal_11w2d_FR_2.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multi_Fetal_11w2d_FR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multi_Fetal_11w2d_NR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multi_Fetal_13W_FR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multi_Fetal_13W_NR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multi_Fetal_14w5d_FR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multi_Fetal_14w5d_NR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multi_Fetal_19W4d_FR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multi_Fetal_19W4d_NR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multi_Fetal_20W2d_FR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multi_Fetal_20W2d_NR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multi_Fetal_23w1d_FR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multi_Fetal_23w1d_NR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multiome_10w_FR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multiome_10w_NR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multiome_12w3d_FR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multiome_12w3d_NR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multiome_14w2d_FR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multiome_14w2d_NR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multiome_16w4d_FR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multiome_16w4d_NR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multiome_20w1d_FR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multiome_20w1d_NR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multiome_23w4d_FR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/Multiome_23w4d_NR.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/sn_multiome_d59.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/sn_multiome_d76c.loom", 
+"/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/sn_multiome_d76p.loom",
+]
+loompy.combine(
+    loom_files,
+    "/storage/chentemp/zz4/adult_dev_compare/results/RNA_velocity/combined.loom",
+)

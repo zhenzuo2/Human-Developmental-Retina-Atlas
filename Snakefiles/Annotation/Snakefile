@@ -1,12 +1,13 @@
 import pandas as pd
 
 meta = pd.read_csv(
-    "/storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/QC_seurat/meta.csv"
+    "/storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/QC_seurat/meta.csv"
 )
 samples = meta["Samples_ID"].tolist()
 sample2file = dict(zip(meta["Samples_ID"].tolist(), meta["Samples"].tolist()))
 labels = ["fetal", "fetal_adult"]
-cell_type = ["AC", "BC", "Cone", "HC", "MG", "RGC", "Rod"]
+cell_type = ["AC", "BC", "Cone", "HC", "MG", "NRPC", "PRPC", "RGC", "Rod"]
+NR = ["AC", "BC", "Cone", "HC", "RGC", "Rod", "RPC_MG", "ALL"]
 
 
 def get_rawh5(wildcards):
@@ -14,32 +15,36 @@ def get_rawh5(wildcards):
 
 
 rule all:
-    ## Put input file here to run corresponding rules
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/AC_subtype.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC_subtype.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/PRPC_MG.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/RGC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Cone.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Rod.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/BC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/BC_subtype.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/BC_subtype.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC_subtype_NRPC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/HC_subtype.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC_subtype.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/RGC_subtype.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/RGC_subtype.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/Cone_subtype.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Cone_subtype.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/Rod_subtype.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Rod_subtype.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC_subtype_NRPC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC_subtype_NRPC_obs.csv",
-
-
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/Rod_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/AC_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/BC_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/Cone_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/HC_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/RGC_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated_not_filter_ATAC.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated.h5ad",
+        expand(
+            [
+                "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/{nr}.h5ad",
+            ],
+            nr=NR,
+        ),
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_wadult_umap_10000.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/RGC_annotation_adult/RGC_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/AC_annotation_adult/AC_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/HC_annotation_adult/HC_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/BC_annotation_adult/BC_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/Rod_annotation_adult/Rod_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/Cone_annotation_adult/Cone_merged_object.h5ad",
+        expand(
+            [
+                "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/{cy}.csv",
+            ],
+            cy=cell_type,
+        ),
+        "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/ALL.csv",
 
 
 ####################################################################################################
@@ -49,43 +54,43 @@ rule QC_seurat:
     input:
         get_rawh5,
     output:
-        result="/storage/singlecell/zz4/fetal_snakemake/results/after_qc_seurat_object/{sample}.rds",
-        figure="/storage/singlecell/zz4/fetal_snakemake/figures/after_qc_seurat_object/{sample}_seurat_QC.svg",
+        result="/storage/chentemp/zz4/adult_dev_compare/results/after_qc_seurat_object/{sample}.rds",
+        figure="/storage/chentemp/zz4/adult_dev_compare/figures/after_qc_seurat_object/{sample}_seurat_QC.svg",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/QC_seurat/QC_seurat.R {wildcards.sample} {input} 200 10 /storage/singlecell/zz4/fetal_snakemake/results/after_qc_seurat_object/ /storage/singlecell/zz4/fetal_snakemake/figures/after_qc_seurat_object/'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/QC_seurat/QC_seurat.R {wildcards.sample} {input} 200 10 /storage/chentemp/zz4/adult_dev_compare/results/after_qc_seurat_object/ /storage/chentemp/zz4/adult_dev_compare/figures/after_qc_seurat_object/'
         """
 
 
 rule QC_seurat_apply_filter:
     ## Apply QC cutoff to get a subset of cells
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/after_qc_seurat_object/{sample}.rds",
+        "/storage/chentemp/zz4/adult_dev_compare/results/after_qc_seurat_object/{sample}.rds",
     output:
-        result="/storage/singlecell/zz4/fetal_snakemake/results/after_qc_seurat_object_apply_filter/{sample}.rds",
-        figure="/storage/singlecell/zz4/fetal_snakemake/figures/after_qc_seurat_object_apply_filter/{sample}_after_filtered_seurat_QC.svg",
+        result="/storage/chentemp/zz4/adult_dev_compare/results/after_qc_seurat_object_apply_filter/{sample}.rds",
+        figure="/storage/chentemp/zz4/adult_dev_compare/figures/after_qc_seurat_object_apply_filter/{sample}_after_filtered_seurat_QC.svg",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/QC_seurat_apply_filter/QC_seurat_apply_filter.R {wildcards.sample} {input} /storage/singlecell/zz4/fetal_snakemake/results/after_qc_seurat_object_apply_filter/ /storage/singlecell/zz4/fetal_snakemake/figures/after_qc_seurat_object_apply_filter/'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/QC_seurat_apply_filter/QC_seurat_apply_filter.R {wildcards.sample} {input} /storage/chentemp/zz4/adult_dev_compare/results/after_qc_seurat_object_apply_filter/ /storage/chentemp/zz4/adult_dev_compare/figures/after_qc_seurat_object_apply_filter/'
         """
 
 
 rule DoubletFinder:
     ## Run DoubletFinder
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/after_qc_seurat_object_apply_filter/{sample}.rds",
+        "/storage/chentemp/zz4/adult_dev_compare/results/after_qc_seurat_object_apply_filter/{sample}.rds",
     output:
-        result="/storage/singlecell/zz4/fetal_snakemake/results/DoubletFinder_seurat_object/{sample}.rds",
-        figure="/storage/singlecell/zz4/fetal_snakemake/figures/DoubletFinder_UMAP/{sample}.svg",
+        result="/storage/chentemp/zz4/adult_dev_compare/results/DoubletFinder_seurat_object/{sample}.rds",
+        figure="/storage/chentemp/zz4/adult_dev_compare/figures/DoubletFinder_UMAP/{sample}.svg",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/DoubletFinder/DoubletFinder.R {wildcards.sample} {input} /storage/singlecell/zz4/fetal_snakemake/results/DoubletFinder_seurat_object/ /storage/singlecell/zz4/fetal_snakemake/figures/DoubletFinder_UMAP/'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/DoubletFinder/DoubletFinder.R {wildcards.sample} {input} /storage/chentemp/zz4/adult_dev_compare/results/DoubletFinder_seurat_object/ /storage/chentemp/zz4/adult_dev_compare/figures/DoubletFinder_UMAP/'
         """
 
 
@@ -94,17 +99,17 @@ rule DoubletFinder_save_filtered_cells:
     input:
         expand(
             [
-                "/storage/singlecell/zz4/fetal_snakemake/results/DoubletFinder_seurat_object/{sample}.rds",
+                "/storage/chentemp/zz4/adult_dev_compare/results/DoubletFinder_seurat_object/{sample}.rds",
             ],
             sample=samples,
         ),
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/DoubletFinder_filtered_cells/DoubletFinder_filtered_cells.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/DoubletFinder_filtered_cells/DoubletFinder_filtered_cells.csv",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/DoubletFinder_save_filtered_cells/DoubletFinder_save_filtered_cells.R'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/DoubletFinder_save_filtered_cells/DoubletFinder_save_filtered_cells.R'
         """
 
 
@@ -113,349 +118,217 @@ rule merge_rna_save_as_seurat_object:
     input:
         expand(
             [
-                "/storage/singlecell/zz4/fetal_snakemake/results/DoubletFinder_seurat_object/{sample}.rds",
+                "/storage/chentemp/zz4/adult_dev_compare/results/DoubletFinder_seurat_object/{sample}.rds",
             ],
             sample=samples,
         ),
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_rna/merged_rna.rds",
     shell:
         """
         bash -c '
-        mkdir /storage/singlecell/zz4/fetal_snakemake/results/merged_rna/
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/merge_rna_save_as_seurat_object/merge_rna_save_as_seurat_object.R'
+        mkdir /storage/chentemp/zz4/adult_dev_compare/results/merged_rna/
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/merge_rna_save_as_seurat_object/merge_rna_save_as_seurat_object.R'
         """
 
 
 rule merge_feature_bc_matrix_to_h5ad:
     ## Merge all samples and save as anndata object, save the object and filtered object
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/DoubletFinder_filtered_cells/DoubletFinder_filtered_cells.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/DoubletFinder_filtered_cells/DoubletFinder_filtered_cells.csv",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered.h5ad",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/merge_feature_bc_matrix_to_h5ad/merge_feature_bc_matrix_to_h5ad.py'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/merge_feature_bc_matrix_to_h5ad/merge_feature_bc_matrix_to_h5ad.py'
         """
 
 
 rule major_class_annotation:
     ## Annote major cell types with adult data. Progenitors were labeled as MG.
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered.h5ad",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_wadult_umap_10000.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_wadult_umap_10000.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/filtered_major_class.csv",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/major_class_annotation/major_class_annotation.py'
+        export CUDA_VISIBLE_DEVICES=1
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/major_class_annotation/major_class_annotation.py'
         """
 
 
-rule filter_run_UMAP_to_annotate_MG:
+rule run_UMAP_to_without_adult:
     ## Run scvi umap to annotate MG cells. Filter cells based on ATAC and RNA seq
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/ATAC_filtered_cells/ATAC_Filtered_cell.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/filtered_major_class.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw.h5ad",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult.h5ad",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/run_UMAP_to_annotate_MG/run_UMAP_to_annotate_MG.py'
-        """
-
-
-rule annotate_MG_RPC:
-    ## Manually annotation. Annotate MG, PRPC, and NRPC. Clean.
-    input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult.h5ad",
-    output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad",
-    shell:
-        """
-        bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/annotate_MG_RPC/annotate_MG_RPC.py'
+        export CUDA_VISIBLE_DEVICES=1
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/run_UMAP_to_without_adult/run_UMAP_to_without_adult.py'
         """
 
 
 rule subclass_annotation_with_adult:
     ## Run subclass annotation within each major class.
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult.h5ad",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/subclass_annotation/RGC_annotation_adult/RGC_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/RGC_annotation_adult/RGC_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/AC_annotation_adult/AC_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/HC_annotation_adult/HC_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/BC_annotation_adult/BC_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/Rod_annotation_adult/Rod_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/Cone_annotation_adult/Cone_merged_object.h5ad",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        sh /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/subclass_annotation_with_adult/subclass_annotation_with_adult.sh'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        sh /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/subclass_annotation_with_adult/subclass_annotation_with_adult.sh'
         """
 
 
-rule run_umap_all_cells_wo_adult:
-    ## Run UMAP without adult sample on all samples.
+rule add_adult_annotated_reference_to_object:
+    ## Run subclass annotation within each major class.
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_MG.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/RGC_annotation_adult/RGC_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/AC_annotation_adult/AC_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/HC_annotation_adult/HC_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/BC_annotation_adult/BC_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/Rod_annotation_adult/Rod_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/Cone_annotation_adult/Cone_merged_object.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/data/manual_reference/AC_subclass_annotation.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/data/manual_reference/BC_subclass_annotation.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/data/manual_reference/Cone_subclass_annotation.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/data/manual_reference/HC_subclass_annotation.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/data/manual_reference/RGC_subclass_annotation.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/data/manual_reference/Rod_subclass_annotation.csv",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/Rod_subtype.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/AC_subtype.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/BC_subtype.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/Cone_subtype.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/HC_subtype.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/RGC_subtype.csv",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/run_umap_all_cells_wo_adult/run_umap_all_cells_wo_adult.py'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python;
+        cd /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/add_adult_annotated_reference_to_object/;
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 AC_subtype_annotate.py;
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 Cone_subtype_annotate.py; 
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 RGC_subtype_annotate.py;
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 BC_subtype_annotate.py;
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 HC_subtype_annotate.py;
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 Rod_subtype_annotate.py'
         """
 
 
-rule run_umap_AC_wo_adult:
-    ## Run UMAP without adult on AC.
+rule add_adult_annotated_reference_to_object_step2:
+    ## Run subclass annotation within each major class.
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/Rod_subtype.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/AC_subtype.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/BC_subtype.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/Cone_subtype.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/HC_subtype.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/RGC_subtype.csv",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/Rod_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/AC_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/BC_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/Cone_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/HC_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/RGC_subtype_processed.csv",
     shell:
         """
         bash -c '
-        mkdir /storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/AC_run_umap.py'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python;
+        cd /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/add_adult_annotated_reference_to_object_step2/;
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 AC_subtype_annotate.py &
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 Cone_subtype_annotate.py & 
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 RGC_subtype_annotate.py &
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 BC_subtype_annotate.py &
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 HC_subtype_annotate.py &
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 Rod_subtype_annotate.py'
         """
 
 
-rule Annotate_AC_subtype:
-    ## Annotate AC based on UMAP.
+rule organize_annotation:
+    ## Run subclass annotation within each major class.
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/subclass_annotation/AC_annotation_adult/AC_merged_object.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/data/manual_reference/AC_subclass_annotation.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/data/cell_subclass_majorclass_mapping.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/Rod_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/AC_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/BC_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/Cone_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/HC_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/RGC_subtype_processed.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ATAC_filtered_cells/ATAC_Filtered_cell.csv",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/AC_subtype.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC_subtype.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated_not_filter_ATAC.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated.h5ad",
+        expand(
+            [
+                "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/{cy}.csv",
+            ],
+            cy=cell_type,
+        ),
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/AC_subtype_annotate.py'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python;
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/organize_annotation/organize_annotation.py'
         """
 
 
-rule run_umap_PRPC_MG_wo_adult:
-    ## Run UMAP without adult on PRPC MG.
+rule run_umap_check_subclass_annotation:
+    ## Run subclass annotation within each major class.
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated.h5ad",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/PRPC_MG.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/{nr}.h5ad",
     shell:
         """
         bash -c '
-        mkdir /storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/PRPC_MG_run_umap.py'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python;
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/run_umap_check_subclass_annotation/run_umap_check_subclass_annotation.py {wildcards.nr}'
         """
 
 
-rule run_umap_BC_wo_adult:
-    ## Run UMAP without adult on BC.
+rule save_annotation_after_check:
+    ## Run subclass annotation within each major class.
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/BC.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/ALL.csv",
     shell:
         """
         bash -c '
-        mkdir /storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/BC_run_umap.py'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python;
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/save_annotation_after_check/save_annotation_after_check.py'
         """
 
 
-rule Annotate_BC_subtype:
-    ## Annotate BC based on UMAP.
+rule create_cell_by_gene_matrix:
+    ## Run subclass annotation within each major class.
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/BC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/subclass_annotation/BC_annotation_adult/BC_merged_object.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/data/manual_reference/BC_subclass_annotation.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/data/cell_subclass_majorclass_mapping.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated.h5ad",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/BC_subtype.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/BC_subtype.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/cellbygene/gene_expression.h5ad",
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/BC_subtype_annotate.py'
-        """
-
-rule run_umap_Rod_wo_adult:
-    ## Run UMAP without adult on BC.
-    input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
-    output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Rod.h5ad",
-    shell:
-        """
-        bash -c '
-        export CUDA_VISIBLE_DEVICES=0
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/Rod_run_umap.py'
-        """
-
-rule run_umap_Cone_wo_adult:
-    ## Run UMAP without adult on BC.
-    input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
-    output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Cone.h5ad",
-    shell:
-        """
-        bash -c '
-        export CUDA_VISIBLE_DEVICES=1
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/Cone_run_umap.py'
-        """
-
-
-rule run_umap_RGC_wo_adult:
-    ## Run UMAP without adult on BC.
-    input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
-    output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/RGC.h5ad",
-    shell:
-        """
-        bash -c '
-        export CUDA_VISIBLE_DEVICES=2
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/RGC_run_umap.py'
-        """
-
-
-rule run_umap_HC_wo_adult:
-    ## Run UMAP without adult on BC.
-    input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_h5ad/merged_raw_filtered.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/filtered_major_class_MG.csv",
-    output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC.h5ad",
-    shell:
-        """
-        bash -c '
-        export CUDA_VISIBLE_DEVICES=3
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/HC_run_umap.py'
-        """
-
-rule AC_NRPC_run_umap:
-    ## Run UMAP without adult on PRPC MG.
-    input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_AC.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC_subtype.h5ad"
-    output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC_subtype_NRPC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/AC_subtype_NRPC_obs.csv",
-    shell:
-        """
-        bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/AC_NRPC_run_umap.py'
-        """
-
-rule HC_NRPC_run_umap:
-    ## Run UMAP without adult on PRPC MG.
-    input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/NRPC_HC.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC_subtype.h5ad"
-    output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC_subtype_NRPC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC_subtype_NRPC_obs.csv",
-    shell:
-        """
-        bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/HC_NRPC_run_umap.py'
-        """
-
-rule Annotate_HC_subtype:
-    ## Annotate BC based on UMAP.
-    input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/subclass_annotation/HC_annotation_adult/HC_merged_object.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/data/manual_reference/HC_subclass_annotation.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/data/cell_subclass_majorclass_mapping.csv",
-    output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/HC_subtype.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/HC_subtype.h5ad",
-    shell:
-        """
-        bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/HC_subtype_annotate.py'
-        """
-
-rule Annotate_RGC_subtype:
-    ## Annotate RGC based on UMAP.
-    input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/RGC.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/subclass_annotation/RGC_annotation_adult/RGC_merged_object.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/data/manual_reference/RGC_subclass_annotation.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/data/cell_subclass_majorclass_mapping.csv",
-    output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/RGC_subtype.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/RGC_subtype.h5ad",
-    shell:
-        """
-        bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/RGC_subtype_annotate.py'
-        """
-
-rule Annotate_Cone_subtype:
-    ## Annotate RGC based on UMAP.
-    input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Cone.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/subclass_annotation/Cone_annotation_adult/Cone_merged_object.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/data/manual_reference/Cone_subclass_annotation.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/data/cell_subclass_majorclass_mapping.csv",
-    output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/Cone_subtype.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Cone_subtype.h5ad",
-    shell:
-        """
-        bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/Cone_subtype_annotate.py'
-        """
-
-rule Annotate_Rod_subtype:
-    ## Annotate RGC based on UMAP.
-    input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Rod.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/subclass_annotation/Rod_annotation_adult/Rod_merged_object.h5ad",
-        "/storage/singlecell/zz4/fetal_snakemake/data/manual_reference/Rod_subclass_annotation.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/data/cell_subclass_majorclass_mapping.csv",
-    output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/Rod_subtype.csv",
-        "/storage/singlecell/zz4/fetal_snakemake/results/cell_annotation_results/umap/Rod_subtype.h5ad",
-    shell:
-        """
-        bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate python
-        python3.9 /storage/singlecell/zz4/fetal_snakemake/scripts/Annotation/add_adult_annotated_reference_to_object/Rod_subtype_annotate.py'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python;
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Annotation/create_cell_by_gene_matrix/create_cell_by_gene_matrix.py'
         """

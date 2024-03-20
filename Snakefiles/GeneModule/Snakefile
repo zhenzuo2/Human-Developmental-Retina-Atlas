@@ -1,0 +1,43 @@
+
+rule all:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/hotspot_result/PRPC/PRPC_hs.adata_velocity_pseudotime.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/hotspot_result/PRPC/PRPC_hs.adata_Days.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/hotspot_result/PRPC/PRPC_hs.adata_PCA.h5ad",
+
+rule run_hotspot_PRPC_velocity_pseudotime:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/infer_velocity_pseudotime/PRPC.csv",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/hotspot_result/PRPC/PRPC_hs.adata_velocity_pseudotime.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/GeneModule/run_hotspot/run_hotspot_PRPC_velocity_pseudotime.py'
+        """
+
+rule run_hotspot_PRPC_Days:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/hotspot_result/PRPC/PRPC_hs.adata_Days.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/GeneModule/run_hotspot/run_hotspot_PRPC_Days.py'
+        """
+
+rule run_hotspot_PRPC_PCA:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/hotspot_result/PRPC/PRPC_hs.adata_PCA.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/GeneModule/run_hotspot/run_hotspot_PRPC_PCA.py'
+        """

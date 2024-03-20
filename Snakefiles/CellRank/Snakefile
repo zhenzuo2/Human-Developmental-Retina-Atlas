@@ -1,0 +1,145 @@
+cell_type = ["AC", "BC", "Cone", "HC", "RGC", "Rod"]
+
+rule all:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics_g.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated_ldata_dynamics_vk.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated_ldata_dynamics.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/NRPC_res2.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/NRPC_annotated_terminal_states.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/NRPC_annotated_terminal_states.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/NRPC.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/PRPC.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/PRPC_w_cell_cycle_gene.h5ad",
+        expand(
+            [
+                "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/{x}_w_NRPC.h5ad",
+            ],
+            x=cell_type,
+        ),
+        "/storage/chentemp/zz4/adult_dev_compare/results/infer_velocity_pseudotime/PRPC.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/PRPC_infer_fate/PRPC_to_terminal_states.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/PRPC_infer_fate/PRPC_dynamics_g.h5ad"
+
+
+rule recover_dynamics:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated_ldata.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated_ldata_dynamics.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/CellRank/recover_dynamics/recover_dynamics.py'
+        """
+
+
+rule compute_vk:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated_ldata_dynamics.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated_ldata_dynamics_vk.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/CellRank/compute_vk/compute_vk.py'
+        """
+
+
+rule infer_fate:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated_ldata_dynamics_vk.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_woadult_MG_ldata_dynamics_g.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/CellRank/infer_fate/infer_fate.py'
+        """
+
+
+rule run_umap_RPC:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad"
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/PRPC_MG.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/NRPC.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/PRPC.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/PRPC_w_cell_cycle_gene.h5ad"
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/CellRank/run_umap_RPC/run_umap_RPC.py'
+        """
+
+
+rule organize_fate_1:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/to_terminal_states.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/NRPC.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/NRPC_res2.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/CellRank/organize_fate/organize_fate_1.py'
+        """
+
+
+rule organize_fate_2:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/NRPC_res2.h5ad",
+        "/storage/chentemp/zz4/adult_dev_compare/scripts/CellRank/organize_fate/organize_fate_2.py",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/NRPC_annotated_terminal_states.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/NRPC_annotated_terminal_states.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/CellRank/organize_fate/organize_fate_2.py'
+        """
+
+
+rule run_umap_w_NRPC:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/NRPC_annotated_terminal_states.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/scripts/CellRank/run_umap_w_NRPC/run_umap_w_NRPC.py",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/{x}_w_NRPC.h5ad",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/CellRank/run_umap_w_NRPC/run_umap_w_NRPC.py {wildcards.x}'
+        """
+
+rule infer_velocity_pseudotime_PRPC:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated_ldata.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/infer_velocity_pseudotime/PRPC.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/CellRank/infer_velocity_pseudotime/PRPC.py'
+        """
+
+rule infer_fate_PRPC:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated_ldata.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/PRPC_infer_fate/PRPC_to_terminal_states.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/PRPC_infer_fate/PRPC_dynamics_g.h5ad"
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/CellRank/infer_fate/infer_fate_PRPC.py'
+        """

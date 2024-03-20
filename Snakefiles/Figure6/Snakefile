@@ -1,0 +1,16 @@
+rule all:
+    ## Put input file here to run corresponding rules
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure6/DHRS3.tiff",
+
+rule plot_RA_marker_genes:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad"
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure6/DHRS3.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure6/plot_RA_marker_genes.py'
+        """

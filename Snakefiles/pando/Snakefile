@@ -1,68 +1,94 @@
-groups = [
-    "AC",
-    "HC",
-    "RGC",
-    "BC",
-    "Cone",
-    "Rod",
-    "AC_HC_RGC",
-    "BC_Rod_Cone",
-    "Annotated_NRPC",
-]
-meta_list = [
-    "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC/AC.csv",
-    "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC/HC.csv",
-    "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC/RGC.csv",
-    "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC/BC.csv",
-    "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC/Cone.csv",
-    "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC/Rod.csv",
-    "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC/AC_HC_RGC.csv",
-    "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC/BC_Rod_Cone.csv",
-    "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC/Annotated_NRPC.csv",
-]
-
-sample2meta = dict(zip(groups, meta_list))
-
-
-def get_meta(wildcards):
-    return sample2meta[wildcards.sam]
-
+import pandas as pd
+celltypes = ["RGC", "HC", "NRPC", "PRPC", "Cone", "MG", "AC", "BC", "Rod"]
 
 rule all:
+    ## Put input file here to run corresponding rules
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC/Annotated_NRPC.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_rna/merged_rna.rds",
+        "/storage/chentemp/zz4/adult_dev_compare/results/pando_merged_seurat_object/pando_merged_seurat_object.rds",
         expand(
             [
-                "/storage/singlecell/zz4/fetal_snakemake/results/pando_results/{sam}_seurat_object.rds",
+                "/storage/chentemp/zz4/adult_dev_compare/results/pando_merged_seurat_object/pando_merged_seurat_object_{celltype}.rds",
             ],
-            sam=groups,
+            celltype=celltypes,
         ),
+        expand(
+            [
+                "/storage/chentemp/zz4/adult_dev_compare/results/pando_results/pando_{celltype}.rds"
+            ],
+            celltype=celltypes,
+        )
 
-
-rule NRPC_meta:
-    ## Split NRPC files to generate meta
+rule merge_ATAC:
+    ## Create ArchR project
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC_fate.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/data/Retina_fetal/Multi_Fetal_23w1d_NR/outs/atac_fragments.tsv.gz",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/NRPC_fate/NRPC/Annotated_NRPC.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_atac/atac.rds"
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/pando/NRPC_meta/NRPC_meta.R'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Pando/merge_ATAC/merge_ATAC.R'
         """
 
-rule run_pando:
-    ## Run pando
+rule merge_RNA:
+    ## Create ArchR project
     input:
-        "/storage/singlecell/zz4/fetal_snakemake/results/merged_rna/merged_rna.rds",
-        meta=get_meta,
+        "/storage/chentemp/zz4/adult_dev_compare/data/Retina_fetal/Multi_Fetal_23w1d_NR/outs/atac_fragments.tsv.gz",
     output:
-        "/storage/singlecell/zz4/fetal_snakemake/results/pando_results/{sam}_seurat_object.rds",
-        "/storage/singlecell/zz4/fetal_snakemake/results/pando_results/{sam}_modules_meta.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_rna/merged_rna.rds"
     shell:
         """
         bash -c '
-        source /storage/singlecell/zz4/mambaforge/etc/profile.d/conda.sh && conda activate r
-        Rscript /storage/singlecell/zz4/fetal_snakemake/scripts/pando/run_pando/run_pando.R {wildcards.sam} {input.meta}'
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Pando/merge_RNA/merge_RNA.R'
+        """
+
+rule create_seurat_object:
+    ## Create ArchR project
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_rna/merged_rna.rds",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_atac/atac.rds",
+        "/storage/chentemp/zz4/adult_dev_compare/results/Annotation/ALL.csv"
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/pando_merged_seurat_object/pando_merged_seurat_object.rds"
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Pando/create_seurat_object/create_seurat_object.R'
+        """
+
+rule split_by_class:
+    ## Create ArchR project
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_rna/merged_rna.rds",
+        "/storage/chentemp/zz4/adult_dev_compare/results/merged_atac/atac.rds",
+        "/storage/chentemp/zz4/adult_dev_compare/scripts/Pando/split_by_class/split_by_class.R"
+    output:
+        expand(
+            [
+                "/storage/chentemp/zz4/adult_dev_compare/results/pando_merged_seurat_object/pando_merged_seurat_object_{celltype}.rds",
+            ],
+            celltype=celltypes,
+        )
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Pando/split_by_class/split_by_class.R'
+        """
+
+rule run_pando_majorclass:
+    ## Create ArchR project
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/pando_merged_seurat_object/pando_merged_seurat_object_{celltype}.rds"
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/pando_results/pando_{celltype}.rds"
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate newR
+        /storage/chen/home/zz4/miniforge-pypy3/envs/newR/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Pando/run_pando_majorclass/run_pando_majorclass.R /storage/chentemp/zz4/adult_dev_compare/results/pando_merged_seurat_object/pando_merged_seurat_object_{wildcards.celltype}.rds {wildcards.celltype}'
         """

@@ -1,0 +1,118 @@
+rule all:
+    ## Put input file here to run corresponding rules
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Plots/Peak-Marker-Heatmap.pdf",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/p2g.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/all_peaks.bed",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/Adult_DAR_peak_RGC.bed",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/Dev_DAR_peak_RGC.bed",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/RGC_Shared.bed",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/RGC_Dev_Sep.bed",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure5/compare_p2g_adult_histone_modification.png",
+
+
+rule plot_marker_peaks:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Save-ArchR-Project.rds",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Plots/Peak-Marker-Heatmap.pdf",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/markersPeaks.rds",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Figure5/plot_marker_peaks.R'
+        """
+
+rule save_p2g_peak_bed:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Save-ArchR-Project.rds",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/p2g.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/p2g_unique.bed"
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Figure5/save_p2g_peak_bed.R'
+        """
+
+rule export_all_bed:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Save-proj3/Save-ArchR-Project.rds",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/all_peaks.bed",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Figure5/export_all_bed.R'
+        """
+
+rule pre_process_adult_peak:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/data/adult_peaks/RGC_DAR_peak_hg38",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/Adult_DAR_peak_RGC.bed",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Figure5/pre_process_adult_peak.R'
+        """
+
+rule export_marker_peaks:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/markersPeaks.rds",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/Dev_DAR_peak_BC.bed",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Figure5/export_marker_peaks.R'
+        """
+
+rule plot_adult_dev_DAR_compare:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/markersPeaks.rds",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/Dev_DAR_peak_BC.bed",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure5/plot_adult_dev_DAR_compare.png",
+    shell:
+        """
+        bash -c '
+        sh /storage/chentemp/zz4/adult_dev_compare/scripts/Figure5/plot_adult_dev_DAR_compare.sh;
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R;
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Figure5/plot_adult_dev_DAR_compare.R'
+        """
+
+rule export_RGC_peak_compare_adult:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/RGC_Dev_Adult_Compare.bed",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/RGC_Shared.bed",
+        "/storage/chentemp/zz4/adult_dev_compare/results/ArchR/Peak_set/RGC_Dev_Sep.bed"
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R;
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Figure5/export_RGC_peak_compare_adult.R'
+        """
+    
+
+rule pre_process_adult_histone:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/data/Histone/Hu9_21_26_mac_H3K27ac.narrowPeak",
+        "/storage/chentemp/zz4/adult_dev_compare/data/Histone/Hu1_2_3_ret_H3K27ac.narrowPeak"
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure5/compare_p2g_adult_histone_modification.png",
+    shell:
+        """
+        bash -c '
+        sh /storage/chentemp/zz4/adult_dev_compare/scripts/Figure5/pre_process_adult_histone.sh
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate R;
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Figure5/pre_process_adult_histone.R
+        sh /storage/chentemp/zz4/adult_dev_compare/scripts/Figure5/pre_process_adult_histone2.sh
+        /storage/chen/home/zz4/miniforge-pypy3/envs/R/bin/Rscript /storage/chentemp/zz4/adult_dev_compare/scripts/Figure5/pre_process_adult_histone2.R'
+        """

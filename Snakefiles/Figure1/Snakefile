@@ -1,0 +1,116 @@
+
+rule all:
+    ## Put input file here to run corresponding rules
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/RNA_majorclass_UMAP.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/ATAC_majorclass_UMAP.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/Numer of cells each PCW.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/gene_expression_heatmap.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/overall_umap_by_majorclass_PCW.png",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/plot_appearance_pcw.svg",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/Cell Maturation Index_AC.tiff",
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/sns.violinplot_Rod_Cone_OTX2.tiff",
+
+
+rule plot_number_of_cells_table:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/Numer of cells each PCW.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure1/plot_number_of_cells_table.py'
+        """
+
+
+rule RNA_majorclass_UMAP:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/RNA_majorclass_UMAP.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure1/RNA_majorclass_UMAP.py'
+        """
+
+
+rule ATAC_majorclass_UMAP:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/ATAC_umap/ATAC_UMAPHarmony_cor.csv",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/ATAC_majorclass_UMAP.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure1/ATAC_majorclass_UMAP.py'
+        """
+
+
+rule plot_gene_score_gene_expression_heatmap:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/gene_expression_heatmap.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure1/plot_gene_score_gene_expression_heatmap.py'
+        """
+
+
+rule plot_UMAP_by_region_subclass_PCW:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/overall_umap_by_majorclass_PCW.png",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure1/plot_UMAP_by_region_subclass_PCW.py'
+        """
+
+
+rule plot_appearance_pcw:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/plot_appearance_pcw.svg",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure1/plot_appearance_pcw.py'
+        """
+
+
+rule cell_maturation_score:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/Cell Maturation Index_AC.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure1/cell_maturation_score.py'
+        """
+
+
+rule plot_violin_plot_over_weeks:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/figures/Figure1/sns.violinplot_Rod_Cone_OTX2.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/Figure1/plot_violin_plot_over_weeks.py'
+        """

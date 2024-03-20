@@ -1,0 +1,37 @@
+import pandas as pd
+
+
+rule all:
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/Gene_panel/500.csv",
+        "/storage/chentemp/zz4/adult_dev_compare/results/Gene_panel/500.tiff",
+
+
+####################################################################################################
+# Annotation
+rule GenePanelDesign:
+    ## Seurat QC
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/Gene_panel/500.csv",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/MERFISH/GenePanelDesign/GenePanelDesign.py'
+        """
+
+
+rule check_umap:
+    ## Seurat QC
+    input:
+        "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
+    output:
+        "/storage/chentemp/zz4/adult_dev_compare/results/Gene_panel/500.tiff",
+    shell:
+        """
+        bash -c '
+        source /storage/chen/home/zz4/miniforge-pypy3/etc/profile.d/conda.sh && conda activate python
+        /storage/chen/home/zz4/miniforge-pypy3/envs/python/bin/python3.9 /storage/chentemp/zz4/adult_dev_compare/scripts/MERFISH/check_umap/check_umap.py'
+        """
