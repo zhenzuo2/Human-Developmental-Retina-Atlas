@@ -59,14 +59,16 @@
 
 <details>
   <summary>ATAC Analysis With ArchR</summary>
-## Create ArchR project  
-## Filter ArchR project  
-## Create seRNA object as input for ArchR object (RNA-seq input)  
-## Add RNA-seq to ArchR object through the created seRNA object.  
-## Run ATAC-seq UMAP.  
-## Export UMAP cordinates for plotting.  
-## Export caculated gene score to matrix.  
-## Read exported gene score and save into h5ad format.  
-## Run gene score inputation on h5ad object  
-## Get Bigwig file from ArchR object  
+
+* Create ArchR project  
+* Filter ArchR project  
+* Create seRNA object as input for ArchR object (RNA-seq input)  
+* Add RNA-seq to ArchR object through the created seRNA object.  
+* Run ATAC-seq UMAP.  
+* Export UMAP cordinates for plotting.  
+* Export caculated gene score to matrix.  
+* Read exported gene score and save into h5ad format.  
+* Run gene score inputation on h5ad object  
+* Get Bigwig file from ArchR object  
+
 </details>
