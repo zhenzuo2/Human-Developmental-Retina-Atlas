@@ -1,3 +1,4 @@
+# Import packages and define variables
 import pandas as pd
 
 meta = pd.read_csv(
@@ -9,10 +10,8 @@ labels = ["fetal", "fetal_adult"]
 cell_type = ["AC", "BC", "Cone", "HC", "MG", "NRPC", "PRPC", "RGC", "Rod"]
 NR = ["AC", "BC", "Cone", "HC", "RGC", "Rod", "RPC_MG", "ALL"]
 
-
 def get_rawh5(wildcards):
     return sample2file[wildcards.sample]
-
 
 rule all:
     input:
@@ -50,7 +49,7 @@ rule all:
 ####################################################################################################
 # Annotation
 rule QC_seurat:
-    ## Seurat QC
+    ## Run Seurat QC
     input:
         get_rawh5,
     output:
@@ -80,7 +79,7 @@ rule QC_seurat_apply_filter:
 
 
 rule DoubletFinder:
-    ## Run DoubletFinder
+    ## Run DoubletFinder on RNA-seq
     input:
         "/storage/chentemp/zz4/adult_dev_compare/results/after_qc_seurat_object_apply_filter/{sample}.rds",
     output:
@@ -200,7 +199,7 @@ rule subclass_annotation_with_adult:
 
 
 rule add_adult_annotated_reference_to_object:
-    ## Run subclass annotation within each major class.
+    ## Manually annotate subclass and use csv as input to update the object.
     input:
         "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/RGC_annotation_adult/RGC_merged_object.h5ad",
         "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation/AC_annotation_adult/AC_merged_object.h5ad",
@@ -236,7 +235,7 @@ rule add_adult_annotated_reference_to_object:
 
 
 rule add_adult_annotated_reference_to_object_step2:
-    ## Run subclass annotation within each major class.
+    ## Oranize annotation by renaming the columns.
     input:
         "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/Rod_subtype.csv",
         "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/AC_subtype.csv",
@@ -266,7 +265,7 @@ rule add_adult_annotated_reference_to_object_step2:
 
 
 rule organize_annotation:
-    ## Run subclass annotation within each major class.
+    ## Merge organized annotation
     input:
         "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/Rod_subtype_processed.csv",
         "/storage/chentemp/zz4/adult_dev_compare/results/cell_annotation_results/subclass_annotation_result_csv/AC_subtype_processed.csv",
@@ -293,7 +292,7 @@ rule organize_annotation:
 
 
 rule run_umap_check_subclass_annotation:
-    ## Run subclass annotation within each major class.
+    ## Run UMAP to check subclass annotation 
     input:
         "/storage/chentemp/zz4/adult_dev_compare/results/merged_h5ad/merged_raw_filtered_umap_10000_wadult_annotated.h5ad",
     output:
@@ -307,7 +306,7 @@ rule run_umap_check_subclass_annotation:
 
 
 rule save_annotation_after_check:
-    ## Run subclass annotation within each major class.
+    ## Save subclass annotation within each major class.
     input:
         "/storage/chentemp/zz4/adult_dev_compare/results/adata_object_UMAP/ALL.h5ad",
     output:
