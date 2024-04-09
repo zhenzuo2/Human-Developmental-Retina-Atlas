@@ -37,19 +37,33 @@
 <details>
   <summary>Annotation</summary>
   
-* Run Seurat QC  
-* Apply QC cutoff to get a subset of cells  
-* Run DoubletFinder on RNA-seq  
-* Export DoubletFinder results to a csv file  
+* Run Seurat QC.  
+* Apply QC cutoff to get a subset of cells.  
+* Run DoubletFinder on RNA-seq.  
+* Export DoubletFinder results to a csv file.  
 * Merge all samples and save as seurat object.  
-* Merge all samples and save as anndata object, save the object and filtered object  
+* Merge all samples and save as anndata object, save the object and filtered object.  
 * Annote major cell types with adult data. Progenitors were labeled as MG.  
-* Run scvi umap to annotate MG cells. Filter cells based on ATAC and RNA seq  
+* Run scvi umap to annotate MG cells. Filter cells based on ATAC and RNA seq.  
 * Run subclass annotation within each major class.  
 * Manually annotate subclass and use csv as input to update the object.  
 * Oranize annotation by renaming the columns in obs.  
-* Merge organized annotation  
-* Run UMAP to check annotation  
+* Merge organized annotation.  
+* Run UMAP to check annotation.  
 * Save subclass annotation within each major class.  
 * Run subclass annotation within each major class.  
+</details>
+
+<details>
+  <summary>ATAC Analysis With ArchR</summary>
+## Create ArchR project 
+## Filter ArchR project 
+## Create seRNA object as input for ArchR object (RNA-seq input) 
+## Add RNA-seq to ArchR object through the created seRNA object. 
+## Run ATAC-seq UMAP. 
+## Export UMAP cordinates for plotting. 
+## Export caculated gene score to matrix. 
+## Read exported gene score and save into h5ad format. 
+## Run gene score inputation on h5ad object 
+## Get Bigwig file from ArchR object 
 </details>
