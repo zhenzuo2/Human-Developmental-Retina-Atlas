@@ -33,19 +33,23 @@
   |Multiome_23w4d_NR     |14      |23w4d|Peripheral|165 |Multiomics|
 </details>
 
-#################################################################################################### Annotation 
-## Run Seurat QC 
-## Apply QC cutoff to get a subset of cells 
-## Run DoubletFinder on RNA-seq 
-## Export DoubletFinder results to a csv file 
-## Merge all samples and save as seurat object. 
-## Merge all samples and save as anndata object, save the object and filtered object 
-## Annote major cell types with adult data. Progenitors were labeled as MG. 
-## Run scvi umap to annotate MG cells. Filter cells based on ATAC and RNA seq 
-## Run subclass annotation within each major class. 
-## Manually annotate subclass and use csv as input to update the object. 
-## Oranize annotation by renaming the columns in obs. 
-## Merge organized annotation 
-## Run UMAP to check annotation 
-## Save subclass annotation within each major class. 
-## Run subclass annotation within each major class. 
+
+<details>
+  <summary>Annotation</summary>
+  
+* Run Seurat QC  
+* Apply QC cutoff to get a subset of cells  
+* Run DoubletFinder on RNA-seq  
+* Export DoubletFinder results to a csv file  
+* Merge all samples and save as seurat object.  
+* Merge all samples and save as anndata object, save the object and filtered object  
+* Annote major cell types with adult data. Progenitors were labeled as MG.  
+* Run scvi umap to annotate MG cells. Filter cells based on ATAC and RNA seq  
+* Run subclass annotation within each major class.  
+* Manually annotate subclass and use csv as input to update the object.  
+* Oranize annotation by renaming the columns in obs.  
+* Merge organized annotation  
+* Run UMAP to check annotation  
+* Save subclass annotation within each major class.  
+* Run subclass annotation within each major class.  
+</details>
