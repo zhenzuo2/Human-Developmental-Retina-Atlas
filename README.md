@@ -1,4 +1,5 @@
-# Data Meta
+<details open>
+  <summary>Data Meta</summary>
 |Sample.ID             |Donor.ID|Time |Region    |Days|Data.Type |
 |----------------------|--------|-----|----------|----|----------|
 |sn_multiome_d59       |1       |8w3d |Whole Eye |59  |Multiomics|
@@ -29,8 +30,9 @@
 |Multi_Fetal_23w1d_NR  |13      |23w1d|Peripheral|162 |Multiomics|
 |Multiome_23w4d_FR     |14      |23w4d|Macula    |165 |Multiomics|
 |Multiome_23w4d_NR     |14      |23w4d|Peripheral|165 |Multiomics|
+</details>
 
-#################################################################################################### 
+#################################################################################################### Annotation 
 ## Run Seurat QC 
 ## Apply QC cutoff to get a subset of cells 
 ## Run DoubletFinder on RNA-seq 
