@@ -1,4 +1,4 @@
-# Single Cell Multi-omic Atlas of the Human Developing Retina
+d# Single Cell Multi-omic Atlas of the Human Developing Retina
 [Preprint](https://www.researchsquare.com/article/rs-3417373/v1)
 
 <details>
@@ -71,4 +71,37 @@
 * Run gene score inputation on h5ad object  
 * Get Bigwig file from ArchR object  
 
+</details>
+
+<details>
+  <summary>Gene Regulatory Network Inference</summary>
+
+* Create RNA-seq object
+* Create ATAC-seq object
+* Merge RNA-seq and ATAC-seq object
+* Split merged object by major class
+* Run Pando on each major class
+</details>
+
+<details>
+  <summary>Differential Expression Analysis</summary>
+  
+* Regression Analysis of Differential Expressed Genes with Monocle 3
+</details>
+
+<details>
+  <summary>CellRank for directed single-cell fate mapping</summary>
+  
+* Estimates velocities in a gene-specific manner with scvelo.tl.velocity
+* Compute velocity kernel
+* Computation of fate probabilities
+</details>
+
+<details>
+  <summary>Velocity Inference from Single-Cell Multi-Omic Data</summary>
+</details>
+
+
+<details>
+  <summary>Gene Module Analysis</summary>
 </details>
