@@ -90,12 +90,10 @@ for module in [0, 1, 2]:
     # they are still used in the computation of the image padding.
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
-
     # Even though our axes (plot region) are set to cover the whole image with [0,0,1,1],
     # by default they leave padding between the plotted data and the frame. We use tigher=True
     # to make sure the data gets scaled to the full extents of the axes.
     plt.autoscale(tight=True)
-
     for gene in mod_reordered[mod_reordered == module + 1].index[:20]:
         print(module)
         print(gene)
@@ -133,7 +131,7 @@ for module in [0, 1, 2]:
         dpi=600,
     )
     plt.clf()
-
+    adata_result.obs.to_csv(output_file_path + "PRPC_gene_module_" + str(module + 1) + "_gene_trend.csv")
 
 ###
 module=0
@@ -187,3 +185,4 @@ plt.savefig(
     dpi=600,
 )
 plt.clf()
+adata_result.obs.to_csv(output_file_path + "PRPC_gene_module_" + str(module + 1) + "_gene_trend.csv")

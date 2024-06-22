@@ -77,3 +77,8 @@ for gene in genes:
         transparent=True,
     )
     plt.clf()
+
+#temp = adata[adata.obs.Weeks.isin(["PCW19","PCW23"])]
+#temp
+#sc.tl.rank_genes_groups(temp,groupby = "Weeks")
+#sc.get.rank_genes_groups_df(temp,group = None).to_csv("/storage/chentemp/zz4/adult_dev_compare/temp/degs.csv")

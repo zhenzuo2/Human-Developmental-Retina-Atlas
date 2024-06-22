@@ -59,7 +59,7 @@ def plot_normal_distributions(means, stds, labels, size):
     ax.set_xlim([70, 160])
     for line in leg.get_lines():
         line.set_linewidth(10.0)
-    plt.legend(bbox_to_anchor=(1.03, 1), borderaxespad=0)
+    plt.legend('',frameon=False)
     plt.savefig(
         "/storage/chentemp/zz4/adult_dev_compare/figures/Figure3/NRPC Birth Rate in the Macula.tiff",
         transparent=True,
@@ -107,7 +107,7 @@ def plot_normal_distributions(means, stds, labels, size):
     ax.set_xlim([70, 160])
     for line in leg.get_lines():
         line.set_linewidth(10.0)
-    plt.legend(bbox_to_anchor=(1.03, 1), borderaxespad=0)
+    plt.legend('',frameon=False)
     plt.savefig(
         "/storage/chentemp/zz4/adult_dev_compare/figures/Figure3/NRPC Birth Rate in the Peripheral.tiff",
         transparent=True,
