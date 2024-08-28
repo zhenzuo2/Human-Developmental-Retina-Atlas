@@ -1,6 +1,6 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.12737836.svg)](https://doi.org/10.5281/zenodo.12737836)
 
-# Single Cell Multi-omic Atlas of the Human Developing Retina
+
 [Single cell dual-omic atlas of the human developing retina](https://www.nature.com/articles/s41467-024-50853-5)
 
 <details>
